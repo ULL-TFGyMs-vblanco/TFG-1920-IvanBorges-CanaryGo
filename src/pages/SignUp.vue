@@ -1,11 +1,19 @@
 <template>
-  <q-page padding>
-    <!-- content -->
-  </q-page>
+  <div class="q-pa-md">
+
+  </div>
 </template>
 
 <script>
 export default {
-  // name: 'PageName',
+  data () {
+    return {
+
+    }
+  }
 }
 </script>
+
+<style>
+
+</style>

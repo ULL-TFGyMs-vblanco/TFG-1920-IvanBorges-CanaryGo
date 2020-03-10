@@ -43,7 +43,7 @@ module.exports = function (ctx) {
       all: 'auto',
 
       components: [
-        'QParallax', 'QFab', 'QFabAction', 'QBtn'
+        'QParallax', 'QSkeleton', 'QFab', 'QFabAction', 'QBtn', 'QExpansionItem', 'QAvatar', 'QTabPanels', 'QTabPanel', 'QList', 'QItem', 'QItemSection', 'QItemLabel'
       ],
       directives: [],
 

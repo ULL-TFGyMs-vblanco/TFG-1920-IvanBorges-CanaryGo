@@ -13,7 +13,7 @@
       color="secondary"
       style="width:200px;"
       to="/"
-      label="Go back"
+      label="Vuelve atrás"
     />
   </div>
 </template>
