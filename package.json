@@ -8,6 +8,8 @@
   "author": "Ivan Josue Borges Gonzalez <alu0100880755@ull.edu.es>",
   "private": true,
   "scripts": {
+    "build": "quasar build",
+    "deploy": "now",
     "lint": "eslint --ext .js,.vue src",
     "test": "echo \"No test specified\" && exit 0"
   },
