@@ -13,7 +13,7 @@
 
       <q-parallax
         id="seccionhtml"
-        :height="900"
+        :height="1400"
         :speed="0.8"
         v-for="seccion of secciones"
         v-bind:key="seccion"
@@ -81,7 +81,7 @@ export default {
     return {
       secciones: [
         {
-          foto: 'img/beach1853939',
+          foto: 'img/beach1853939.jpg',
           iconos2:
             [
               {
@@ -105,7 +105,7 @@ export default {
             ]
         },
         {
-          foto: 'img/paddle-839814',
+          foto: 'img/paddle-839814.jpg',
           iconos2:
             [
               {
@@ -184,10 +184,10 @@ export default {
     onClick () {
       if (this.expanded) {
         this.expanded = false
-        this.Expandir()
+        // this.Expandir()
       } else {
         this.expanded = true
-        this.Expandir()
+        // this.Expandir()
       }
     },
 
@@ -201,7 +201,7 @@ export default {
         setTimeout(function () {
           var elem = document.getElementById('seccionhtml')
           elem.style.height = '600px'
-        }, 1000)
+        }, 1800)
       }
     }
   }
@@ -212,4 +212,5 @@ export default {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 <style>
+
 </style>
