@@ -81,7 +81,7 @@ export default {
     return {
       secciones: [
         {
-          foto: 'img/beach1853939.jpg',
+          foto: '../assets/images/index/beach1853939.jpg',
           iconos2:
             [
               {
