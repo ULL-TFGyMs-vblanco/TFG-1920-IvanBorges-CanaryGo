@@ -1,14 +1,15 @@
 <template>
   <div class="q-pa-md q-gutter-md">
-    <div class=".row">
-      <!-- SECCION1 -->
-      <q-parallax
-        id="seccionhtml"
-        :height="600"
-        :speed="0.8"
-        src="../assets/images/index/beach1853939.jpg"
-      >
-        <!-- <template v-slot:content="scope">
+    <div class="total">
+      <div class="total1">
+        <!-- SECCION1 -->
+        <q-parallax
+          id="seccionhtml"
+          :height="600"
+          :speed="0.8"
+          src="../assets/images/index/beach1853939.jpg"
+        >
+          <!-- <template v-slot:content="scope">
           <div
             class="absolute column items-center"
             :style="{
@@ -17,37 +18,38 @@
             left: 100,
             right: 100
         }"
-        >-->
-        <img
-          src="../assets/images/CanaryGo/Canary_Go_Icon.png"
-          style="width: 150px; height: 150px; border-radius: 20%"
-        />
-        <br />
-        <br />
-        <div class="text-h3 text-bold text-black text-center">{{introduccion1}}</div>
-        <br />
-        <!-- ACCIONES -->
-        <q-card-actions>
-          <q-btn
-            color="black"
-            label="Mas info"
-            round
-            flat
-            dense
-            id="expanded1"
-            :icon="expanded ? 'keyboard_arrow_up' : 'keyboard_arrow_down'"
-            @click="onClick(1)"
+          >-->
+          <img
+            src="../assets/images/CanaryGo/Canary_Go_Icon.png"
+            style="width: 150px; height: 150px; border-radius: 20%"
           />
-        </q-card-actions>
-        <!-- /ACCIONES -->
-        <q-slide-transition :duration="2000">
-          <div v-show="expanded">
-            <Seccioninfo v-for="seccion in seccion1" :key="seccion.icono" v-bind="seccion" />
-          </div>
-        </q-slide-transition>
-        <!-- </div>
-        </template>-->
-      </q-parallax>
+          <br />
+          <br />
+          <div id="seccionh3-index" class="text-bold text-center">{{introduccion1}}</div>
+          <br />
+          <!-- ACCIONES -->
+          <q-card-actions>
+            <q-btn
+              color="black"
+              label="Mas info"
+              round
+              flat
+              dense
+              id="expanded1"
+              :icon="expanded ? 'keyboard_arrow_up' : 'keyboard_arrow_down'"
+              @click="onClick(1)"
+            />
+          </q-card-actions>
+          <!-- /ACCIONES -->
+          <q-slide-transition :duration="2000">
+            <div v-show="expanded">
+              <Seccioninfo v-for="seccion in seccion1" :key="seccion.icono" v-bind="seccion" />
+            </div>
+          </q-slide-transition>
+          <!-- </div>
+          </template>-->
+        </q-parallax>
+      </div>
 
       <!-- SECCION2 -->
       <q-parallax
@@ -69,7 +71,7 @@
 
         <br />
         <br />
-        <div class="text-h3 text-bold text-black text-center">{{introduccion2}}</div>
+        <div id="seccionh3-index" class="text-h3 text-bold text-center">{{introduccion2}}</div>
         <br />
         <!-- ACCIONES -->
         <q-card-actions>
@@ -113,7 +115,7 @@
 
         <br />
         <br />
-        <div class="text-h3 text-bold text-black text-center">{{introduccion3}}</div>
+        <div id="seccionh3-index" class="text-h3 text-bold text-center">{{introduccion3}}</div>
         <br />
         <!-- ACCIONES -->
         <q-card-actions>
@@ -157,7 +159,7 @@
 
         <br />
         <br />
-        <div class="text-h3 text-bold text-black text-center">{{introduccion4}}</div>
+        <div id="seccionh3-index" class="text-h3 text-bold text-center">{{introduccion4}}</div>
         <br />
         <!-- ACCIONES -->
         <q-card-actions>
@@ -207,7 +209,7 @@ export default {
         {
           icono: 'people',
           titulo: 'OPINIONES DE GENTE COMO TÚ',
-          descripcion: 'Gracias a las aportaciones de la gran comunidad que hay detrás podrás saber si el evento se adecua a lo que se está buscando, lo bueno y lo malo. Todo esto gracias al sistema de consejos, opiniones o experiencias de la comunidad.'
+          descripcion: 'Gracias a las aportaciones de la gran comunidad podrás saber si el evento se adecua a lo que se está buscando, lo bueno y lo malo. Todo esto gracias al sistema de consejos, opiniones o experiencias de la comunidad.'
         }
 
       ],
@@ -316,4 +318,8 @@ export default {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 <style>
+#seccionh3-index {
+  font-size: calc(34px + 6 * ((100vw - 20px) / 680));
+  color: black;
+}
 </style>

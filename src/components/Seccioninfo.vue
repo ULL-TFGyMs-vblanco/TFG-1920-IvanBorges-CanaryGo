@@ -5,8 +5,8 @@
         <q-icon :name="icono" size="50px" />
         <br />
         <br />
-        <p class="text-h3 text-bold text-black-2 text-center">{{titulo}}</p>
-        <p class="text-h5 text-bold text-black-2 text-center">{{descripcion}}</p>
+        <p class="text-bold text-black-2 text-center" id="seccionh3">{{titulo}}</p>
+        <p class="text-bold text-black-2 text-center" id="seccionh4">{{descripcion}}</p>
       </div>
 
       <!-- <br /> -->
@@ -39,10 +39,18 @@ export default {
 </script>
 
 <style>
-.seccion-info1{
-padding-left: 5%;
-padding-right: 5%;
-/* padding-top: 1%; */
-/* padding-bottom: 5%; */
+.seccion-info1 {
+  padding-left: 5%;
+  padding-right: 5%;
 }
+
+#seccionh3 {
+  font-size: calc(16px + 6 * ((100vw - 20px) / 680));
+  /* font-size: 33px; */
+}
+#seccionh4 {
+  font-size: calc(10px + 6 * ((100vw - 20px) / 680));
+  /* font-size: 22px; */
+}
+
 </style>

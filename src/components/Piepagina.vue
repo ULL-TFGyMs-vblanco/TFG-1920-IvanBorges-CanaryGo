@@ -140,9 +140,6 @@ body {
   font-size: 25px;
 }
 
-footer {
-}
-
 .negrita {
   font-weight: bold;
   font-size: 120%;
