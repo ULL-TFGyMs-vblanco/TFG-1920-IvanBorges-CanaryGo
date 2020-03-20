@@ -5,26 +5,16 @@
         <!-- SECCION1 -->
         <q-parallax
           id="seccionhtml"
-          :height="1200"
-          :speed="0.8"
+          :height="1050"
+          :speed="1"
           src="../assets/images/index/beach1853939.jpg"
         >
-          <!-- <template v-slot:content="scope">
-          <div
-            class="absolute column items-center"
-            :style="{
-            opacity: 0.45 + (1 - scope.percentScrolled) * 0.55,
-            top: (scope.percentScrolled * 30) + '%',
-            left: 100,
-            right: 100
-        }"
-          >-->
           <img
             src="../assets/images/CanaryGo/Canary_Go_Icon.png"
-            style="width: 150px; height: 150px; border-radius: 20%;"
+            style="width: 100px; height: 100px; border-radius: 20%;"
           />
           <br />
-          <br />
+
           <div id="seccionh3-index" class="text-bold text-center">{{introduccion1}}</div>
           <br />
           <!-- ACCIONES -->
@@ -46,29 +36,16 @@
               <Seccioninfo v-for="seccion in seccion1" :key="seccion.icono" v-bind="seccion" />
             </div>
           </q-slide-transition>
-          <!-- </div>
-          </template>-->
         </q-parallax>
       </div>
 
       <!-- SECCION2 -->
       <q-parallax
         id="seccionhtml2"
-        :height="1200"
+        :height="1000"
         :speed="0.8"
         src="../assets/images/index/paddle-839814.jpg"
       >
-        <!-- <template v-slot:content="scope">
-          <div
-            class="absolute column items-center"
-            :style="{
-            opacity: 0.45 + (1 - scope.percentScrolled) * 0.55,
-            top: (scope.percentScrolled * 30) + '%',
-            left: 100,
-            right: 100
-          }"
-        >-->
-
         <br />
         <br />
         <div id="seccionh3-index2" class="text-h3 text-bold text-center">{{introduccion2}}</div>
@@ -91,28 +68,15 @@
             <Seccioninfo v-for="seccion in seccion2" :key="seccion.icono" v-bind="seccion" />
           </div>
         </q-slide-transition>
-        <!-- </div>
-        </template>-->
       </q-parallax>
 
       <!-- SECCION3 -->
       <q-parallax
         id="seccionhtml3"
-        :height="1200"
+        :height="1000"
         :speed="0.8"
         src="../assets/images/index/concert-768722.jpg"
       >
-        <!-- <template v-slot:content="scope">
-          <div
-            class="absolute column items-center"
-            :style="{
-            opacity: 0.45 + (1 - scope.percentScrolled) * 0.55,
-            top: (scope.percentScrolled * 30) + '%',
-            left: 100,
-            right: 100
-          }"
-        >-->
-
         <br />
         <br />
         <div id="seccionh3-index3" class="text-h3 text-bold text-center">{{introduccion3}}</div>
@@ -142,21 +106,10 @@
       <!-- SECCION4 -->
       <q-parallax
         id="seccionhtml4"
-        :height="1200"
+        :height="1000"
         :speed="0.8"
         src="../assets/images/index/yoga-2176668.jpg"
       >
-        <!-- <template v-slot:content="scope">
-          <div
-            class="absolute column items-center"
-            :style="{
-            opacity: 0.45 + (1 - scope.percentScrolled) * 0.55,
-            top: (scope.percentScrolled * 30) + '%',
-            left: 100,
-            right: 100
-          }"
-        >-->
-
         <br />
         <br />
         <div id="seccionh3-index4" class="text-h3 text-bold text-center">{{introduccion4}}</div>
@@ -204,12 +157,12 @@ export default {
         {
           icono: 'event',
           titulo: 'NO MAS EVENTOS OLVIDADOS',
-          descripcion: 'Muchas veces debido a que el evento se hace de forma local o en otra isla, se desconoce de la existencia del mismo (por muy bueno que sea). Ahora olvídate de ese momento con CanaryGo.'
+          descripcion: 'Muchas veces debido a que el evento se hace de forma local o en otra isla, se desconoce de la existencia del mismo (por muy bueno que sea). Olvídate de ese momento con CanaryGo.'
         },
         {
           icono: 'people',
           titulo: 'OPINIONES DE GENTE COMO TÚ',
-          descripcion: 'Gracias a las aportaciones de la gran comunidad podrás saber si el evento se adecua a lo que se está buscando, lo bueno y lo malo. Todo esto gracias al sistema de consejos, opiniones o experiencias de la comunidad.'
+          descripcion: 'Gracias a las aportaciones de la gran comunidad podrás saber si el evento se adecua a lo que se está buscando, lo bueno y lo malo.'
         }
 
       ],
@@ -304,12 +257,12 @@ export default {
       var edit = document.getElementById(id2)
       if (status) {
         setTimeout(function () {
-          // elem.style.height = '1200px'
+          // elem.style.height = '1000px'
           edit.style.filter = 'blur(2px)'
         }, 500)
       } else {
         setTimeout(function () {
-          // elem.style.height = '600px'
+          // elem.style.height = '1000px'
           edit.style.filter = 'none'
         }, 1800)
       }
