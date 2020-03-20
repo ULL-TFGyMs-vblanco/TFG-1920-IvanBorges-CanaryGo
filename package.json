@@ -1,7 +1,7 @@
 {
   "name": "canarygo",
   "version": "0.0.1",
-  "description": "A Quasar Framework app",
+  "description": "Todo el ocio al alcance de tu mano",
   "productName": "CanaryGo",
   "cordovaId": "org.ull.canarygo.app",
   "capacitorId": "",
