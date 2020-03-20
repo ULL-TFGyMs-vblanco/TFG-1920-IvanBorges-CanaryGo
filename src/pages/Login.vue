@@ -82,14 +82,18 @@ export default {
         this.$q.notify({
           color: 'negative',
           message: 'La contraseña introducida no es correcta',
-          position: 'bottom'
+          position: 'bottom',
+          timeout: 2000,
+          progress: true
         })
       } else {
         this.$q.notify({
           icon: 'done',
           color: 'positive',
           message: 'Inicio de sesión correcto',
-          position: 'bottom'
+          position: 'bottom',
+          timeout: 1000,
+          progress: true
         })
       }
     },
