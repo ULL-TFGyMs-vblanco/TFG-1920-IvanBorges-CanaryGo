@@ -39,11 +39,18 @@
             />
           </template>
         </q-input>
+        <div class="text-center">
+          <q-checkbox name="sesion" v-model="sesion" label="Mantener la sesión abierta" />
+          <br />
 
-        <q-toggle v-model="accept" label="Mantener la sesión abierta" />
-
+          <q-item clickable v-ripple to="/restore">
+            <q-item-section>
+              <q-item-label style="color: #ec9718">He olvidado mi contraseña</q-item-label>
+            </q-item-section>
+          </q-item>
+        </div>
         <div>
-          <q-btn label="Enviar" type="submit" color="primary" />
+          <q-btn label="Iniciar sesión" type="submit" color="primary" />
           <q-btn label="Limpiar" type="reset" color="primary" flat class="q-ml-sm" />
         </div>
       </form>
@@ -60,7 +67,7 @@ export default {
       contrasena: null,
       isPwd: true,
 
-      accept: false
+      sesion: false
     }
   },
 
@@ -71,7 +78,7 @@ export default {
 
       if (this.$refs.email.hasError || this.$refs.contrasena.hasError) {
         this.formHasError = true
-      } else if (this.accept !== true) {
+      } else if (this.sesion !== true) {
         this.$q.notify({
           color: 'negative',
           message: 'La contraseña introducida no es correcta',
