@@ -40,8 +40,16 @@ export default {
 
 <style>
 .seccion-info1 {
-  padding-left: 5%;
-  padding-right: 5%;
+  /* padding-left: 5%;
+  padding-right: 5%; */
+  background-color: rgb(255, 255, 255); /* Fallback color */
+  background-color: rgba(255, 255, 255, 0.6); /* Black w/opacity/see-through */
+  color: black;
+  font-weight: bold;
+  border: 2px solid black;
+
+  padding: 20px;
+  text-align: center;
 }
 
 #seccionh3 {

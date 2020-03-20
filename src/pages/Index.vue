@@ -21,7 +21,7 @@
           >-->
           <img
             src="../assets/images/CanaryGo/Canary_Go_Icon.png"
-            style="width: 150px; height: 150px; border-radius: 20%"
+            style="width: 150px; height: 150px; border-radius: 20%;"
           />
           <br />
           <br />
