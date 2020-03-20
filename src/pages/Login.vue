@@ -66,7 +66,6 @@ export default {
       email: null,
       contrasena: null,
       isPwd: true,
-
       sesion: false
     }
   },

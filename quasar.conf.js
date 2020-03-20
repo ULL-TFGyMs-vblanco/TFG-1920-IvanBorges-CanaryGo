@@ -42,6 +42,10 @@ module.exports = function (ctx) {
       //            (not treeshaking Quasar; biggest bundle size; convenient)
       all: 'auto',
 
+      config: {
+        dark: 'auto' // or Boolean true/false
+      },
+
       components: [
         'QParallax', 'QSkeleton', 'QFab', 'QFabAction', 'QBtn', 'QExpansionItem', 'QAvatar', 'QTabPanels', 'QTabPanel', 'QList', 'QItem', 'QItemSection', 'QItemLabel'
       ],
