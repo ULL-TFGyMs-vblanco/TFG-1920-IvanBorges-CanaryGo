@@ -90,9 +90,9 @@ export default {
     },
     botonoscuro () {
       if (this.$q.dark.isActive) {
-        this.dark = 'true'
+        this.dark = true
       } else {
-        this.dark = 'false'
+        this.dark = false
       }
     }
 
