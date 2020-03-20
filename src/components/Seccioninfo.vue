@@ -42,9 +42,14 @@ export default {
 .seccion-info1 {
   /* padding-left: 5%;
   padding-right: 5%; */
-  background-color: rgb(255, 255, 255); /* Fallback color */
-  background-color: rgba(255, 255, 255, 0.6); /* Black w/opacity/see-through */
+  background-color: rgb(255, 255, 255);
+  background-color: rgba(255, 255, 255, 0.6);
   color: black;
+
+  /* background-color: rgb(0, 0, 0);
+  background-color: rgba(0, 0, 0, 0.6);
+  color: white; */
+
   font-weight: bold;
   border: 2px solid black;
 
@@ -60,5 +65,4 @@ export default {
   font-size: calc(10px + 6 * ((100vw - 20px) / 680));
   /* font-size: 22px; */
 }
-
 </style>
