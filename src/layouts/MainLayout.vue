@@ -86,7 +86,7 @@ export default {
   methods: {
     modooscuro () {
       this.$q.dark.toggle()
-      console.log('OSCURO')
+      // console.log('OSCURO')
       this.botonoscuro()
     },
     botonoscuro () {
