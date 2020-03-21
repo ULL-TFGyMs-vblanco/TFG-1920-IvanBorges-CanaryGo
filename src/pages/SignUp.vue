@@ -128,6 +128,7 @@ export default {
       email: null,
       fecha: null,
       contrasena: null,
+      contrasena2: null,
       isPwd: true,
       sesion: false
     }
