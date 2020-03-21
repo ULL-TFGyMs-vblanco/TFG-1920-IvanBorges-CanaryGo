@@ -278,4 +278,19 @@ export default {
   font-size: calc(38px + 6 * ((100vw - 20px) / 680));
   color: black;
 }
+
+#seccionh3-index2 {
+  font-size: calc(38px + 6 * ((100vw - 20px) / 680));
+  color: black;
+}
+
+#seccionh3-index3 {
+  font-size: calc(38px + 6 * ((100vw - 20px) / 680));
+  color: black;
+}
+
+#seccionh3-index4 {
+  font-size: calc(38px + 6 * ((100vw - 20px) / 680));
+  color: black;
+}
 </style>
