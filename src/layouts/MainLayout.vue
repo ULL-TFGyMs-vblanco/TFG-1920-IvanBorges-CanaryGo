@@ -65,7 +65,7 @@ export default {
           title: 'Inicio',
           caption: '¿Qué ofrecemos?',
           icon: 'apps',
-          link: '/'
+          link: '/home'
         },
         {
           title: 'Iniciar sesión',
