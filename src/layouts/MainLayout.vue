@@ -16,7 +16,7 @@
         </q-toolbar>
       </q-header>
 
-      <q-drawer v-model="leftDrawerOpen" toggle bordered >
+      <q-drawer v-model="leftDrawerOpen" toggle bordered>
         <q-list>
           <q-item-label header class="text-grey-8">Menu</q-item-label>
           <EssentialLink v-for="link in essentialLinks" :key="link.title" v-bind="link" />
@@ -25,11 +25,11 @@
         <!-- /Modo oscuro/ -->
         <q-item clickable tag="a" @click="modooscuro()">
           <q-item-section avatar>
-            <q-toggle color="#ec9718" size="28px" v-model="dark" @click="modooscuro()" />
+            <q-toggle color="#ec9718" size="28px" v-model="dark" @input="modooscuro()" />
           </q-item-section>
 
           <q-item-section>
-            <q-item-label>Oscuro</q-item-label>
+            <q-item-label>Modo oscuro</q-item-label>
             <q-item-label caption>Activa o desactiva el modo oscuro</q-item-label>
           </q-item-section>
         </q-item>
@@ -86,6 +86,7 @@ export default {
   methods: {
     modooscuro () {
       this.$q.dark.toggle()
+      console.log('OSCURO')
       this.botonoscuro()
     },
     botonoscuro () {
