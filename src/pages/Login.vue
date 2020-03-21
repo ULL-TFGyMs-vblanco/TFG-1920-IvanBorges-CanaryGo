@@ -15,7 +15,7 @@
           v-model="email"
           label="Email *"
           hint="Escribe tu email"
-          type= "email"
+          type="email"
           lazy-rules
           :rules="[ val => val && val.length > 0 || 'Debes introducir un email']"
         />
@@ -44,7 +44,8 @@
           <q-checkbox name="sesion" v-model="sesion" label="Mantener la sesión abierta" />
           <br />
 
-          <q-item clickable v-ripple to="/restore">
+          <!-- to="/restore" -->
+          <q-item clickable v-ripple>
             <q-item-section>
               <q-item-label style="color: #ec9718">He olvidado mi contraseña</q-item-label>
             </q-item-section>
