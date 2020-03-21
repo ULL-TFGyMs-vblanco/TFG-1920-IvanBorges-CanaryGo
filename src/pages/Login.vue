@@ -15,6 +15,7 @@
           v-model="email"
           label="Email *"
           hint="Escribe tu email"
+          type= "email"
           lazy-rules
           :rules="[ val => val && val.length > 0 || 'Debes introducir un email']"
         />
