@@ -37,10 +37,21 @@
           v-model="fecha"
           label="Fecha de nacimiento *"
           hint="Indica tu fecha de nacimiento"
-          type="date"
           lazy-rules
-          :rules="[ val => val && val.length > 0 || 'Debes introducir una fecha']"
-        />
+          :rules="[
+          val => val && val.length > 0 || 'Debes introducir una fecha',
+          val => val.length === 10 || 'Introduce un formato correcto de fecha',
+          'date',
+          ]"
+        >
+          <template v-slot:append>
+            <q-icon name="event" class="cursor-pointer">
+              <q-popup-proxy ref="qDateProxy" transition-show="scale" transition-hide="scale">
+                <q-date v-model="fecha" @input="() => $refs.qDateProxy.hide()" />
+              </q-popup-proxy>
+            </q-icon>
+          </template>
+        </q-input>
 
         <q-input
           ref="email"
@@ -83,7 +94,8 @@
           hint="Repite la contraseña"
           lazy-rules
           :rules="[
-          val => val !== null && val !== '' || 'Repite la contraseña',
+          val => val !== null && val !== '' || 'Debes repetir la contraseña',
+          val => val === contrasena || 'Las contraseña no coincide'
         ]"
         >
           <template v-slot:append>
@@ -102,10 +114,10 @@
             label="Acepto los términos y condiciones de privacidad"
           />
           <br />
-
-          <q-item clickable v-ripple to="/restore">
+          <!-- to="/terms" -->
+          <q-item clickable v-ripple>
             <q-item-section>
-              <q-item-label style="color: #ec9718">He olvidado mi contraseña</q-item-label>
+              <q-item-label style="color: #ec9718">Términos y condiciones</q-item-label>
             </q-item-section>
           </q-item>
         </div>
@@ -138,8 +150,14 @@ export default {
     onSubmit () {
       this.$refs.email.validate()
       this.$refs.contrasena.validate()
+      this.$refs.nombre.validate()
+      this.$refs.usuario.validate()
+      this.$refs.email.validate()
+      this.$refs.fecha.validate()
+      this.$refs.contrasena.validate()
+      this.$refs.contrasena2.validate()
 
-      if (this.$refs.email.hasError || this.$refs.contrasena.hasError) {
+      if (this.$refs.nombre.hasError || this.$refs.usuario.hasError || this.$refs.email.hasError || this.$refs.fecha.hasError || this.$refs.contrasena.hasError || this.$refs.contrasena2.hasError) {
         this.formHasError = true
       } else if (this.sesion !== true) {
         this.$q.notify({
