@@ -131,6 +131,9 @@
 </template>
 
 <script>
+
+import { firebaseAuth } from 'boot/firebase'
+
 export default {
   email: 'Signup',
   data () {
@@ -176,6 +179,7 @@ export default {
           timeout: 1000,
           progress: true
         })
+        this.Registrar()
       }
     },
 
@@ -193,6 +197,20 @@ export default {
       this.$refs.email.resetValidation()
       this.$refs.contrasena.resetValidation()
       this.$refs.contrasena2.resetValidation()
+    },
+    Registrar () {
+      const correo = this.email
+      const password2 = this.contrasena
+
+      console.log(this.email)
+      console.log(this.contrasena)
+      firebaseAuth.createUserWithEmailAndPassword(correo, password2).catch(function (error) {
+        // Handle Errors here.
+        var errorCode = error.code
+        var errorMessage = error.message
+        console.log(errorCode)
+        console.log(errorMessage)
+      })
     }
   }
 }
