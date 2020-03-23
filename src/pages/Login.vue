@@ -61,6 +61,9 @@
 </template>
 
 <script>
+
+import { firebaseAuth } from 'boot/firebase'
+
 export default {
   email: 'Index',
   data () {
@@ -71,8 +74,12 @@ export default {
       sesion: false
     }
   },
+  mounted () {
+    this.Observador()
+  },
 
   methods: {
+
     onSubmit () {
       this.$refs.email.validate()
       this.$refs.contrasena.validate()
@@ -96,6 +103,7 @@ export default {
           timeout: 1000,
           progress: true
         })
+        this.IniciarSesion()
       }
     },
 
@@ -105,6 +113,37 @@ export default {
 
       this.$refs.email.resetValidation()
       this.$refs.contrasena.resetValidation()
+    },
+    IniciarSesion () {
+      firebaseAuth.signInWithEmailAndPassword(this.email, this.contrasena).catch(function (error) {
+        // Errores
+        var errorCode = error.code
+        var errorMessage = error.message
+        console.log(errorCode)
+        console.log(errorMessage)
+      })
+    },
+    Observador () {
+      console.log('Dentro')
+      firebaseAuth.onAuthStateChanged(function (user) {
+        if (user) {
+          // User is signed in.
+          /* eslint-disable no-unused-vars */
+          var displayName = user.displayName
+          var email = user.email
+          var emailVerified = user.emailVerified
+          var photoURL = user.photoURL
+          var isAnonymous = user.isAnonymous
+          var uid = user.uid
+          var providerData = user.providerData
+
+          // Verificar
+          console.log('Usuario logueado')
+        } else {
+          // User is signed out.
+          console.log('Ningun usuario logueado')
+        }
+      })
     }
   }
 }
