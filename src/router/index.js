@@ -28,23 +28,3 @@ export default function (/* { store, ssrContext } */) {
 
   return Router
 }
-
-// Configurar Firebase
-
-import firebase from 'firebase'
-
-// Firebase configuration
-var firebaseConfig = {
-  apiKey: 'AIzaSyCciIEIxvTIkLFdP0cutu6WD3La0kZGBgY',
-  authDomain: 'canarygo-f725d.firebaseapp.com',
-  databaseURL: 'https://canarygo-f725d.firebaseio.com',
-  projectId: 'canarygo-f725d',
-  storageBucket: 'canarygo-f725d.appspot.com',
-  messagingSenderId: '622261513235',
-  appId: '1:622261513235:web:9a4d69491a04572dfb63e6',
-  measurementId: 'G-GKNFVEPYQZ'
-}
-
-// Inicio de Firebase
-firebase.initializeApp(firebaseConfig)
-firebase.analytics()
