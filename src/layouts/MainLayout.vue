@@ -13,6 +13,7 @@
           />
 
           <q-toolbar-title class="header-text" style="color: white">Canary Go</q-toolbar-title>
+          <LanguageSelector />
         </q-toolbar>
       </q-header>
 
@@ -47,13 +48,15 @@
 
 <script>
 import EssentialLink from 'components/EssentialLink'
+import LanguageSelector from '../components/LanguageSelector.vue'
 
 export default {
   name: 'MainLayout',
   dark: 'false',
 
   components: {
-    EssentialLink
+    EssentialLink,
+    LanguageSelector
   },
 
   data () {

@@ -21,7 +21,7 @@
           <q-card-actions>
             <q-btn
               color="black"
-              label="Mas info"
+              :label="$t('more_info')"
               round
               flat
               dense
@@ -54,7 +54,7 @@
         <q-card-actions>
           <q-btn
             color="black"
-            label="Mas info"
+            :label="$t(more_info)"
             round
             flat
             dense
@@ -85,7 +85,7 @@
         <q-card-actions>
           <q-btn
             color="black"
-            label="Mas info"
+            :label="$t(more_info)"
             round
             flat
             dense
@@ -118,7 +118,7 @@
         <q-card-actions>
           <q-btn
             color="black"
-            label="Mas info"
+            :label="$t(more_info)"
             round
             flat
             dense
