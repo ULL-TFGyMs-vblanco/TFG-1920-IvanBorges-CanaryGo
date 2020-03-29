@@ -15,7 +15,7 @@
           />
           <br />
 
-          <div id="seccionh3-index" class="text-bold text-center">{{introduccion1}}</div>
+          <div id="seccionh3-index" class="text-bold text-center">{{ introduccion1 }}</div>
           <br />
           <!-- ACCIONES -->
           <q-card-actions>
@@ -48,13 +48,13 @@
       >
         <br />
         <br />
-        <div id="seccionh3-index2" class="text-h3 text-bold text-center">{{introduccion2}}</div>
+        <div id="seccionh3-index2" class="text-h3 text-bold text-center">{{$t('introduction2')}}</div>
         <br />
         <!-- ACCIONES -->
         <q-card-actions>
           <q-btn
             color="black"
-            :label="$t(more_info)"
+            :label="$t('more_info')"
             round
             flat
             dense
@@ -79,13 +79,13 @@
       >
         <br />
         <br />
-        <div id="seccionh3-index3" class="text-h3 text-bold text-center">{{introduccion3}}</div>
+        <div id="seccionh3-index3" class="text-h3 text-bold text-center">{{$t('introduction3')}}</div>
         <br />
         <!-- ACCIONES -->
         <q-card-actions>
           <q-btn
             color="black"
-            :label="$t(more_info)"
+            :label="$t('more_info')"
             round
             flat
             dense
@@ -112,13 +112,13 @@
       >
         <br />
         <br />
-        <div id="seccionh3-index4" class="text-h3 text-bold text-center">{{introduccion4}}</div>
+        <div id="seccionh3-index4" class="text-h3 text-bold text-center">{{$t('introduction4')}}</div>
         <br />
         <!-- ACCIONES -->
         <q-card-actions>
           <q-btn
             color="black"
-            :label="$t(more_info)"
+            :label="$t('more_info')"
             round
             flat
             dense
@@ -129,7 +129,9 @@
         <!-- /ACCIONES -->
         <q-slide-transition :duration="2000">
           <div v-show="expanded4">
-            <Seccioninfo v-for="seccion in seccion4" :key="seccion.icono" v-bind="seccion" />
+            <!-- <keep-alive> -->
+            <Seccioninfo v-for="seccion in seccion4" v-bind:key="seccion.icono" v-bind="seccion" />
+            <!-- </keep-alive> -->
           </div>
         </q-slide-transition>
         <!-- </div>
@@ -152,54 +154,54 @@ export default {
   },
   data () {
     return {
-      introduccion1: 'Encuentra los eventos que tanto buscas',
+      introduccion1: this.$t('introduction1'),
       seccion1: [
         {
           icono: 'event',
-          titulo: 'NO MAS EVENTOS OLVIDADOS',
-          descripcion: 'Muchas veces debido a que el evento se hace de forma local o en otra isla, se desconoce de la existencia del mismo (por muy bueno que sea). Olvídate de ese momento con CanaryGo.'
+          titulo: this.$t('title1'),
+          descripcion: this.$t('description1')
         },
         {
           icono: 'people',
-          titulo: 'OPINIONES DE GENTE COMO TÚ',
-          descripcion: 'Gracias a las aportaciones de la gran comunidad podrás saber si el evento se adecua a lo que se está buscando, lo bueno y lo malo.'
+          titulo: this.$t('title1_1'),
+          descripcion: this.$t('description1_1')
         }
 
       ],
-      introduccion2: 'Organiza el calendario a tu manera',
+      introduccion2: this.$t('introduction2'),
       seccion2: [
         {
           icono: 'calendar_today',
-          titulo: 'ORGANIZA TUS PRIORIDADES',
-          descripcion: 'Puedes ordenar tus eventos según tus prioridades y preferencias: (Isla, Fecha, Novedades). De esta forma podrás encontrar siempre lo que buscas.'
+          titulo: this.$t('title2'),
+          descripcion: this.$t('description2')
         }
 
       ],
-      introduccion3: 'Conoce gente nueva dentro de la comunidad',
+      introduccion3: this.$t('introduction3'),
       seccion3: [
         {
           icono: 'people_outline',
-          titulo: 'CONTACTA CON GENTE NUEVA',
-          descripcion: 'Conoce gente nueva dentro de la comunidad, mantén el contacto, mira recomendaciones basadas en tu perfil. Tú eliges.'
+          titulo: this.$t('title3'),
+          descripcion: this.$t('description3')
         },
         {
           icono: 'group',
-          titulo: 'CREA TUS GRUPOS FAVORITOS',
-          descripcion: 'Crea tus quedadas favoritas. Juntarse es un comienzo. Seguir juntos es un progreso. Trabajar juntos es un éxito.'
+          titulo: this.$t('title3_1'),
+          descripcion: this.$t('description3_1')
         }
 
       ],
-      introduccion4: 'Mejora en la gestión de viajes',
+      introduccion4: this.$t('introduction4'),
       seccion4: [
         {
           icono: 'calendar_today',
-          titulo: 'PLANIFICA MEJOR TU SEMANA',
-          descripcion: 'Muchas veces debido al desconocimiento de los eventos o actividades que existen e incluso la poca información que existe, es difícil planificar. Ahora eso ha quedado en el olvido.'
+          titulo: this.$t('title4'),
+          descripcion: this.$t('description4')
         },
         {
           icono: 'alarm_on',
-          titulo: 'AÑADE RECORDATORIOS',
-          descripcion: 'Mantente al tanto de todos los eventos próximos a los que te has suscrito.'
+          titulo: this.$t('title4_1'),
+          descripcion: this.$t('description4_1')
         }
       ],
       open: false,

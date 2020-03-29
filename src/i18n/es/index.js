@@ -1,8 +1,22 @@
 export default {
   more_info: 'Más información',
   language: 'Idioma',
-  currency: {
-    style: 'currency',
-    currency: 'EUR'
-  }
+  introduction1: 'Encuentra los eventos que tanto buscas',
+  title1: 'NO MAS EVENTOS OLVIDADOS',
+  description1: 'Muchas veces debido a que el evento se hace de forma local o en otra isla, se desconoce de la existencia del mismo (por muy bueno que sea). Olvídate de ese momento con CanaryGo.',
+  title1_1: 'OPINIONES DE GENTE COMO TÚ',
+  description1_1: 'Gracias a las aportaciones de la gran comunidad podrás saber si el evento se adecua a lo que se está buscando, lo bueno y lo malo.',
+  introduction2: 'Organiza el calendario a tu manera',
+  title2: 'ORGANIZA TUS PRIORIDADES',
+  description2: 'Puedes ordenar tus eventos según tus prioridades y preferencias: (Isla, Fecha, Novedades). De esta forma podrás encontrar siempre lo que buscas.',
+  introduction3: 'Conoce gente nueva dentro de la comunidad',
+  title3: 'CONTACTA CON GENTE NUEVA',
+  description3: 'Conoce gente nueva dentro de la comunidad, mantén el contacto, mira recomendaciones basadas en tu perfil. Tú eliges.',
+  title3_1: 'CREA TUS GRUPOS FAVORITOS',
+  description3_1: 'Crea tus quedadas favoritas. Juntarse es un comienzo. Seguir juntos es un progreso. Trabajar juntos es un éxito.',
+  introduction4: 'Mejora en la gestión de viajes',
+  title4: 'PLANIFICA MEJOR TU SEMANA',
+  description4: 'Muchas veces debido al desconocimiento de los eventos o actividades que existen e incluso la poca información que existe, es difícil planificar. Ahora eso ha quedado en el olvido.',
+  title4_1: 'AÑADE RECORDATORIOS',
+  description4_1: 'Mantente al tanto de todos los eventos próximos a los que te has suscrito.'
 }
