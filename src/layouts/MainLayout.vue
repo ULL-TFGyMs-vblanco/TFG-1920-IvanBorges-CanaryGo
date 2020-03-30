@@ -11,11 +11,7 @@
             aria-label="Menu"
             @click="leftDrawerOpen = !leftDrawerOpen"
           />
-            <q-toolbar-title class="header-text" style="color: white; font-size: 18px">Canary Go</q-toolbar-title>
-
-<q-space />
-<q-space />
-<q-space />
+          <q-toolbar-title class="header-text" style="color: white; font-size: 17px">Canary Go</q-toolbar-title>
           <LanguageSelector />
         </q-toolbar>
       </q-header>
