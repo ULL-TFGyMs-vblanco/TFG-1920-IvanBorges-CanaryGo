@@ -30,8 +30,8 @@
           </q-item-section>
 
           <q-item-section>
-            <q-item-label>Modo oscuro</q-item-label>
-            <q-item-label caption>Activa o desactiva el modo oscuro</q-item-label>
+            <q-item-label>{{$t('dark_mode')}}</q-item-label>
+            <q-item-label caption>{{$t('dark')}}</q-item-label>
           </q-item-section>
         </q-item>
       </q-drawer>
@@ -65,20 +65,20 @@ export default {
       leftDrawerOpen: false,
       essentialLinks: [
         {
-          title: 'Inicio',
-          caption: '¿Qué ofrecemos?',
+          title: 'introduction',
+          caption: 'offer',
           icon: 'apps',
           link: '/home'
         },
         {
-          title: 'Iniciar sesión',
-          caption: 'Encuentra lo que buscas',
+          title: 'login',
+          caption: 'find',
           icon: 'person',
           link: './login'
         },
         {
-          title: 'Registro',
-          caption: 'Comienza tu aventura',
+          title: 'register',
+          caption: 'adventure',
           icon: 'person_add_disabled',
           link: './signup'
         }

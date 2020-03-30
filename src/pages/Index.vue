@@ -15,7 +15,7 @@
           />
           <br />
 
-          <div id="seccionh3-index" class="text-bold text-center">{{ introduccion1 }}</div>
+          <div id="seccionh3-index" class="text-bold text-center" >{{$t(introduccion1)}}</div>
           <br />
           <!-- ACCIONES -->
           <q-card-actions>
@@ -33,7 +33,12 @@
           <!-- /ACCIONES -->
           <q-slide-transition :duration="2000">
             <div v-show="expanded">
-              <Seccioninfo v-for="seccion in seccion1" :key="seccion.icono" v-bind="seccion" />
+              <Seccioninfo
+                v-for="seccion in seccion1"
+                :key="seccion.titulo"
+                v-bind="seccion"
+                v-model="$i18n.locale"
+              />
             </div>
           </q-slide-transition>
         </q-parallax>
@@ -152,56 +157,56 @@ export default {
   components: {
     Seccioninfo
   },
-  data () {
+  data: function () {
     return {
-      introduccion1: this.$t('introduction1'),
+      introduccion1: 'introduction1',
       seccion1: [
         {
           icono: 'event',
-          titulo: this.$t('title1'),
-          descripcion: this.$t('description1')
+          titulo: 'title1',
+          descripcion: 'description1'
         },
         {
           icono: 'people',
-          titulo: this.$t('title1_1'),
-          descripcion: this.$t('description1_1')
+          titulo: 'title1_1',
+          descripcion: 'description1_1'
         }
 
       ],
-      introduccion2: this.$t('introduction2'),
+      introduccion2: 'introduction2',
       seccion2: [
         {
           icono: 'calendar_today',
-          titulo: this.$t('title2'),
-          descripcion: this.$t('description2')
+          titulo: 'title2',
+          descripcion: 'description2'
         }
 
       ],
-      introduccion3: this.$t('introduction3'),
+      introduccion3: 'introduction3',
       seccion3: [
         {
           icono: 'people_outline',
-          titulo: this.$t('title3'),
-          descripcion: this.$t('description3')
+          titulo: 'title3',
+          descripcion: 'description3'
         },
         {
           icono: 'group',
-          titulo: this.$t('title3_1'),
-          descripcion: this.$t('description3_1')
+          titulo: 'title3_1',
+          descripcion: 'description3_1'
         }
 
       ],
-      introduccion4: this.$t('introduction4'),
+      introduccion4: 'introduction4',
       seccion4: [
         {
           icono: 'calendar_today',
-          titulo: this.$t('title4'),
-          descripcion: this.$t('description4')
+          titulo: 'title4',
+          descripcion: 'description4'
         },
         {
           icono: 'alarm_on',
-          titulo: this.$t('title4_1'),
-          descripcion: this.$t('description4_1')
+          titulo: 'title4_1',
+          descripcion: 'description4_1'
         }
       ],
       open: false,

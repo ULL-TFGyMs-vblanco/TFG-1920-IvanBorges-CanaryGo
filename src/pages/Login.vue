@@ -13,11 +13,11 @@
           ref="email"
           filled
           v-model="email"
-          label="Email *"
-          hint="Escribe tu email"
+          :label="$t('email') "
+          :hint="$t('email_hint')"
           type="email"
           lazy-rules
-          :rules="[ val => val && val.length > 0 || 'Debes introducir un email']"
+          :rules="[ val => val && val.length > 0 || $t('email_fail')]"
         />
 
         <q-input
@@ -25,11 +25,11 @@
           filled
           v-model="contrasena"
           :type="isPwd ? 'password' : 'text'"
-          label="Contraseña *"
-          hint="Escribe tu contraseña"
+          :label="$t('password')"
+          :hint="$t('password_hint')"
           lazy-rules
           :rules="[
-          val => val !== null && val !== '' || 'Debes introducir la contraseña',
+          val => val !== null && val !== '' || $t('password_fail'),
         ]"
         >
           <template v-slot:append>
@@ -41,19 +41,19 @@
           </template>
         </q-input>
         <div class="text-center">
-          <q-checkbox name="sesion" v-model="sesion" label="Mantener la sesión abierta" />
+          <q-checkbox name="sesion" v-model="sesion" :label="$t('remember')" />
           <br />
 
           <!-- to="/restore" -->
           <q-item clickable v-ripple>
             <q-item-section>
-              <q-item-label style="color: #ec9718">He olvidado mi contraseña</q-item-label>
+              <q-item-label style="color: #ec9718">{{$t('password_reset')}}</q-item-label>
             </q-item-section>
           </q-item>
         </div>
         <div>
-          <q-btn label="Iniciar sesión" type="submit" color="primary" />
-          <q-btn label="Limpiar" type="reset" color="primary" flat class="q-ml-sm" />
+          <q-btn :label="$t('login')" type="submit" color="primary" />
+          <q-btn :label="$t('clear')" type="reset" color="primary" flat class="q-ml-sm" />
         </div>
       </form>
     </div>
@@ -82,7 +82,7 @@ export default {
       } else if (this.sesion !== true) {
         this.$q.notify({
           color: 'negative',
-          message: 'La contraseña introducida no es correcta',
+          message: this.$t('login_fail'),
           position: 'bottom',
           timeout: 2000,
           progress: true
@@ -91,7 +91,7 @@ export default {
         this.$q.notify({
           icon: 'done',
           color: 'positive',
-          message: 'Inicio de sesión correcto',
+          message: this.$t('login_sucess'),
           position: 'bottom',
           timeout: 1000,
           progress: true

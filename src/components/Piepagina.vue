@@ -8,19 +8,19 @@
           <div class="q-pa-md" align="center">
             <q-list class="compania">
               <q-item>
-                <q-item-section class="negrita">Compañía</q-item-section>
+                <q-item-section class="negrita">{{$t('company')}}</q-item-section>
               </q-item>
               <q-separator inset style="max-width: 200px " />
 
               <q-item clickable v-ripple>
                 <q-item-section>
-                  <q-item-label>Sobre nosotros</q-item-label>
+                  <q-item-label>{{$t('us')}}</q-item-label>
                 </q-item-section>
               </q-item>
 
               <q-item clickable v-ripple>
                 <q-item-section>
-                  <q-item-label>Contacto</q-item-label>
+                  <q-item-label>{{$t('contact')}}</q-item-label>
                 </q-item-section>
               </q-item>
             </q-list>
@@ -31,13 +31,13 @@
           <div class="q-pa-md" align="center">
             <q-list class="comunidad">
               <q-item>
-                <q-item-section class="negrita">Comunidad</q-item-section>
+                <q-item-section class="negrita">{{$t('community')}}</q-item-section>
               </q-item>
               <q-separator inset style="max-width: 200px " />
 
               <q-item clickable v-ripple>
                 <q-item-section>
-                  <q-item-label>Cómo funciona CanaryGo</q-item-label>
+                  <q-item-label>{{$t('works')}}</q-item-label>
                 </q-item-section>
               </q-item>
             </q-list>
@@ -48,19 +48,19 @@
           <div class="q-pa-md" align="center">
             <q-list class="asistencia">
               <q-item>
-                <q-item-section class="negrita">Asistencia</q-item-section>
+                <q-item-section class="negrita">{{$t('assistance')}}</q-item-section>
               </q-item>
               <q-separator inset style="max-width: 200px " />
 
               <q-item clickable v-ripple>
                 <q-item-section>
-                  <q-item-label>Ayuda</q-item-label>
+                  <q-item-label>{{$t('help')}}</q-item-label>
                 </q-item-section>
               </q-item>
 
               <q-item clickable v-ripple>
                 <q-item-section>
-                  <q-item-label>Chat</q-item-label>
+                  <q-item-label>{{$t('chat')}}</q-item-label>
                 </q-item-section>
               </q-item>
             </q-list>
@@ -71,7 +71,7 @@
           <div class="q-pa-md" align="center">
             <q-list class="asistencia">
               <q-item>
-                <q-item-section class="negrita">Descarga nuestra APP</q-item-section>
+                <q-item-section class="negrita">{{$t('app')}}</q-item-section>
               </q-item>
               <q-separator inset style="max-width: 200px " />
 

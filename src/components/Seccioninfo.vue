@@ -5,8 +5,8 @@
         <q-icon :name="icono" size="50px" />
         <br />
         <br />
-        <p class="text-bold text-black-2 text-center" id="seccionh3">{{titulo}}</p>
-        <p class="text-bold text-black-2 text-center" id="seccionh4">{{descripcion}}</p>
+        <p class="text-bold text-black-2 text-center" id="seccionh3">{{$t(titulo)}}</p>
+        <p class="text-bold text-black-2 text-center" id="seccionh4">{{$t(descripcion)}}</p>
       </div>
 
       <!-- <br /> -->
