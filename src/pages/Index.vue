@@ -10,7 +10,7 @@
           src="../assets/images/index/beach1853939.jpg"
         >
           <img
-            src="../assets/images/CanaryGo/Canary_Go_Icon.png"
+            src="../assets/images/CanaryGo/Canary_Go_Icon.png" id = "canarygo"
             style="width: 100px; height: 100px; border-radius: 20%;"
           />
           <br />

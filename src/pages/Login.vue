@@ -8,9 +8,15 @@
       <br />
       <br />
       <br />
-      <form @submit.prevent.stop="onSubmit" @reset.prevent.stop="onReset" class="q-gutter-md">
+      <form
+        id="Form"
+        @submit.prevent.stop="onSubmit"
+        @reset.prevent.stop="onReset"
+        class="q-gutter-md"
+      >
         <q-input
           ref="email"
+          class="Email"
           filled
           v-model="email"
           :label="$t('email') "
@@ -19,9 +25,9 @@
           lazy-rules
           :rules="[ val => val && val.length > 0 || $t('email_fail')]"
         />
-
         <q-input
           ref="contrasena"
+          class="Contrasena"
           filled
           v-model="contrasena"
           :type="isPwd ? 'password' : 'text'"
@@ -52,8 +58,8 @@
           </q-item>
         </div>
         <div>
-          <q-btn :label="$t('login')" type="submit" color="primary" />
-          <q-btn :label="$t('clear')" type="reset" color="primary" flat class="q-ml-sm" />
+          <q-btn class="Registro" :label="$t('login')" type="submit" color="primary" />
+          <q-btn class="Reset" :label="$t('clean')" type="reset" color="primary" flat  />
         </div>
       </form>
     </div>
@@ -62,6 +68,7 @@
 
 <script>
 export default {
+  name: 'Login',
   email: 'Index',
   data () {
     return {

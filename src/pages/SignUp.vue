@@ -11,6 +11,7 @@
       <form @submit.prevent.stop="onSubmit" @reset.prevent.stop="onReset" class="q-gutter-md">
         <q-input
           ref="nombre"
+          class="Nombre"
           filled
           v-model="nombre"
           :label="$t('name')"
@@ -22,6 +23,7 @@
 
         <q-input
           ref="usuario"
+          class="Usuario"
           filled
           v-model="usuario"
           :label="$t('user')"
@@ -33,6 +35,7 @@
 
         <q-input
           ref="fecha"
+          class="Fecha"
           filled
           v-model="fecha"
           :label="$t('date')"
@@ -55,6 +58,7 @@
 
         <q-input
           ref="email"
+          class="Email"
           filled
           v-model="email"
           :label="$t('email')"
@@ -66,6 +70,7 @@
 
         <q-input
           ref="contrasena"
+          class="Contrasena"
           filled
           v-model="contrasena"
           :type="isPwd ? 'password' : 'text'"
@@ -87,6 +92,7 @@
 
         <q-input
           ref="contrasena2"
+          class="Contrasena2"
           filled
           v-model="contrasena2"
           :type="isPwd ? 'password' : 'text'"
@@ -108,11 +114,7 @@
         </q-input>
 
         <div class="text-center">
-          <q-checkbox
-            name="sesion"
-            v-model="sesion"
-            :label="$t('terms')"
-          />
+          <q-checkbox class="Terms" name="sesion" v-model="sesion" :label="$t('terms')" />
           <br />
           <!-- to="/terms" -->
           <q-item clickable v-ripple>
@@ -122,8 +124,8 @@
           </q-item>
         </div>
         <div>
-          <q-btn :label="$t('register')" type="submit" color="primary" />
-          <q-btn :label="$t('clean')" type="reset" color="primary" flat class="q-ml-sm" />
+          <q-btn class="Registro" :label="$t('register')" type="submit" color="primary" />
+          <q-btn class="Reset" :label="$t('clean')" type="reset" color="primary" flat  />
         </div>
       </form>
     </div>
@@ -164,7 +166,7 @@ export default {
           color: 'negative',
           message: this.$t('register_fail'),
           position: 'bottom',
-          timeout: 2000,
+          timeout: 20000,
           progress: true
         })
       } else {
