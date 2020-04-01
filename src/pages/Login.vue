@@ -23,7 +23,7 @@
           :hint="$t('email_hint')"
           type="email"
           lazy-rules
-          :rules="[ val => val && val.length > 0 || $t('email_fail')]"
+          :rules="[ val => val && val.length > 0 && val.indexOf('@') >= 0 || $t('email_fail')]"
         />
         <q-input
           ref="contrasena"
