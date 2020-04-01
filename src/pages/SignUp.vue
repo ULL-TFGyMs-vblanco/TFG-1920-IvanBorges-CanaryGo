@@ -65,7 +65,7 @@
           :hint="$t('email_hint')"
           type="email"
           lazy-rules
-          :rules="[ val => val && val.length > 0 || $t('email_fail')]"
+          :rules="[ val => val && val.length > 0 && val.indexOf('@') >= 0 || $t('email_fail')]"
         />
 
         <q-input
@@ -125,7 +125,7 @@
         </div>
         <div>
           <q-btn class="Registro" :label="$t('register')" type="submit" color="primary" />
-          <q-btn class="Reset" :label="$t('clean')" type="reset" color="primary" flat  />
+          <q-btn class="Reset" :label="$t('clean')" type="reset" color="primary" flat />
         </div>
       </form>
     </div>
@@ -166,7 +166,7 @@ export default {
           color: 'negative',
           message: this.$t('register_fail'),
           position: 'bottom',
-          timeout: 20000,
+          timeout: 2000,
           progress: true
         })
       } else {
