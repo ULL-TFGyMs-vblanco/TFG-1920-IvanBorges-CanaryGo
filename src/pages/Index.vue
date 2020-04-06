@@ -10,18 +10,18 @@
           src="../assets/images/index/beach1853939.jpg"
         >
           <img
-            src="../assets/images/CanaryGo/Canary_Go_Icon.png"
+            src="../assets/images/CanaryGo/Canary_Go_Icon.png" id = "canarygo"
             style="width: 100px; height: 100px; border-radius: 20%;"
           />
           <br />
 
-          <div id="seccionh3-index" class="text-bold text-center">{{introduccion1}}</div>
+          <div id="seccionh3-index" class="text-bold text-center" >{{$t(introduccion1)}}</div>
           <br />
           <!-- ACCIONES -->
           <q-card-actions>
             <q-btn
               color="black"
-              label="Mas info"
+              :label="$t('more_info')"
               round
               flat
               dense
@@ -33,7 +33,12 @@
           <!-- /ACCIONES -->
           <q-slide-transition :duration="2000">
             <div v-show="expanded">
-              <Seccioninfo v-for="seccion in seccion1" :key="seccion.icono" v-bind="seccion" />
+              <Seccioninfo
+                v-for="seccion in seccion1"
+                :key="seccion.titulo"
+                v-bind="seccion"
+                v-model="$i18n.locale"
+              />
             </div>
           </q-slide-transition>
         </q-parallax>
@@ -48,13 +53,13 @@
       >
         <br />
         <br />
-        <div id="seccionh3-index2" class="text-h3 text-bold text-center">{{introduccion2}}</div>
+        <div id="seccionh3-index2" class="text-h3 text-bold text-center">{{$t('introduction2')}}</div>
         <br />
         <!-- ACCIONES -->
         <q-card-actions>
           <q-btn
             color="black"
-            label="Mas info"
+            :label="$t('more_info')"
             round
             flat
             dense
@@ -79,13 +84,13 @@
       >
         <br />
         <br />
-        <div id="seccionh3-index3" class="text-h3 text-bold text-center">{{introduccion3}}</div>
+        <div id="seccionh3-index3" class="text-h3 text-bold text-center">{{$t('introduction3')}}</div>
         <br />
         <!-- ACCIONES -->
         <q-card-actions>
           <q-btn
             color="black"
-            label="Mas info"
+            :label="$t('more_info')"
             round
             flat
             dense
@@ -112,13 +117,13 @@
       >
         <br />
         <br />
-        <div id="seccionh3-index4" class="text-h3 text-bold text-center">{{introduccion4}}</div>
+        <div id="seccionh3-index4" class="text-h3 text-bold text-center">{{$t('introduction4')}}</div>
         <br />
         <!-- ACCIONES -->
         <q-card-actions>
           <q-btn
             color="black"
-            label="Mas info"
+            :label="$t('more_info')"
             round
             flat
             dense
@@ -129,7 +134,9 @@
         <!-- /ACCIONES -->
         <q-slide-transition :duration="2000">
           <div v-show="expanded4">
-            <Seccioninfo v-for="seccion in seccion4" :key="seccion.icono" v-bind="seccion" />
+            <!-- <keep-alive> -->
+            <Seccioninfo v-for="seccion in seccion4" v-bind:key="seccion.icono" v-bind="seccion" />
+            <!-- </keep-alive> -->
           </div>
         </q-slide-transition>
         <!-- </div>
@@ -150,56 +157,56 @@ export default {
   components: {
     Seccioninfo
   },
-  data () {
+  data: function () {
     return {
-      introduccion1: 'Encuentra los eventos que tanto buscas',
+      introduccion1: 'introduction1',
       seccion1: [
         {
           icono: 'event',
-          titulo: 'NO MAS EVENTOS OLVIDADOS',
-          descripcion: 'Muchas veces debido a que el evento se hace de forma local o en otra isla, se desconoce de la existencia del mismo (por muy bueno que sea). Olvídate de ese momento con CanaryGo.'
+          titulo: 'title1',
+          descripcion: 'description1'
         },
         {
           icono: 'people',
-          titulo: 'OPINIONES DE GENTE COMO TÚ',
-          descripcion: 'Gracias a las aportaciones de la gran comunidad podrás saber si el evento se adecua a lo que se está buscando, lo bueno y lo malo.'
+          titulo: 'title1_1',
+          descripcion: 'description1_1'
         }
 
       ],
-      introduccion2: 'Organiza el calendario a tu manera',
+      introduccion2: 'introduction2',
       seccion2: [
         {
           icono: 'calendar_today',
-          titulo: 'ORGANIZA TUS PRIORIDADES',
-          descripcion: 'Puedes ordenar tus eventos según tus prioridades y preferencias: (Isla, Fecha, Novedades). De esta forma podrás encontrar siempre lo que buscas.'
+          titulo: 'title2',
+          descripcion: 'description2'
         }
 
       ],
-      introduccion3: 'Conoce gente nueva dentro de la comunidad',
+      introduccion3: 'introduction3',
       seccion3: [
         {
           icono: 'people_outline',
-          titulo: 'CONTACTA CON GENTE NUEVA',
-          descripcion: 'Conoce gente nueva dentro de la comunidad, mantén el contacto, mira recomendaciones basadas en tu perfil. Tú eliges.'
+          titulo: 'title3',
+          descripcion: 'description3'
         },
         {
           icono: 'group',
-          titulo: 'CREA TUS GRUPOS FAVORITOS',
-          descripcion: 'Crea tus quedadas favoritas. Juntarse es un comienzo. Seguir juntos es un progreso. Trabajar juntos es un éxito.'
+          titulo: 'title3_1',
+          descripcion: 'description3_1'
         }
 
       ],
-      introduccion4: 'Mejora en la gestión de viajes',
+      introduccion4: 'introduction4',
       seccion4: [
         {
           icono: 'calendar_today',
-          titulo: 'PLANIFICA MEJOR TU SEMANA',
-          descripcion: 'Muchas veces debido al desconocimiento de los eventos o actividades que existen e incluso la poca información que existe, es difícil planificar. Ahora eso ha quedado en el olvido.'
+          titulo: 'title4',
+          descripcion: 'description4'
         },
         {
           icono: 'alarm_on',
-          titulo: 'AÑADE RECORDATORIOS',
-          descripcion: 'Mantente al tanto de todos los eventos próximos a los que te has suscrito.'
+          titulo: 'title4_1',
+          descripcion: 'description4_1'
         }
       ],
       open: false,
@@ -275,6 +282,21 @@ export default {
 
 <style>
 #seccionh3-index {
+  font-size: calc(38px + 6 * ((100vw - 20px) / 680));
+  color: black;
+}
+
+#seccionh3-index2 {
+  font-size: calc(38px + 6 * ((100vw - 20px) / 680));
+  color: black;
+}
+
+#seccionh3-index3 {
+  font-size: calc(38px + 6 * ((100vw - 20px) / 680));
+  color: black;
+}
+
+#seccionh3-index4 {
   font-size: calc(38px + 6 * ((100vw - 20px) / 680));
   color: black;
 }

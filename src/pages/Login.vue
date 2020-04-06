@@ -8,28 +8,34 @@
       <br />
       <br />
       <br />
-      <form @submit.prevent.stop="onSubmit" @reset.prevent.stop="onReset" class="q-gutter-md">
+      <form
+        id="Form"
+        @submit.prevent.stop="onSubmit"
+        @reset.prevent.stop="onReset"
+        class="q-gutter-md"
+      >
         <q-input
           ref="email"
+          class="Email"
           filled
           v-model="email"
-          label="Email *"
-          hint="Escribe tu email"
+          :label="$t('email') "
+          :hint="$t('email_hint')"
           type="email"
           lazy-rules
-          :rules="[ val => val && val.length > 0 || 'Debes introducir un email']"
+          :rules="[ val => val && val.length > 0 && val.indexOf('@') >= 0 || $t('email_fail')]"
         />
-
         <q-input
           ref="contrasena"
+          class="Contrasena"
           filled
           v-model="contrasena"
           :type="isPwd ? 'password' : 'text'"
-          label="Contraseña *"
-          hint="Escribe tu contraseña"
+          :label="$t('password')"
+          :hint="$t('password_hint')"
           lazy-rules
           :rules="[
-          val => val !== null && val !== '' || 'Debes introducir la contraseña',
+          val => val !== null && val !== '' || $t('password_fail'),
         ]"
         >
           <template v-slot:append>
@@ -41,19 +47,19 @@
           </template>
         </q-input>
         <div class="text-center">
-          <q-checkbox name="sesion" v-model="sesion" label="Mantener la sesión abierta" />
+          <q-checkbox name="sesion" v-model="sesion" :label="$t('remember')" />
           <br />
 
           <!-- to="/restore" -->
           <q-item clickable v-ripple>
             <q-item-section>
-              <q-item-label style="color: #ec9718">He olvidado mi contraseña</q-item-label>
+              <q-item-label style="color: #ec9718">{{$t('password_reset')}}</q-item-label>
             </q-item-section>
           </q-item>
         </div>
         <div>
-          <q-btn label="Iniciar sesión" type="submit" color="primary" />
-          <q-btn label="Limpiar" type="reset" color="primary" flat class="q-ml-sm" />
+          <q-btn class="Registro" :label="$t('login')" type="submit" color="primary" />
+          <q-btn class="Reset" :label="$t('clean')" type="reset" color="primary" flat  />
         </div>
       </form>
     </div>
@@ -65,6 +71,7 @@
 import { firebaseAuth } from 'boot/firebase'
 
 export default {
+  name: 'Login',
   email: 'Index',
   data () {
     return {
@@ -89,7 +96,7 @@ export default {
       } else if (this.sesion !== true) {
         this.$q.notify({
           color: 'negative',
-          message: 'La contraseña introducida no es correcta',
+          message: this.$t('login_fail'),
           position: 'bottom',
           timeout: 2000,
           progress: true
@@ -98,7 +105,7 @@ export default {
         this.$q.notify({
           icon: 'done',
           color: 'positive',
-          message: 'Inicio de sesión correcto',
+          message: this.$t('login_sucess'),
           position: 'bottom',
           timeout: 1000,
           progress: true
