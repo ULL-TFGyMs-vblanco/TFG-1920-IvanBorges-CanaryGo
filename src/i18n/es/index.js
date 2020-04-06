@@ -63,5 +63,7 @@ export default {
   terms: 'Acepto los términos y condiciones de privacidad',
   terms2: 'Términos y condiciones',
   register_sucess: 'Registro correcto',
-  register_fail: 'Debes aceptar los términos y condiciones'
+  register_fail: 'Debes aceptar los términos y condiciones',
+  event: 'Ir al evento'
+
 }

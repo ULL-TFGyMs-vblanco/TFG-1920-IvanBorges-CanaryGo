@@ -1,10 +1,10 @@
 <template>
-  <div>Evento</div>
+  <div>My component</div>
 </template>
 
 <script>
 export default {
-  name: 'Evento',
+  name: 'Busqueda',
   data () {
     return {}
   }
