@@ -30,7 +30,7 @@
                   <q-item clickable v-ripple v-close-popup>
                     <q-item-section>
                       <q-item-label>
-                        <q-icon name="person" style="font-size: 2em;" />     Perfil
+                        <q-icon name="person" style="font-size: 2em;" />Perfil
                       </q-item-label>
                     </q-item-section>
                   </q-item>
@@ -38,7 +38,7 @@
                   <q-item clickable v-ripple v-close-popup>
                     <q-item-section>
                       <q-item-label>
-                        <q-icon name="alarm" style="font-size: 2em;" />     Alertas
+                        <q-icon name="alarm" style="font-size: 2em;" />Alertas
                       </q-item-label>
                     </q-item-section>
                   </q-item>

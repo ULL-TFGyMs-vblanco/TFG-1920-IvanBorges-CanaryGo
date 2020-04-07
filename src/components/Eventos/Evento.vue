@@ -1,20 +1,21 @@
 <template>
   <div>
     <q-card class="my-card">
+      <q-card-section class="fecha text-right">{{ fecha }}</q-card-section>
       <q-card-section horizontal>
         <q-img class="col-5" src="https://cdn.quasar.dev/img/parallax1.jpg" />
         <q-card-section vertical>
           <div class="votos_">
             <q-card-section class="votos">
-              <q-btn size="70%" flat round icon="chat" />
-              <q-btn class="votos_evento" size="70%" flat style="pointer-events: none;">7</q-btn>
-              <q-btn size="70%" flat round icon="chat" />
+              <q-btn size="70%" flat round icon="thumb_down_outlined" />
+              <q-btn class="votos_evento" size="100%" flat style="pointer-events: none;">7</q-btn>
+              <q-btn size="70%" flat round icon="thumb_up" />
             </q-card-section>
             <!-- <q-card-section /> -->
           </div>
-          <q-card-section class="titulo">{{ titulo }}</q-card-section>
-          <q-card-section class="ubicacion">{{ ubicacion }}</q-card-section>
-          <q-card-section class="precio">{{ precio }}</q-card-section>
+          <q-card-section class="titulo text-justify">{{ titulo }}</q-card-section>
+          <q-card-section class="ubicacion text-justify">{{ ubicacion }}</q-card-section>
+          <q-card-section class="precio text-justify">{{ precio }}</q-card-section>
         </q-card-section>
       </q-card-section>
 
@@ -51,7 +52,8 @@ export default {
     return {
       titulo: 'Fin de año en Venecia',
       ubicacion: 'La Palma',
-      precio: 'Gratis'
+      precio: 'Gratis',
+      fecha: '5 Junio'
     }
   }
 }
@@ -68,20 +70,28 @@ export default {
 
 .votos_ {
   background-color: rgba(128, 128, 128, 0.164);
-  width: 90%;
-  height: 28%;
   border-radius: 20%;
   text-align: center;
   font-size: calc(10px + 6 * ((100vw - 20px) / 680));
 }
-.votos{
-top: 15%;
+.votos {
+  top: 15%;
 }
 
 .votos_evento {
   color: rgb(113, 138, 221);
   font-family: "PT Serif";
   font: bold;
+}
+
+.titulo {
+  font-family: "PT Sans";
+  font-size: 140%;
+  font-weight: bold;
+}
+
+.ubicacion {
+  font-family: "Helvetica";
 }
 
 .usuario {
@@ -106,4 +116,13 @@ top: 15%;
   padding-left: 20%;
 } */
 
+.precio {
+  color: rgb(16, 153, 78);
+  font-style: italic;
+}
+
+.fecha {
+  color: rgb(23, 131, 219);
+  font-style: italic;
+}
 </style>

@@ -64,6 +64,9 @@ export default {
   terms2: 'Terms and conditions',
   register_sucess: 'Register successfully',
   register_fail: 'You must agree to terms and conditions',
-  event: 'Go to event'
+  event: 'Go to event',
+  settings: 'Settings',
+  profile: 'Profile',
+  alerts: 'Alerts'
 
 }
