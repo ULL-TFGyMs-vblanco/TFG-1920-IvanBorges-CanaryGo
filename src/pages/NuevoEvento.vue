@@ -10,13 +10,10 @@
         <br />
         <br />
         <form @submit.prevent.stop="onSubmit" @reset.prevent.stop="onReset" class="q-gutter-md">
-          <q-uploader
-            ref="foto"
-            class="foto"
-            url="http://localhost:4444/upload"
-            :label="$t('photo')"
-            hide-upload-btn
-          />
+
+          <input type="file" id="files" name="files[]" multiple />
+          <Selectorarchivos />
+          <!-- <q-btn color="white" text-color="black" label="Standard" @click="subirImagen()" /> -->
 
           <q-input
             ref="nombre_evento"
@@ -151,12 +148,15 @@
 
 <script>
 
-import { firebaseDb } from 'boot/firebase'
+import { firebaseDb, firebaseStg } from 'boot/firebase'
+import Selectorarchivos from 'components/Selectorarchivos'
 
 export default {
   name: 'NuevoEvento',
+  components: { Selectorarchivos },
   data () {
     return {
+      imagenRef: '',
       nombre_evento: '',
       localizacion: '',
       fecha_inicio: '',
@@ -203,6 +203,7 @@ export default {
       }
     },
     añadirEvento () {
+      this.subirImagen()
       firebaseDb.collection('eventos').add({
         nombre_evento: this.nombre_evento,
         localizacion: this.localizacion,
@@ -219,7 +220,22 @@ export default {
           console.error('Error añadiendo evento ', error)
         })
     },
+    subirImagen () {
+      // Created a Storage Reference with root dir
+      var storageRef = firebaseStg.ref('eventos')
+      // Get the file from DOM
+      var file = document.getElementById('foto').files[0]
+      console.log('ARCHIVITO -> ', file)
 
+      // dynamically set reference to the file name
+      var thisRef = storageRef.child(file.name)
+
+      // put request upload file to firebase storage
+      thisRef.put(file).then(function (snapshot) {
+        alert('File Uploaded')
+        console.log('Uploaded a blob or file!')
+      })
+    },
     onReset () {
       this.nombre_evento = null
       this.localizacion = null

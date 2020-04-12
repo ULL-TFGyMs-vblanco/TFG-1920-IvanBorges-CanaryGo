@@ -8,6 +8,7 @@ import 'firebase/auth'
 import 'firebase/firestore'
 import 'firebase/database'
 import 'firebase/analytics'
+import 'firebase/storage'
 
 // TODO: Replace the following with your app's Firebase project configuration
 const firebaseConfig = {
@@ -25,6 +26,7 @@ const firebaseConfig = {
 let firebaseApp = firebase.initializeApp(firebaseConfig)
 let firebaseAuth = firebaseApp.auth()
 let firebaseDb = firebaseApp.firestore()
-// firebase.analytics()
+let firebaseStg = firebaseApp.storage()
+firebase.analytics()
 
-export { firebaseAuth, firebaseDb }
+export { firebaseAuth, firebaseDb, firebaseStg }
