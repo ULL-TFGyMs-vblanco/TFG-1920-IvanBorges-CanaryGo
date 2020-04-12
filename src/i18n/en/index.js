@@ -65,6 +65,8 @@ export default {
   event_terms: 'I confirm the veracity of the information',
   register_sucess: 'Register successfully',
   register_fail: 'You must agree to terms and conditions',
+  event_sucess: 'Successfully added event',
+  event_fail: 'You must confirm the veracity of the information',
   event: 'Go to event',
   settings: 'Settings',
   profile: 'Profile',

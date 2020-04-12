@@ -150,6 +150,9 @@
 </template>
 
 <script>
+
+import { firebaseDb } from 'boot/firebase'
+
 export default {
   name: 'NuevoEvento',
   data () {
@@ -195,7 +198,26 @@ export default {
           timeout: 1000,
           progress: true
         })
+        this.añadirEvento()
+        this.$router.push('events')
       }
+    },
+    añadirEvento () {
+      firebaseDb.collection('eventos').add({
+        nombre_evento: this.nombre_evento,
+        localizacion: this.localizacion,
+        fecha_inicio: this.fecha_inicio,
+        fecha_fin: this.fecha_fin,
+        precio: this.precio,
+        descuento: this.descuento,
+        descripcion: this.descripcion
+      })
+        .then(function (docRef) {
+          console.log('Evento con ID: ', docRef.id)
+        })
+        .catch(function (error) {
+          console.error('Error añadiendo evento ', error)
+        })
     },
 
     onReset () {

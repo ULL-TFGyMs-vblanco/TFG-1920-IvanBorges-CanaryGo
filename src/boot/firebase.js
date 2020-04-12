@@ -24,7 +24,7 @@ const firebaseConfig = {
 // Initialize Firebase
 let firebaseApp = firebase.initializeApp(firebaseConfig)
 let firebaseAuth = firebaseApp.auth()
-let firebaseDb = firebaseApp.database()
-firebase.analytics()
+let firebaseDb = firebaseApp.firestore()
+// firebase.analytics()
 
 export { firebaseAuth, firebaseDb }
