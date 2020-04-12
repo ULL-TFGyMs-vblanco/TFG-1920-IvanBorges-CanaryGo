@@ -1,7 +1,7 @@
 <template>
   <div>
     <q-card class="my-card">
-      <q-card-section class="fecha text-right">{{ fecha }}</q-card-section>
+      <q-card-section class="fecha text-right">{{ fecha_inicio }}</q-card-section>
       <q-card-section horizontal>
         <q-img class="col-5" src="https://cdn.quasar.dev/img/parallax1.jpg" />
         <q-card-section vertical>
@@ -13,8 +13,8 @@
             </q-card-section>
             <!-- <q-card-section /> -->
           </div>
-          <q-card-section class="titulo text-justify">{{ titulo }}</q-card-section>
-          <q-card-section class="ubicacion text-justify">{{ ubicacion }}</q-card-section>
+          <q-card-section class="titulo text-justify">{{ nombre_evento }}</q-card-section>
+          <q-card-section class="ubicacion text-justify">{{ localizacion }}</q-card-section>
           <q-card-section class="precio text-justify">{{ precio }}</q-card-section>
         </q-card-section>
       </q-card-section>
@@ -46,15 +46,34 @@
 </template>
 
 <script>
+
 export default {
   name: 'Evento',
   data () {
     return {
-      titulo: 'Fin de año en Venecia',
-      ubicacion: 'La Palma',
-      precio: 'Gratis',
-      fecha: '5 Junio'
+
     }
+  },
+  props: {
+    nombre_evento: {
+      // type: String,
+      // required: true
+    },
+    localizacion: {
+      // type: String,
+      // required: true
+    },
+    precio: {
+      // type: Number,
+      // required: true
+    },
+    fecha_inicio: {
+      // type: Date,
+      // required: true
+    }
+  },
+  methods: {
+
   }
 }
 </script>
