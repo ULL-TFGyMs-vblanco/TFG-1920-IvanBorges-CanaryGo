@@ -3,7 +3,7 @@
     <q-card class="my-card">
       <q-card-section class="fecha text-right">{{ fecha_inicio }}</q-card-section>
       <q-card-section horizontal>
-        <q-img class="col-5" src="https://cdn.quasar.dev/img/parallax1.jpg" />
+        <q-img class="col-5" :src="foto" />
         <q-card-section vertical>
           <div class="votos_">
             <q-card-section class="votos">
@@ -55,6 +55,9 @@ export default {
     }
   },
   props: {
+    foto: {
+
+    },
     nombre_evento: {
       // type: String,
       // required: true

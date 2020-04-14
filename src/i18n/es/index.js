@@ -93,6 +93,9 @@ export default {
   price_discount: 'Código de descuento',
   price_discount_hint: 'Introduce el codigo de descuento (Opcional)',
   share: 'Compartir',
-  photo: 'Foto del evento'
+  photo: 'Foto del evento',
+  select: 'Selecciona o arrastra tu foto aquí',
+  done: 'Hecho',
+  change: 'Cambiar foto'
 
 }

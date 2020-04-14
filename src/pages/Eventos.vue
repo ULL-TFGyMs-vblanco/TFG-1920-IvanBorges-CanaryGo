@@ -11,7 +11,7 @@
 import Evento from 'components/Eventos/Evento'
 import Usuario from 'components/Eventos/Usuario'
 // import Toolbar from 'components/Toolbar'
-import { firebaseDb } from 'boot/firebase'
+import { firebaseDb, firebaseStg } from 'boot/firebase'
 
 export default {
   name: 'Eventos',
@@ -32,16 +32,25 @@ export default {
   },
   mounted () {
     console.log('LEYENDO DOC')
+
     firebaseDb.collection('eventos').get().then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
-        // console.log(`${doc.id} => ${doc.data()}`)
-        // console.log('TITULO -> ', doc.data().nombre_evento)
+        // Leemos los datos
         const evento = {
+          foto: '',
           nombre_evento: doc.data().nombre_evento,
           localizacion: doc.data().localizacion,
           precio: doc.data().precio,
           fecha_inicio: doc.data().fecha_inicio
         }
+
+        const storageRef = firebaseStg.ref('eventos/' + doc.id)
+        var fotoRef = storageRef.child('foto')
+        // Obtener foto
+        fotoRef.getDownloadURL().then(function (url) {
+          evento.foto = url
+        })
+
         this.datos_evento.push(evento)
       })
     })

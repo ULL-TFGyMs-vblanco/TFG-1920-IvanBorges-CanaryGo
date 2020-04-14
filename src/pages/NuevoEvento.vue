@@ -10,11 +10,8 @@
         <br />
         <br />
         <form @submit.prevent.stop="onSubmit" @reset.prevent.stop="onReset" class="q-gutter-md">
-
-          <input type="file" id="files" name="files[]" multiple />
+          <!-- Selector -->
           <Selectorarchivos />
-          <!-- <q-btn color="white" text-color="black" label="Standard" @click="subirImagen()" /> -->
-
           <q-input
             ref="nombre_evento"
             class="nombre_evento"
@@ -26,6 +23,8 @@
             lazy-rules
             :rules="[ val => val && val.length > 0 || $t('event_name_fail')]"
           />
+
+          <Mapa />
 
           <q-input
             ref="localizacion"
@@ -148,12 +147,13 @@
 
 <script>
 
-import { firebaseDb, firebaseStg } from 'boot/firebase'
-import Selectorarchivos from 'components/Selectorarchivos'
+import { firebaseDb, firebaseStg } from '../boot/firebase'
+import Selectorarchivos from '../components/Eventos/Selectorarchivos'
+import Mapa from '../components/Eventos/Mapa'
 
 export default {
   name: 'NuevoEvento',
-  components: { Selectorarchivos },
+  components: { Selectorarchivos, Mapa },
   data () {
     return {
       imagenRef: '',
@@ -165,7 +165,8 @@ export default {
       descripcion: '',
       descuento: '',
       sesion: false,
-      usuario: 'Diego'
+      usuario: 'Diego',
+      id: ''
     }
   },
   methods: {
@@ -179,7 +180,7 @@ export default {
       // this.$refs.descuento.validate()
       this.$refs.descripcion.validate()
 
-      if (this.$refs.foto.hasError || this.$refs.nombre_evento.hasError || this.$refs.localizacion.hasError || this.$refs.fecha_inicio.hasError || this.$refs.fecha_fin.hasError || this.$refs.precio.hasError || this.$refs.descripcion.hasError) {
+      if (this.$refs.nombre_evento.hasError || this.$refs.localizacion.hasError || this.$refs.fecha_inicio.hasError || this.$refs.fecha_fin.hasError || this.$refs.precio.hasError || this.$refs.descripcion.hasError) {
         this.formHasError = true
       } else if (this.sesion !== true) {
         this.$q.notify({
@@ -199,11 +200,13 @@ export default {
           progress: true
         })
         this.añadirEvento()
-        this.$router.push('events')
       }
     },
     añadirEvento () {
-      this.subirImagen()
+      // Subir informacion
+      const file = document.getElementById('foto').files[0]
+      const router = this.$router
+
       firebaseDb.collection('eventos').add({
         nombre_evento: this.nombre_evento,
         localizacion: this.localizacion,
@@ -214,27 +217,18 @@ export default {
         descripcion: this.descripcion
       })
         .then(function (docRef) {
-          console.log('Evento con ID: ', docRef.id)
+          // Subir imagenes
+          const storageRef = firebaseStg.ref('eventos/' + docRef.id)
+          const thisRef = storageRef.child('foto')
+
+          thisRef.put(file).then(function (snapshot) {
+            // console.log('Archivo subido')
+          })
+          router.push('events')
         })
         .catch(function (error) {
           console.error('Error añadiendo evento ', error)
         })
-    },
-    subirImagen () {
-      // Created a Storage Reference with root dir
-      var storageRef = firebaseStg.ref('eventos')
-      // Get the file from DOM
-      var file = document.getElementById('foto').files[0]
-      console.log('ARCHIVITO -> ', file)
-
-      // dynamically set reference to the file name
-      var thisRef = storageRef.child(file.name)
-
-      // put request upload file to firebase storage
-      thisRef.put(file).then(function (snapshot) {
-        alert('File Uploaded')
-        console.log('Uploaded a blob or file!')
-      })
     },
     onReset () {
       this.nombre_evento = null
@@ -268,9 +262,6 @@ export default {
 
 #formulario {
   max-width: 100%;
-  /* padding-right: 20%;
-  padding-left: 20%; */
-
   padding-right: 8%;
   padding-left: 8%;
   padding-top: 2%;
