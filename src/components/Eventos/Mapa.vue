@@ -12,7 +12,7 @@
       <l-tile-layer
         v-for="tileProvider in tileProviders"
         :key="tileProvider.name"
-        :name="tileProvider.name"
+        v-bind:name="tileProvider.name"
         :visible="tileProvider.visible"
         :url="tileProvider.url"
         :attribution="tileProvider.attribution"
@@ -73,14 +73,14 @@ export default {
       markerinfo: '',
       tileProviders: [
         {
-          name: 'Mapa estándar',
+          name: this.$t('map0'),
           visible: true,
           attribution:
             '&copy; <a target="_blank" href="http://osm.org/copyright">OpenStreetMap</a> contributors',
           url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
         },
         {
-          name: 'Mapa topográfico',
+          name: this.$t('map1'),
           visible: false,
           url: 'https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png',
           attribution:
@@ -92,15 +92,13 @@ export default {
   methods: {
     addMarker (event) {
       // Datos
+      console.log('ALGO', this.tileProviders)
       const busqueda = document.getElementsByClassName('leaflet-bar-part leaflet-bar-part-single')[0]
-      // const busquedaactiva = document.getElementsByClassName('geosearch leaflet-bar leaflet-control leaflet-control-geosearch active')[0]
       const reset = document.getElementsByClassName('reset')[0]
-      // const barra = document.getElementsByClassName('glass ')[0]
-      // const resultadosactivos = document.getElementsByClassName('results active')[0]
 
       // Establecer idioma
-      document.getElementsByClassName('leaflet-bar-part leaflet-bar-part-single')[0].setAttribute('title', 'Introduce una direccion')
-      document.getElementsByClassName('glass')[0].setAttribute('placeholder', 'Introduce una dirección')
+      document.getElementsByClassName('leaflet-bar-part leaflet-bar-part-single')[0].setAttribute('title', this.$t('direction'))
+      document.getElementsByClassName('glass')[0].setAttribute('placeholder', this.$t('direction'))
 
       if (document.getElementsByClassName('leaflet-marker-icon leaflet-zoom-animated leaflet-interactive')[1]) {
         document.getElementsByClassName('leaflet-marker-icon leaflet-zoom-animated leaflet-interactive')[1].click()
@@ -134,7 +132,7 @@ export default {
           if (response.length >= 1) {
             this.markerinfo = response[0].display_name
           } else {
-            this.markerinfo = 'Sin ubicación'
+            this.markerinfo = this.$t('no_location')
           }
         })
         .catch((error) => {
@@ -157,6 +155,11 @@ export default {
         .catch((error) => {
           console.log(error)
         })
+    }
+  },
+  computed: {
+    component () {
+      return { ...this.$t('map1') }
     }
   }
 }

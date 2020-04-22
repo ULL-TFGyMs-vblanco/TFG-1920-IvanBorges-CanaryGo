@@ -24,7 +24,7 @@
             :rules="[ val => val && val.length > 0 || $t('event_name_fail')]"
           />
 
-          <Mapa @clicked="onClickChild" />
+          <Mapa :key="$i18n.locale" @clicked="onClickChild" />
 
           <q-input
             ref="localizacion"
@@ -271,12 +271,5 @@ export default {
   padding-left: 8%;
   padding-top: 2%;
   padding-bottom: 10%;
-}
-
-.selectorarchivos {
-  /* position: absolute; */
-  z-index: -1;
-  /* left: 60px;
-  top: 3em; */
 }
 </style>

@@ -96,6 +96,10 @@ export default {
   photo: 'Foto del evento',
   select: 'Selecciona o arrastra tu foto aquí',
   done: 'Hecho',
-  change: 'Cambiar foto'
+  change: 'Cambiar foto',
+  direction: 'Introduce una dirección',
+  no_location: 'Sin ubicación',
+  map0: 'Mapa Estándar',
+  map1: 'Mapa topográfico'
 
 }

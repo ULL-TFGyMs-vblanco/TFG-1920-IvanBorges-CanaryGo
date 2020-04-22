@@ -10,10 +10,11 @@
       size="50"
       radius="5"
       button-class="primary"
+      :key="$i18n.locale"
       :custom-strings="{
-        upload: $t('done'),
-        drag: $t('select'),
-        change: $t('change'),
+        upload: this.$t('done'),
+        drag: this.$t('select'),
+        change: this.$t('change'),
       }"
       @change="onChange"
       @
