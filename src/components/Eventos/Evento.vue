@@ -15,7 +15,7 @@
           </div>
           <q-card-section class="titulo text-justify">{{ nombre_evento }}</q-card-section>
           <q-card-section class="ubicacion text-justify">{{ localizacion }}</q-card-section>
-          <q-card-section class="precio text-justify">{{ precio }}</q-card-section>
+          <q-card-section class="precio text-justify">{{ precio }} €</q-card-section>
         </q-card-section>
       </q-card-section>
 

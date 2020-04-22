@@ -36,6 +36,7 @@ export default {
   },
   methods: {
     onChange (image) {
+      document.getElementsByClassName('picture-preview')[0].setAttribute('style', 'height: 578px; z-index: 0; background: none;')
       console.log('Nuevo archivo')
       if (image) {
         console.log('Archivo leído.')

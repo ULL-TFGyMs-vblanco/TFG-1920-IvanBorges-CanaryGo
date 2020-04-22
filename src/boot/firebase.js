@@ -29,4 +29,4 @@ let firebaseDb = firebaseApp.firestore()
 let firebaseStg = firebaseApp.storage()
 firebase.analytics()
 
-export { firebaseAuth, firebaseDb, firebaseStg }
+export { firebaseConfig, firebaseAuth, firebaseDb, firebaseStg }

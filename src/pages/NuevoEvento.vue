@@ -11,7 +11,7 @@
         <br />
         <form @submit.prevent.stop="onSubmit" @reset.prevent.stop="onReset" class="q-gutter-md">
           <!-- Selector -->
-          <Selectorarchivos />
+          <Selectorarchivos class="selectorarchivos" />
           <q-input
             ref="nombre_evento"
             class="nombre_evento"
@@ -24,16 +24,18 @@
             :rules="[ val => val && val.length > 0 || $t('event_name_fail')]"
           />
 
-          <Mapa />
+          <Mapa @clicked="onClickChild" />
 
           <q-input
             ref="localizacion"
             class="localizacion"
+            id="localizacion"
+            readonly
             filled
             v-model="localizacion"
             :label="$t('event_location')"
             :hint="$t('event_location_hint')"
-            type="user"
+            type="text"
             lazy-rules
             :rules="[ val => val && val.length > 0 || $t('event_location_fail')]"
           />
@@ -247,6 +249,9 @@ export default {
       this.$refs.precio.resetValidation()
       this.$refs.descuento.resetValidation()
       this.$refs.descripcion.resetValidation()
+    },
+    onClickChild (ubicacion) {
+      this.localizacion = String(ubicacion).slice(7, -1)
     }
   }
 }
@@ -266,5 +271,12 @@ export default {
   padding-left: 8%;
   padding-top: 2%;
   padding-bottom: 10%;
+}
+
+.selectorarchivos {
+  /* position: absolute; */
+  z-index: -1;
+  /* left: 60px;
+  top: 3em; */
 }
 </style>
