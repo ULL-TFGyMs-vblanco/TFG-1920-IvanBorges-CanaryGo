@@ -100,6 +100,9 @@ export default {
   direction: 'Introduce una dirección',
   no_location: 'Sin ubicación',
   map0: 'Mapa Estándar',
-  map1: 'Mapa topográfico'
+  map1: 'Mapa topográfico',
+  mind: '¿Qué tienes en mente?',
+  welcome: 'Bienvenid@',
+  signoff: 'Cerrar sesión'
 
 }

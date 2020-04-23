@@ -100,5 +100,8 @@ export default {
   direction: 'Enter an address',
   no_location: 'No location data',
   map0: 'Standard Map',
-  map1: 'Topographic map'
+  map1: 'Topographic map',
+  mind: 'What do you have in mind?',
+  welcome: 'Welcome',
+  signoff: 'Sign off'
 }

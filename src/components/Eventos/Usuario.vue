@@ -57,7 +57,7 @@
                     </q-item>
                   </q-list>
                 </div>
-                <q-btn color="primary" label="Cerrar sesión" push size="sm" v-close-popup />
+                <q-btn color="primary" :label="$t('signoff')" push size="sm" v-close-popup />
               </div>
             </div>
           </q-menu>
@@ -72,8 +72,8 @@ export default {
   name: 'Usuario',
   data () {
     return {
-      saludo: 'Bienvenido, Diego',
-      saludo_2: '¿Qué tienes en mente?',
+      saludo: this.$t('welcome'),
+      saludo_2: this.$t('mind'),
       busqueda: ''
     }
   }

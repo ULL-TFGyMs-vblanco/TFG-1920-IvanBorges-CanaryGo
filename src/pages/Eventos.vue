@@ -1,7 +1,7 @@
 <template>
   <q-page padding>
     <!-- <Toolbar></Toolbar> -->
-    <Usuario></Usuario>
+    <Usuario :key="$i18n.locale"></Usuario>
     <Evento class="evento" v-for="dato in datos_evento" :key="dato.nombre_evento" v-bind="dato"></Evento>
     <q-btn class="boton_add" round color="primary" icon="add" size="150%" to="/new" />
   </q-page>
