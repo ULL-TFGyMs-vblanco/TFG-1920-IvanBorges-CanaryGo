@@ -58,7 +58,8 @@ export default {
   date_fail_2: 'Enter a correct date format',
   clean: 'Clear',
   login_sucess: 'Login successful',
-  login_fail: 'The entered password is not correct',
+  login_fail_user: 'The entered user is not correct or does not exist',
+  login_fail_password: 'The entered password is not correct',
   remember: 'Keep the session open',
   terms: 'I accept the privacy terms and conditions',
   terms2: 'Terms and conditions',
@@ -103,5 +104,9 @@ export default {
   map1: 'Topographic map',
   mind: 'What do you have in mind?',
   welcome: 'Welcome',
-  signoff: 'Sign off'
+  signoff: 'Sign off',
+  google: 'Login with Google',
+  facebook: 'Login with Facebook',
+  error_google: 'Error logging in with Google',
+  error_facebook: 'Error logging in with Facebook'
 }

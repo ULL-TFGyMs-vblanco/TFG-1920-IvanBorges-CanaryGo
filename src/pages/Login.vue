@@ -59,20 +59,24 @@
         </div>
         <div>
           <q-btn class="Registro" :label="$t('login')" type="submit" color="primary" />
-          <q-btn class="Reset" :label="$t('clean')" type="reset" color="primary" flat  />
+          <q-btn class="Reset" :label="$t('clean')" type="reset" color="primary" flat />
         </div>
       </form>
+      <LoginButtons :key="$i18n.locale" />
     </div>
   </div>
 </template>
 
 <script>
-
 import { firebaseAuth } from 'boot/firebase'
+import LoginButtons from 'components/Login/LoginButtons'
 
 export default {
   name: 'Login',
   email: 'Index',
+  components: {
+    LoginButtons
+  },
   data () {
     return {
       email: null,
@@ -94,24 +98,11 @@ export default {
       if (this.$refs.email.hasError || this.$refs.contrasena.hasError) {
         this.formHasError = true
       } else if (this.sesion !== true) {
-        this.$q.notify({
-          color: 'negative',
-          message: this.$t('login_fail'),
-          position: 'bottom',
-          timeout: 2000,
-          progress: true
-        })
+
       } else {
-        this.$q.notify({
-          icon: 'done',
-          color: 'positive',
-          message: this.$t('login_sucess'),
-          position: 'bottom',
-          timeout: 1000,
-          progress: true
-        })
-        this.IniciarSesion()
+
       }
+      this.IniciarSesion()
     },
 
     onReset () {
@@ -122,13 +113,27 @@ export default {
       this.$refs.contrasena.resetValidation()
     },
     IniciarSesion () {
-      firebaseAuth.signInWithEmailAndPassword(this.email, this.contrasena).catch(function (error) {
-        // Errores
-        var errorCode = error.code
-        var errorMessage = error.message
-        console.log(errorCode)
-        console.log(errorMessage)
-      })
+      let errorcodes = ''
+
+      firebaseAuth.signInWithEmailAndPassword(this.email, this.contrasena)
+        .catch(function (error) {
+          // Errores
+          var errorCode = error.code
+          var errorMessage = error.message
+          console.log(errorCode)
+          console.log(errorMessage)
+          errorcodes = errorCode
+        })
+        .then(() => {
+          if (errorcodes === 'auth/user-not-found') {
+            this.Fail(this.$t('login_fail_user'))
+          } else if (errorcodes === 'auth/wrong-password') {
+            this.Fail(this.$t('login_fail_password'))
+          } else {
+            this.Success()
+            this.$router.push('events')
+          }
+        })
     },
     Observador () {
       console.log('Dentro')
@@ -150,6 +155,25 @@ export default {
           // User is signed out.
           console.log('Ningun usuario logueado')
         }
+      })
+    },
+    Success () {
+      this.$q.notify({
+        icon: 'done',
+        color: 'positive',
+        message: this.$t('login_sucess'),
+        position: 'bottom',
+        timeout: 1000,
+        progress: true
+      })
+    },
+    Fail (error) {
+      this.$q.notify({
+        color: 'negative',
+        message: error,
+        position: 'bottom',
+        timeout: 2000,
+        progress: true
       })
     }
   }

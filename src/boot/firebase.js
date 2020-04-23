@@ -25,8 +25,10 @@ const firebaseConfig = {
 // Initialize Firebase
 let firebaseApp = firebase.initializeApp(firebaseConfig)
 let firebaseAuth = firebaseApp.auth()
+let firebaseAuthGoogle = new firebase.auth.GoogleAuthProvider()
+let firebaseAuthFacebook = new firebase.auth.FacebookAuthProvider()
 let firebaseDb = firebaseApp.firestore()
 let firebaseStg = firebaseApp.storage()
 firebase.analytics()
 
-export { firebaseConfig, firebaseAuth, firebaseDb, firebaseStg }
+export { firebaseConfig, firebaseAuth, firebaseDb, firebaseStg, firebaseAuthGoogle, firebaseAuthFacebook }

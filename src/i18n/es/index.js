@@ -58,7 +58,8 @@ export default {
   date_fail_2: 'Introduce un formato correcto de fecha',
   clean: 'Limpiar',
   login_sucess: 'Inicio de sesión correcto',
-  login_fail: 'La contraseña introducida no es correcta',
+  login_fail_user: 'El usuario introducido no es correcto o no existe',
+  login_fail_password: 'La contraseña introducida no es correcta',
   remember: 'Mantener la sesión abierta',
   terms: 'Acepto los términos y condiciones de privacidad',
   terms2: 'Términos y condiciones',
@@ -103,6 +104,9 @@ export default {
   map1: 'Mapa topográfico',
   mind: '¿Qué tienes en mente?',
   welcome: 'Bienvenid@',
-  signoff: 'Cerrar sesión'
-
+  signoff: 'Cerrar sesión',
+  google: 'Iniciar sesión con Google',
+  facebook: 'Iniciar sesión con Facebook',
+  error_google: 'Error al iniciar sesión con Google',
+  error_facebook: 'Error al iniciar sesión con Facebook'
 }

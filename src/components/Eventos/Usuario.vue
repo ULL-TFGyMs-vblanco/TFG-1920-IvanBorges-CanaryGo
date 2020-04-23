@@ -57,7 +57,14 @@
                     </q-item>
                   </q-list>
                 </div>
-                <q-btn color="primary" :label="$t('signoff')" push size="sm" v-close-popup />
+                <q-btn
+                  color="primary"
+                  :label="$t('signoff')"
+                  push
+                  size="sm"
+                  v-close-popup
+                  @click="Salir"
+                />
               </div>
             </div>
           </q-menu>
@@ -68,6 +75,7 @@
 </template>
 
 <script>
+import { firebaseAuth } from '../../boot/firebase'
 export default {
   name: 'Usuario',
   data () {
@@ -75,6 +83,17 @@ export default {
       saludo: this.$t('welcome'),
       saludo_2: this.$t('mind'),
       busqueda: ''
+    }
+  },
+  methods: {
+    Salir () {
+      firebaseAuth.signOut().then(function () {
+        // Sign-out successful.
+      })
+        .catch(function (error) {
+          console.log(error)
+        })
+        .then(() => this.$router.push('home'))
     }
   }
 }
