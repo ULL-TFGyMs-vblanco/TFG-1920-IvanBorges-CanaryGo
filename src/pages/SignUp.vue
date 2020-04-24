@@ -150,7 +150,7 @@
 
 <script>
 
-import { firebaseAuth } from 'boot/firebase'
+import { firebaseAuth, firebase } from 'boot/firebase'
 import LoginButtons from 'components/Login/LoginButtons'
 
 export default {
@@ -241,14 +241,14 @@ export default {
         })
     },
     Verificar () {
-      var user = firebaseAuth().currentUser
-
+      var user = firebase.auth().currentUser
       user.sendEmailVerification()
-        .then(function () {
-          // this.alert = true
-          console.log('LOOOOOL')
-        }).catch(function (error) {
+        .catch(function (error) {
           console.log(error)
+          console.log(error.code)
+        })
+        .then(() => {
+          this.alert = true
         })
     },
     Success () {
