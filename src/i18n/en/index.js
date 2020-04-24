@@ -60,6 +60,7 @@ export default {
   login_sucess: 'Login successful',
   login_fail_user: 'The entered user is not correct or does not exist',
   login_fail_password: 'The entered password is not correct',
+  register_fail_2: 'An error occurred while registering the user. User already exists',
   remember: 'Keep the session open',
   terms: 'I accept the privacy terms and conditions',
   terms2: 'Terms and conditions',
@@ -108,5 +109,7 @@ export default {
   google: 'Login with Google',
   facebook: 'Login with Facebook',
   error_google: 'Error logging in with Google',
-  error_facebook: 'Error logging in with Facebook'
+  error_facebook: 'Error logging in with Facebook',
+  email_verification: 'To complete the registration verify your email',
+  alert: 'Attention'
 }

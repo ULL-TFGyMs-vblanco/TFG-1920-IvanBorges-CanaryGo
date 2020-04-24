@@ -128,6 +128,22 @@
           <q-btn class="Reset" :label="$t('clean')" type="reset" color="primary" flat />
         </div>
       </form>
+      <LoginButtons :key="$i18n.locale" />
+      <!-- VERIFICAR CORREO -->
+      <q-dialog v-model="alert">
+        <q-card>
+          <q-card-section>
+            <div class="text-h6">{{$t('alert')}}</div>
+          </q-card-section>
+
+          <q-card-section class="q-pt-none">{{$t('email_verification')}}</q-card-section>
+
+          <q-card-actions align="right">
+            <q-btn flat label="OK" color="primary" v-close-popup />
+          </q-card-actions>
+        </q-card>
+      </q-dialog>
+      <!-- VERIFICAR CORREO -->
     </div>
   </div>
 </template>
@@ -135,11 +151,18 @@
 <script>
 
 import { firebaseAuth } from 'boot/firebase'
+import LoginButtons from 'components/Login/LoginButtons'
 
 export default {
-  email: 'Signup',
+  name: 'Signup',
+  components: {
+    LoginButtons
+  },
   data () {
     return {
+      alert: false,
+      confirm: false,
+      prompt: false,
       nombre: null,
       usuario: null,
       email: null,
@@ -173,14 +196,6 @@ export default {
           progress: true
         })
       } else {
-        this.$q.notify({
-          icon: 'done',
-          color: 'positive',
-          message: this.$t('register_sucess'),
-          position: 'bottom',
-          timeout: 1000,
-          progress: true
-        })
         this.Registrar()
       }
     },
@@ -203,15 +218,56 @@ export default {
     Registrar () {
       const correo = this.email
       const password2 = this.contrasena
+      let errorcodes = false
 
       console.log(this.email)
       console.log(this.contrasena)
-      firebaseAuth.createUserWithEmailAndPassword(correo, password2).catch(function (error) {
-        // Handle Errors here.
-        var errorCode = error.code
-        var errorMessage = error.message
-        console.log(errorCode)
-        console.log(errorMessage)
+      firebaseAuth.createUserWithEmailAndPassword(correo, password2)
+        .catch(function (error) {
+          // Handle Errors here.
+          var errorCode = error.code
+          var errorMessage = error.message
+          console.log(errorCode)
+          console.log(errorMessage)
+          errorcodes = true
+        })
+        .then(() => {
+          if (errorcodes) {
+            this.Fail(this.$t('register_fail_2'))
+          } else {
+            this.Success()
+            this.Verificar()
+          }
+        })
+    },
+    Verificar () {
+      var user = firebaseAuth().currentUser
+
+      user.sendEmailVerification()
+        .then(function () {
+          // this.alert = true
+          console.log('LOOOOOL')
+        }).catch(function (error) {
+          console.log(error)
+        })
+    },
+    Success () {
+      this.$q.notify({
+        icon: 'done',
+        color: 'positive',
+        message: this.$t('register_sucess'),
+        position: 'bottom',
+        timeout: 1000,
+        progress: true
+      })
+    },
+    Fail (error) {
+      this.$q.notify({
+        color: 'negative',
+        message: error,
+        position: 'bottom',
+        timeout: 2000,
+        progress: true
       })
     }
   }

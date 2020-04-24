@@ -60,12 +60,13 @@ export default {
   login_sucess: 'Inicio de sesión correcto',
   login_fail_user: 'El usuario introducido no es correcto o no existe',
   login_fail_password: 'La contraseña introducida no es correcta',
+  register_fail: 'Debes aceptar los términos y condiciones de privacidad',
   remember: 'Mantener la sesión abierta',
   terms: 'Acepto los términos y condiciones de privacidad',
   terms2: 'Términos y condiciones',
   event_terms: 'Confirmo la veracidad de la información',
   register_sucess: 'Registro correcto',
-  register_fail: 'Debes aceptar los términos y condiciones',
+  register_fail_2: 'Se ha producido un error al registrar el usuario. El usuario ya existe',
   event_sucess: 'Evento agregado correctamente',
   event_fail: 'Debe confirmar la veracidad de la información',
   event: 'Ir al evento',
@@ -108,5 +109,7 @@ export default {
   google: 'Iniciar sesión con Google',
   facebook: 'Iniciar sesión con Facebook',
   error_google: 'Error al iniciar sesión con Google',
-  error_facebook: 'Error al iniciar sesión con Facebook'
+  error_facebook: 'Error al iniciar sesión con Facebook',
+  email_verification: 'Para completar el registro verifica tu correo',
+  alert: 'Atención'
 }
