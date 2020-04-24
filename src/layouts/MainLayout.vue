@@ -11,8 +11,8 @@
             aria-label="Menu"
             @click="leftDrawerOpen = !leftDrawerOpen"
           />
-
-          <q-toolbar-title class="header-text" style="color: white">Canary Go</q-toolbar-title>
+          <q-toolbar-title class="header-text" style="color: white; font-size: 17px">Canary Go</q-toolbar-title>
+          <LanguageSelector />
         </q-toolbar>
       </q-header>
 
@@ -29,8 +29,8 @@
           </q-item-section>
 
           <q-item-section>
-            <q-item-label>Modo oscuro</q-item-label>
-            <q-item-label caption>Activa o desactiva el modo oscuro</q-item-label>
+            <q-item-label>{{$t('dark_mode')}}</q-item-label>
+            <q-item-label caption>{{$t('dark')}}</q-item-label>
           </q-item-section>
         </q-item>
       </q-drawer>
@@ -47,13 +47,15 @@
 
 <script>
 import EssentialLink from 'components/EssentialLink'
+import LanguageSelector from '../components/LanguageSelector.vue'
 
 export default {
   name: 'MainLayout',
   dark: 'false',
 
   components: {
-    EssentialLink
+    EssentialLink,
+    LanguageSelector
   },
 
   data () {
@@ -62,20 +64,20 @@ export default {
       leftDrawerOpen: false,
       essentialLinks: [
         {
-          title: 'Inicio',
-          caption: '¿Qué ofrecemos?',
+          title: 'introduction',
+          caption: 'offer',
           icon: 'apps',
           link: '/home'
         },
         {
-          title: 'Iniciar sesión',
-          caption: 'Encuentra lo que buscas',
+          title: 'login',
+          caption: 'find',
           icon: 'person',
           link: './login'
         },
         {
-          title: 'Registro',
-          caption: 'Comienza tu aventura',
+          title: 'register',
+          caption: 'adventure',
           icon: 'person_add_disabled',
           link: './signup'
         }

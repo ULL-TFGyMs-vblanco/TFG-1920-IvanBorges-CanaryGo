@@ -8,28 +8,34 @@
       <br />
       <br />
       <br />
-      <form @submit.prevent.stop="onSubmit" @reset.prevent.stop="onReset" class="q-gutter-md">
+      <form
+        id="Form"
+        @submit.prevent.stop="onSubmit"
+        @reset.prevent.stop="onReset"
+        class="q-gutter-md"
+      >
         <q-input
           ref="email"
+          class="Email"
           filled
           v-model="email"
-          label="Email *"
-          hint="Escribe tu email"
-          type= "email"
+          :label="$t('email') "
+          :hint="$t('email_hint')"
+          type="email"
           lazy-rules
-          :rules="[ val => val && val.length > 0 || 'Debes introducir un email']"
+          :rules="[ val => val && val.length > 0 && val.indexOf('@') >= 0 || $t('email_fail')]"
         />
-
         <q-input
           ref="contrasena"
+          class="Contrasena"
           filled
           v-model="contrasena"
           :type="isPwd ? 'password' : 'text'"
-          label="Contraseña *"
-          hint="Escribe tu contraseña"
+          :label="$t('password')"
+          :hint="$t('password_hint')"
           lazy-rules
           :rules="[
-          val => val !== null && val !== '' || 'Debes introducir la contraseña',
+          val => val !== null && val !== '' || $t('password_fail'),
         ]"
         >
           <template v-slot:append>
@@ -41,27 +47,36 @@
           </template>
         </q-input>
         <div class="text-center">
-          <q-checkbox name="sesion" v-model="sesion" label="Mantener la sesión abierta" />
+          <q-checkbox name="sesion" v-model="sesion" :label="$t('remember')" />
           <br />
 
-          <q-item clickable v-ripple to="/restore">
+          <!-- to="/restore" -->
+          <q-item clickable v-ripple>
             <q-item-section>
-              <q-item-label style="color: #ec9718">He olvidado mi contraseña</q-item-label>
+              <q-item-label style="color: #ec9718">{{$t('password_reset')}}</q-item-label>
             </q-item-section>
           </q-item>
         </div>
         <div>
-          <q-btn label="Iniciar sesión" type="submit" color="primary" />
-          <q-btn label="Limpiar" type="reset" color="primary" flat class="q-ml-sm" />
+          <q-btn class="Registro" :label="$t('login')" type="submit" color="primary" />
+          <q-btn class="Reset" :label="$t('clean')" type="reset" color="primary" flat />
         </div>
       </form>
+      <LoginButtons :key="$i18n.locale" />
     </div>
   </div>
 </template>
 
 <script>
+import { firebaseAuth } from 'boot/firebase'
+import LoginButtons from 'components/Login/LoginButtons'
+
 export default {
+  name: 'Login',
   email: 'Index',
+  components: {
+    LoginButtons
+  },
   data () {
     return {
       email: null,
@@ -70,8 +85,12 @@ export default {
       sesion: false
     }
   },
+  mounted () {
+    this.Observador()
+  },
 
   methods: {
+
     onSubmit () {
       this.$refs.email.validate()
       this.$refs.contrasena.validate()
@@ -79,23 +98,11 @@ export default {
       if (this.$refs.email.hasError || this.$refs.contrasena.hasError) {
         this.formHasError = true
       } else if (this.sesion !== true) {
-        this.$q.notify({
-          color: 'negative',
-          message: 'La contraseña introducida no es correcta',
-          position: 'bottom',
-          timeout: 2000,
-          progress: true
-        })
+
       } else {
-        this.$q.notify({
-          icon: 'done',
-          color: 'positive',
-          message: 'Inicio de sesión correcto',
-          position: 'bottom',
-          timeout: 1000,
-          progress: true
-        })
+
       }
+      this.IniciarSesion()
     },
 
     onReset () {
@@ -104,6 +111,70 @@ export default {
 
       this.$refs.email.resetValidation()
       this.$refs.contrasena.resetValidation()
+    },
+    IniciarSesion () {
+      let errorcodes = ''
+
+      firebaseAuth.signInWithEmailAndPassword(this.email, this.contrasena)
+        .catch(function (error) {
+          // Errores
+          var errorCode = error.code
+          var errorMessage = error.message
+          console.log(errorCode)
+          console.log(errorMessage)
+          errorcodes = errorCode
+        })
+        .then(() => {
+          if (errorcodes === 'auth/user-not-found') {
+            this.Fail(this.$t('login_fail_user'))
+          } else if (errorcodes === 'auth/wrong-password') {
+            this.Fail(this.$t('login_fail_password'))
+          } else {
+            this.Success()
+            this.$router.push('events')
+          }
+        })
+    },
+    Observador () {
+      console.log('Dentro')
+      firebaseAuth.onAuthStateChanged(function (user) {
+        if (user) {
+          // User is signed in.
+          /* eslint-disable no-unused-vars */
+          var displayName = user.displayName
+          var email = user.email
+          var emailVerified = user.emailVerified
+          var photoURL = user.photoURL
+          var isAnonymous = user.isAnonymous
+          var uid = user.uid
+          var providerData = user.providerData
+
+          // Verificar
+          console.log('Usuario logueado')
+        } else {
+          // User is signed out.
+          console.log('Ningun usuario logueado')
+        }
+      })
+    },
+    Success () {
+      this.$q.notify({
+        icon: 'done',
+        color: 'positive',
+        message: this.$t('login_sucess'),
+        position: 'bottom',
+        timeout: 1000,
+        progress: true
+      })
+    },
+    Fail (error) {
+      this.$q.notify({
+        color: 'negative',
+        message: error,
+        position: 'bottom',
+        timeout: 2000,
+        progress: true
+      })
     }
   }
 }

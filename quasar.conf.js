@@ -7,7 +7,8 @@ module.exports = function (ctx) {
     // --> boot files are part of "main.js"
     // https://quasar.dev/quasar-cli/cli-documentation/boot-files
     boot: [
-      'firebase'
+      'firebase',
+      'i18n'
     ],
 
     // https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-css
@@ -162,7 +163,7 @@ module.exports = function (ctx) {
       bundler: 'packager', // 'packager' or 'builder'
 
       packager: {
-        platform: 'win32'
+        // platform: 'win32'
 
         // https://github.com/electron-userland/electron-packager/blob/master/docs/api.md#options
 

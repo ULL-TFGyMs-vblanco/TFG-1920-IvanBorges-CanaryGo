@@ -11,36 +11,39 @@
       <form @submit.prevent.stop="onSubmit" @reset.prevent.stop="onReset" class="q-gutter-md">
         <q-input
           ref="nombre"
+          class="Nombre"
           filled
           v-model="nombre"
-          label="Nombre *"
-          hint="Escribe tu nombre"
+          :label="$t('name')"
+          :hint="$t('name_hint')"
           type="name"
           lazy-rules
-          :rules="[ val => val && val.length > 0 || 'Debes introducir un nombre']"
+          :rules="[ val => val && val.length > 0 || $t('name_fail')]"
         />
 
         <q-input
           ref="usuario"
+          class="Usuario"
           filled
           v-model="usuario"
-          label="Usuario *"
-          hint="Elige tu usuario"
+          :label="$t('user')"
+          :hint="$t('user_hint')"
           type="user"
           lazy-rules
-          :rules="[ val => val && val.length > 0 || 'Debes introducir un usuario']"
+          :rules="[ val => val && val.length > 0 || $t('user_fail')]"
         />
 
         <q-input
           ref="fecha"
+          class="Fecha"
           filled
           v-model="fecha"
-          label="Fecha de nacimiento *"
-          hint="Indica tu fecha de nacimiento"
+          :label="$t('date')"
+          :hint="$t('date_hint')"
           lazy-rules
           :rules="[
-          val => val && val.length > 0 || 'Debes introducir una fecha',
-          val => val.length === 10 || 'Introduce un formato correcto de fecha',
+          val => val && val.length > 0 || $t('date_fail'),
+          val => val.length === 10 || $t('date_fail_2'),
           'date',
           ]"
         >
@@ -55,25 +58,27 @@
 
         <q-input
           ref="email"
+          class="Email"
           filled
           v-model="email"
-          label="Email *"
-          hint="Escribe tu email"
+          :label="$t('email')"
+          :hint="$t('email_hint')"
           type="email"
           lazy-rules
-          :rules="[ val => val && val.length > 0 || 'Debes introducir un email']"
+          :rules="[ val => val && val.length > 0 && val.indexOf('@') >= 0 || $t('email_fail')]"
         />
 
         <q-input
           ref="contrasena"
+          class="Contrasena"
           filled
           v-model="contrasena"
           :type="isPwd ? 'password' : 'text'"
-          label="Contraseña *"
-          hint="Escribe tu contraseña"
+          :label="$t('password')"
+          :hint="$t('password_hint')"
           lazy-rules
           :rules="[
-          val => val !== null && val !== '' || 'Debes introducir la contraseña',
+          val => val !== null && val !== '' || $t('password_fail'),
         ]"
         >
           <template v-slot:append>
@@ -87,15 +92,16 @@
 
         <q-input
           ref="contrasena2"
+          class="Contrasena2"
           filled
           v-model="contrasena2"
           :type="isPwd ? 'password' : 'text'"
-          label="Contraseña *"
-          hint="Repite la contraseña"
+          :label="$t('password')"
+          :hint="$t('password_repeat')"
           lazy-rules
           :rules="[
-          val => val !== null && val !== '' || 'Debes repetir la contraseña',
-          val => val === contrasena || 'Las contraseña no coincide'
+          val => val !== null && val !== '' || $t('password_repeat_fail'),
+          val => val === contrasena || $t('password_repeat_fail_2')
         ]"
         >
           <template v-slot:append>
@@ -108,22 +114,18 @@
         </q-input>
 
         <div class="text-center">
-          <q-checkbox
-            name="sesion"
-            v-model="sesion"
-            label="Acepto los términos y condiciones de privacidad"
-          />
+          <q-checkbox class="Terms" name="sesion" v-model="sesion" :label="$t('terms')" />
           <br />
           <!-- to="/terms" -->
           <q-item clickable v-ripple>
             <q-item-section>
-              <q-item-label style="color: #ec9718">Términos y condiciones</q-item-label>
+              <q-item-label style="color: #ec9718">{{$t('terms2')}}</q-item-label>
             </q-item-section>
           </q-item>
         </div>
         <div>
-          <q-btn label="Registrarse" type="submit" color="primary" />
-          <q-btn label="Limpiar" type="reset" color="primary" flat class="q-ml-sm" />
+          <q-btn class="Registro" :label="$t('register')" type="submit" color="primary" />
+          <q-btn class="Reset" :label="$t('clean')" type="reset" color="primary" flat />
         </div>
       </form>
     </div>
@@ -165,7 +167,7 @@ export default {
       } else if (this.sesion !== true) {
         this.$q.notify({
           color: 'negative',
-          message: 'Debes aceptar los términos y condiciones',
+          message: this.$t('register_fail'),
           position: 'bottom',
           timeout: 2000,
           progress: true
@@ -174,7 +176,7 @@ export default {
         this.$q.notify({
           icon: 'done',
           color: 'positive',
-          message: 'Registro correcto',
+          message: this.$t('register_sucess'),
           position: 'bottom',
           timeout: 1000,
           progress: true
