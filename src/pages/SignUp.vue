@@ -220,8 +220,8 @@ export default {
       const password2 = this.contrasena
       let errorcodes = false
 
-      console.log(this.email)
-      console.log(this.contrasena)
+      // console.log(this.email)
+      // console.log(this.contrasena)
       firebaseAuth.createUserWithEmailAndPassword(correo, password2)
         .catch(function (error) {
           // Handle Errors here.

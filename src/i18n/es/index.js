@@ -59,6 +59,7 @@ export default {
   clean: 'Limpiar',
   login_sucess: 'Inicio de sesión correcto',
   login_fail_user: 'El usuario introducido no es correcto o no existe',
+  login_fail_verify: 'Debes verificar tu correo primero',
   login_fail_password: 'La contraseña introducida no es correcta',
   register_fail: 'Debes aceptar los términos y condiciones de privacidad',
   remember: 'Mantener la sesión abierta',

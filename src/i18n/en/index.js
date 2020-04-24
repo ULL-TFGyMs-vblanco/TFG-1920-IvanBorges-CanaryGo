@@ -59,6 +59,7 @@ export default {
   clean: 'Clear',
   login_sucess: 'Login successful',
   login_fail_user: 'The entered user is not correct or does not exist',
+  login_fail_verify: 'You must verify your email first',
   login_fail_password: 'The entered password is not correct',
   register_fail_2: 'An error occurred while registering the user. User already exists',
   remember: 'Keep the session open',

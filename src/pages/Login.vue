@@ -68,7 +68,7 @@
 </template>
 
 <script>
-import { firebaseAuth } from 'boot/firebase'
+import { firebaseAuth, firebase } from 'boot/firebase'
 import LoginButtons from 'components/Login/LoginButtons'
 
 export default {
@@ -114,6 +114,7 @@ export default {
     },
     IniciarSesion () {
       let errorcodes = ''
+      // console.log('Estado', firebase.auth().currentUser.emailVerified)
 
       firebaseAuth.signInWithEmailAndPassword(this.email, this.contrasena)
         .catch(function (error) {
@@ -130,8 +131,12 @@ export default {
           } else if (errorcodes === 'auth/wrong-password') {
             this.Fail(this.$t('login_fail_password'))
           } else {
-            this.Success()
-            this.$router.push('events')
+            if (firebase.auth().currentUser.emailVerified === true) {
+              this.Success()
+              this.$router.push('events')
+            } else {
+              this.Fail(this.$t('login_fail_verify'))
+            }
           }
         })
     },
