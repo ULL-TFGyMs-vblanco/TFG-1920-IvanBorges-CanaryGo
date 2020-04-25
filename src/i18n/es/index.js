@@ -112,5 +112,9 @@ export default {
   error_google: 'Error al iniciar sesión con Google',
   error_facebook: 'Error al iniciar sesión con Facebook',
   email_verification: 'Para completar el registro verifica tu correo',
-  alert: 'Atención'
+  alert: 'Atención',
+  location: 'Isla',
+  featured: 'Más destacados',
+  new: 'Novedades',
+  location_user: 'En tu zona'
 }

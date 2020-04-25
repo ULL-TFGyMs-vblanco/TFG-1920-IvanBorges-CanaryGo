@@ -112,5 +112,9 @@ export default {
   error_google: 'Error logging in with Google',
   error_facebook: 'Error logging in with Facebook',
   email_verification: 'To complete the registration verify your email',
-  alert: 'Attention'
+  alert: 'Attention',
+  location: 'Island',
+  featured: 'Most featured',
+  new: 'New',
+  location_user: 'In your zone'
 }

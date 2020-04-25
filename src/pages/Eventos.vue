@@ -2,6 +2,7 @@
   <q-page padding>
     <!-- <Toolbar></Toolbar> -->
     <Usuario :key="$i18n.locale"></Usuario>
+    <Filtro class="filtro" />
     <Evento class="evento" v-for="dato in datos_evento" :key="dato.nombre_evento" v-bind="dato"></Evento>
     <q-btn class="boton_add" round color="primary" icon="add" size="150%" to="/new" />
   </q-page>
@@ -10,6 +11,7 @@
 <script>
 import Evento from 'components/Eventos/Evento'
 import Usuario from 'components/Eventos/Usuario'
+import Filtro from 'components/Eventos/Filtro'
 // import Toolbar from 'components/Toolbar'
 import { firebaseDb, firebaseStg } from 'boot/firebase'
 
@@ -17,7 +19,7 @@ export default {
   name: 'Eventos',
   components: {
     // eslint-disable-next-line vue/no-unused-components
-    Evento, Usuario
+    Evento, Usuario, Filtro
     //  Toolbar
   },
   data () {
