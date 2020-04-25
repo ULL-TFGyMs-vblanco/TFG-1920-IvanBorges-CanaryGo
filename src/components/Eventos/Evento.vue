@@ -5,14 +5,17 @@
       <q-card-section horizontal>
         <q-img class="col-5" :src="foto" />
         <q-card-section vertical>
-          <div class="votos_">
-            <q-card-section class="votos">
-              <q-btn size="70%" flat round icon="thumb_down_outlined" />
-              <q-btn class="votos_evento" size="100%" flat style="pointer-events: none;">7</q-btn>
-              <q-btn size="70%" flat round icon="thumb_up" />
-            </q-card-section>
-            <!-- <q-card-section /> -->
-          </div>
+          <q-card-section horizontal>
+            <div class="votos_">
+              <q-card-section class="votos">
+                <div class="votos_box">
+                  <q-btn size="70%" flat round icon="thumb_down" />
+                  <q-btn class="votos_evento" size="100%" flat style="pointer-events: none;">7</q-btn>
+                  <q-btn size="70%" flat round icon="thumb_up" />
+                </div>
+              </q-card-section>
+            </div>
+          </q-card-section>
           <q-card-section class="titulo text-justify">{{ nombre_evento }}</q-card-section>
           <q-card-section class="ubicacion text-justify">{{ localizacion }}</q-card-section>
           <q-card-section class="precio text-justify">{{ precio }} €</q-card-section>
@@ -90,19 +93,19 @@ export default {
   font-size: calc(8px + 6 * ((100vw - 20px) / 680));
 }
 
-.votos_ {
+.votos_box {
   background-color: rgba(128, 128, 128, 0.164);
-  border-radius: 20%;
-  text-align: center;
-  font-size: calc(10px + 6 * ((100vw - 20px) / 680));
-}
-.votos {
-  top: 15%;
+  border-radius: 25px;
+  margin-left: 0%;
+  /* margin-right: 50%; */
+  text-align: left;
+  /* font-size: calc(8px + 6 * ((100vw - 20px) / 680)); */
 }
 
+@import url("https://fonts.googleapis.com/css2?family=Bitter&display=swap");
 .votos_evento {
   color: rgb(113, 138, 221);
-  font-family: "PT Serif";
+  font-family: "Bitter", serif;
   font: bold;
 }
 
