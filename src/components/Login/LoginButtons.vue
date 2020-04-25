@@ -121,7 +121,7 @@ html * {
   text-align: center;
   letter-spacing: 1px;
   position: relative;
-  font-size: calc(7px + 6 * ((100vw - 20px) / 1080));
+  font-size: calc(7px + 6 * ((100vw - 20px) / 1280));
 }
 
 .login-box:hover {
