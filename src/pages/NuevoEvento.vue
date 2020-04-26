@@ -222,7 +222,8 @@ export default {
         votos: 0,
         comentarios: 0,
         usuario: this.usuario,
-        isla: this.isla
+        isla: this.isla,
+        fecha_creacion: new Date().getDay() + '/' + new Date().getMonth() + '/' + new Date().getFullYear() + ',' + new Date().getHours() + ':' + new Date().getMinutes() + new Date().getMilliseconds()
       })
         .then(function (docRef) {
           // Subir imagenes

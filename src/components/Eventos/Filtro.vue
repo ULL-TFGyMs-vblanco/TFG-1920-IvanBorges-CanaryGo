@@ -42,10 +42,13 @@ export default {
         'Tenerife', 'Gran Canaria', 'La Palma', 'La Gomera', 'El Hierro', 'Lanzarote', 'Fuerteventura'
       ]
     }
+  },
+  updated () {
+    this.$emit('clicked', this.tab)
   }
 }
+
 </script>
 
 <style>
-
 </style>

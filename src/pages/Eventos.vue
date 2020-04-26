@@ -2,7 +2,7 @@
   <q-page padding>
     <!-- <Toolbar></Toolbar> -->
     <Usuario :key="$i18n.locale"></Usuario>
-    <Filtro class="filtro" />
+    <Filtro class="filtro" @clicked="DataChild" />
     <Evento class="evento" v-for="dato in datos_evento" :key="dato.nombre_evento" v-bind="dato"></Evento>
     <q-btn class="boton_add" round color="primary" icon="add" size="150%" to="/new" />
   </q-page>
@@ -24,42 +24,56 @@ export default {
   },
   data () {
     return {
-      datos_evento: []
+      datos_evento: [],
+      tab: 'tab1'
     }
   },
   methods: {
-    async obtenerEvento () {
+    obtenerEvento (filtro, isla) {
+      this.datos_evento = []
+      firebaseDb.collection('eventos').orderBy(filtro, 'desc').get().then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          // Leemos los datos
+          const evento = {
+            foto: '',
+            nombre_evento: doc.data().nombre_evento,
+            localizacion: doc.data().localizacion,
+            precio: doc.data().precio,
+            fecha_inicio: doc.data().fecha_inicio,
+            votos: doc.data().votos,
+            comentarios: doc.data().comentarios,
+            usuario: doc.data().usuario,
+            isla: doc.data().isla
+          }
 
+          const storageRef = firebaseStg.ref('eventos/' + doc.id)
+          var fotoRef = storageRef.child('foto')
+          // Obtener foto
+          fotoRef.getDownloadURL().then(function (url) {
+            evento.foto = url
+          })
+
+          this.datos_evento.push(evento)
+        })
+      })
+    },
+    DataChild (tab) {
+      this.tab = tab
+      this.Mostrar()
+    },
+    Mostrar () {
+      console.log('LEYENDO DOC')
+      if (this.tab === 'tab1') {
+        this.obtenerEvento('votos')
+      } else if (this.tab === 'tab2') {
+        this.obtenerEvento('fecha_creacion')
+      } else if (this.tab === 'tab3') {
+        this.obtenerEvento('isla')
+      }
     }
   },
   mounted () {
-    console.log('LEYENDO DOC')
-
-    firebaseDb.collection('eventos').get().then((querySnapshot) => {
-      querySnapshot.forEach((doc) => {
-        // Leemos los datos
-        const evento = {
-          foto: '',
-          nombre_evento: doc.data().nombre_evento,
-          localizacion: doc.data().localizacion,
-          precio: doc.data().precio,
-          fecha_inicio: doc.data().fecha_inicio,
-          votos: doc.data().votos,
-          comentarios: doc.data().comentarios,
-          usuario: doc.data().usuario,
-          isla: doc.data().isla
-        }
-
-        const storageRef = firebaseStg.ref('eventos/' + doc.id)
-        var fotoRef = storageRef.child('foto')
-        // Obtener foto
-        fotoRef.getDownloadURL().then(function (url) {
-          evento.foto = url
-        })
-
-        this.datos_evento.push(evento)
-      })
-    })
+    this.Mostrar()
   }
 }
 </script>
