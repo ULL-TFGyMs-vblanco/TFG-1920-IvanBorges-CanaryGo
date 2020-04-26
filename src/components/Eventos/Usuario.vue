@@ -25,7 +25,7 @@
       <div class=".col-2 col-sm-2 items-center foto">
         <q-btn round>
           <q-avatar size="80px" label="cuenta">
-            <img src="https://cdn.quasar.dev/img/avatar4.jpg" />
+            <img :src = this.img />
           </q-avatar>
           <q-menu>
             <div class="row no-wrap q-pa-md text-center">
@@ -80,9 +80,10 @@ export default {
   name: 'Usuario',
   data () {
     return {
-      saludo: this.$t('welcome'),
+      saludo: this.$t('welcome') + ' ' + firebaseAuth.currentUser.displayName.split(' ')[0],
       saludo_2: this.$t('mind'),
-      busqueda: ''
+      busqueda: '',
+      img: firebaseAuth.currentUser.photoURL
     }
   },
   methods: {
@@ -116,6 +117,6 @@ export default {
   font-size: 90%;
 }
 
-.foto {
-}
+/* .foto {
+} */
 </style>

@@ -112,7 +112,7 @@
             <q-item-section>
               <q-item-label>
                 <q-avatar size="40px" label="cuenta">
-                  <img src="https://cdn.quasar.dev/img/avatar4.jpg" />
+                  <img :src="this.img" />
                 </q-avatar>
                 {{usuario}}
               </q-item-label>
@@ -149,7 +149,7 @@
 
 <script>
 
-import { firebaseDb, firebaseStg } from '../boot/firebase'
+import { firebaseDb, firebaseStg, firebaseAuth } from '../boot/firebase'
 import Selectorarchivos from '../components/Eventos/Selectorarchivos'
 import Mapa from '../components/Eventos/Mapa'
 
@@ -167,8 +167,10 @@ export default {
       descripcion: '',
       descuento: '',
       sesion: false,
-      usuario: 'Diego',
-      id: ''
+      usuario: firebaseAuth.currentUser.displayName,
+      img: firebaseAuth.currentUser.photoURL,
+      id: '',
+      isla: ''
     }
   },
   methods: {
@@ -216,17 +218,22 @@ export default {
         fecha_fin: this.fecha_fin,
         precio: this.precio,
         descuento: this.descuento,
-        descripcion: this.descripcion
+        descripcion: this.descripcion,
+        votos: 0,
+        comentarios: 0,
+        usuario: this.usuario,
+        isla: this.isla
       })
         .then(function (docRef) {
           // Subir imagenes
           const storageRef = firebaseStg.ref('eventos/' + docRef.id)
           const thisRef = storageRef.child('foto')
 
-          thisRef.put(file).then(function (snapshot) {
-            // console.log('Archivo subido')
-          })
-          router.push('events')
+          thisRef.put(file)
+            .then(function (snapshot) {
+              // console.log('Archivo subido')
+              router.push('events')
+            })
         })
         .catch(function (error) {
           console.error('Error añadiendo evento ', error)
@@ -250,8 +257,10 @@ export default {
       this.$refs.descuento.resetValidation()
       this.$refs.descripcion.resetValidation()
     },
-    onClickChild (ubicacion) {
+    onClickChild (ubicacion, isla) {
+      console.log('USUARIO FIREBASE', firebaseAuth.currentUser)
       this.localizacion = String(ubicacion).slice(7, -1)
+      this.isla = isla
     }
   }
 }

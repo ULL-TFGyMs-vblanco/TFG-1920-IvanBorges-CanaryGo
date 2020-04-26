@@ -86,13 +86,49 @@ export default {
           attribution:
             'Map data: &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)'
         }
-      ]
+      ],
+      isla: '',
+      // Lat y Lng islas
+      // Lanzarote
+      lnz_lat_min: 28.820834,
+      lnz_lat_max: 29.463718,
+      lnz_lng_min: -13.892249,
+      lnz_lng_max: -13.354280,
+      // Fuerteventura
+      ftv_lat_min: 27.994879,
+      ftv_lat_max: 28.780818,
+      ftv_lng_min: -14.563415,
+      ftv_lng_max: -13.761317,
+      // Gran Canaria
+      gcn_lat_min: 27.702862,
+      gcn_lat_max: 28.231178,
+      gcn_lng_min: -15.854814,
+      gcn_lng_max: -15.314903,
+      // Tenerife
+      tnf_lat_min: 27.935335,
+      tnf_lat_max: 28.646747,
+      tnf_lng_min: -16.944341,
+      tnf_lng_max: -16.089806,
+      // La Gomera
+      gmr_lat_min: 27.986798,
+      gmr_lat_max: 28.243741,
+      gmr_lng_min: -17.375494,
+      gmr_lng_max: -17.068637,
+      // La Palma
+      plm_lat_min: 28.433482,
+      plm_lat_max: 28.881690,
+      plm_lng_min: -18.031932,
+      plm_lng_max: -17.670697,
+      // El Hierro
+      hro_lat_min: 27.600233,
+      hro_lat_max: 27.890715,
+      hro_lng_min: -18.197013,
+      hro_lng_max: -17.835778
     }
   },
   methods: {
     addMarker (event) {
       // Datos
-      console.log('ALGO', this.tileProviders)
       const busqueda = document.getElementsByClassName('leaflet-bar-part leaflet-bar-part-single')[0]
       const reset = document.getElementsByClassName('reset')[0]
 
@@ -120,7 +156,8 @@ export default {
           document.getElementsByClassName('leaflet-marker-icon leaflet-zoom-animated leaflet-interactive')[1].removeChild()
         }
       }
-      this.$emit('clicked', this.markerLatLng)
+      this.Localizar_isla()
+      this.$emit('clicked', this.markerLatLng, this.isla)
     },
     reverseGeocode () {
       const Nominatim = require('nominatim-geocoder')
@@ -155,6 +192,29 @@ export default {
         .catch((error) => {
           console.log(error)
         })
+    },
+    Localizar_isla () {
+      const coordenadas = String(this.markerLatLng).slice(7, -1).split(',')
+      const lat = Number(coordenadas[0])
+      const lng = Number(coordenadas[1])
+      if ((this.Rango(this.lnz_lat_min, this.lnz_lat_max, lat)) && (this.Rango(this.lnz_lng_min, this.lnz_lng_max, lng))) {
+        this.isla = 'Lanzarote'
+      } else if ((this.Rango(this.ftv_lat_min, this.ftv_lat_max, lat)) && (this.Rango(this.ftv_lng_min, this.ftv_lng_max, lng))) {
+        this.isla = 'Fuerteventura'
+      } else if ((this.Rango(this.gcn_lat_min, this.gcn_lat_max, lat)) && (this.Rango(this.gcn_lng_min, this.gcn_lng_max, lng))) {
+        this.isla = 'Gran Canaria'
+      } else if ((this.Rango(this.tnf_lat_min, this.tnf_lat_max, lat)) && (this.Rango(this.tnf_lng_min, this.tnf_lng_max, lng))) {
+        this.isla = 'Tenerife'
+      } else if ((this.Rango(this.gmr_lat_min, this.gmr_lat_max, lat)) && (this.Rango(this.gmr_lng_min, this.gmr_lng_max, lng))) {
+        this.isla = 'La Gomera'
+      } else if ((this.Rango(this.plm_lat_min, this.plm_lat_max, lat)) && (this.Rango(this.plm_lng_min, this.plm_lng_max, lng))) {
+        this.isla = 'La Palma'
+      } else if ((this.Rango(this.hro_lat_min, this.hro_lat_max, lat)) && (this.Rango(this.hro_lng_min, this.hro_lng_max, lng))) {
+        this.isla = 'El Hierro'
+      }
+    },
+    Rango (min, max, num) {
+      return num >= min && num <= max
     }
   },
   computed: {

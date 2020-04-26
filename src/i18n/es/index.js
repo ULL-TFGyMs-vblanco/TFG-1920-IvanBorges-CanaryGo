@@ -105,7 +105,7 @@ export default {
   map0: 'Mapa Estándar',
   map1: 'Mapa topográfico',
   mind: '¿Qué tienes en mente?',
-  welcome: 'Bienvenid@',
+  welcome: 'Hola',
   signoff: 'Cerrar sesión',
   google: 'Iniciar sesión con Google',
   facebook: 'Iniciar sesión con Facebook',

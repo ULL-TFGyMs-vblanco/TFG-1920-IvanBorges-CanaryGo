@@ -43,7 +43,11 @@ export default {
           nombre_evento: doc.data().nombre_evento,
           localizacion: doc.data().localizacion,
           precio: doc.data().precio,
-          fecha_inicio: doc.data().fecha_inicio
+          fecha_inicio: doc.data().fecha_inicio,
+          votos: doc.data().votos,
+          comentarios: doc.data().comentarios,
+          usuario: doc.data().usuario,
+          isla: doc.data().isla
         }
 
         const storageRef = firebaseStg.ref('eventos/' + doc.id)

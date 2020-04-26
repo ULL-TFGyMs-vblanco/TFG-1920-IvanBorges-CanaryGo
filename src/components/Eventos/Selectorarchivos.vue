@@ -49,3 +49,12 @@ export default {
   }
 }
 </script>
+
+<style>
+#picture-input {
+  height: 578px;
+  z-index: 0;
+  background: none;
+}
+
+</style>
