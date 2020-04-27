@@ -39,12 +39,12 @@ export default {
       tab: 'tab1',
       model: null,
       options: [
-        'Tenerife', 'Gran Canaria', 'La Palma', 'La Gomera', 'El Hierro', 'Lanzarote', 'Fuerteventura'
+        'Tenerife', 'Gran Canaria', 'La Palma', 'La Gomera', 'El Hierro', 'Lanzarote', 'Fuerteventura', ''
       ]
     }
   },
   updated () {
-    this.$emit('clicked', this.tab)
+    this.$emit('clicked', this.tab, this.model)
   }
 }
 

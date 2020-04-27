@@ -9,14 +9,14 @@
             <div class="votos_">
               <q-card-section class="votos">
                 <div class="votos_box">
-                  <q-btn size="70%" flat round icon="thumb_down" />
+                  <q-btn size="70%" flat round icon="thumb_down" @click="Restar" />
                   <q-btn
                     class="votos_evento"
                     size="100%"
                     flat
                     style="pointer-events: none;"
                   >{{votos}}</q-btn>
-                  <q-btn size="70%" flat round icon="thumb_up" />
+                  <q-btn size="70%" flat round icon="thumb_up" @click="Sumar" />
                 </div>
               </q-card-section>
             </div>
@@ -54,6 +54,7 @@
 </template>
 
 <script>
+import { firebaseDb } from '../../boot/firebase'
 
 export default {
   name: 'Evento',
@@ -97,9 +98,31 @@ export default {
     isla: {
       // type: String,
       // required: true
+    },
+    id: {
+      // type: String,
+      // required: true
     }
   },
   methods: {
+    Sumar () {
+      var votosactuales = 0
+      firebaseDb.collection('eventos').doc(this.id).get().then((querySnapshot) => {
+        votosactuales = querySnapshot.data().votos
+        firebaseDb.collection('eventos').doc(this.id).update({
+          votos: votosactuales + 1
+        })
+      })
+    },
+    Restar () {
+      var votosactuales = 0
+      firebaseDb.collection('eventos').doc(this.id).get().then((querySnapshot) => {
+        votosactuales = querySnapshot.data().votos
+        firebaseDb.collection('eventos').doc(this.id).update({
+          votos: votosactuales - 1
+        })
+      })
+    }
 
   }
 }

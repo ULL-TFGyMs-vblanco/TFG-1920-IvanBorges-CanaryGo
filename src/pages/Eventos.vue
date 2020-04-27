@@ -25,13 +25,14 @@ export default {
   data () {
     return {
       datos_evento: [],
-      tab: 'tab1'
+      tab: 'tab1',
+      isla: ''
     }
   },
   methods: {
-    obtenerEvento (filtro, isla) {
+    obtenerEvento (filtro) {
       this.datos_evento = []
-      firebaseDb.collection('eventos').orderBy(filtro, 'desc').get().then((querySnapshot) => {
+      filtro.get().then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
           // Leemos los datos
           const evento = {
@@ -43,7 +44,8 @@ export default {
             votos: doc.data().votos,
             comentarios: doc.data().comentarios,
             usuario: doc.data().usuario,
-            isla: doc.data().isla
+            isla: doc.data().isla,
+            id: doc.id
           }
 
           const storageRef = firebaseStg.ref('eventos/' + doc.id)
@@ -57,19 +59,37 @@ export default {
         })
       })
     },
-    DataChild (tab) {
+    DataChild (tab, isla) {
       this.tab = tab
+      this.isla = isla
       this.Mostrar()
     },
     Mostrar () {
       console.log('LEYENDO DOC')
+      // Consultas
+      var eventos = firebaseDb.collection('eventos')
+      var destacados = eventos.orderBy('votos', 'desc')
+      var novedades = eventos.orderBy('fecha_creacion', 'desc')
+      var zona = eventos.orderBy('fecha_creacion', 'desc')
+      // var isla = eventos.where('isla', '==', 'Tenerife')
+
+      // Gestión consultas
+      var consulta
       if (this.tab === 'tab1') {
-        this.obtenerEvento('votos')
+        consulta = destacados
       } else if (this.tab === 'tab2') {
-        this.obtenerEvento('fecha_creacion')
+        consulta = novedades
       } else if (this.tab === 'tab3') {
-        this.obtenerEvento('isla')
+        consulta = zona
       }
+
+      // Requerimos filtro por isla si es necesario
+      if (this.isla !== '') {
+        consulta = consulta.where('isla', '==', this.isla)
+      }
+
+      // Realizamos consulta final
+      this.obtenerEvento(consulta)
     }
   },
   mounted () {
