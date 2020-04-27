@@ -150,7 +150,7 @@
 
 <script>
 
-import { firebaseAuth, firebase, firebaseDb } from 'boot/firebase'
+import { firebaseAuth, firebase } from 'boot/firebase'
 import LoginButtons from 'components/Login/LoginButtons'
 
 export default {
@@ -273,16 +273,15 @@ export default {
     },
     EnviarInfo () {
       // Subir informacion
-
-      firebaseDb.collection('usuarios').add({
-        nombre: this.nombre,
-        usuario: this.usuario,
-        email: this.email,
-        fecha: this.fecha
-      })
-        .catch(function (error) {
-          console.error('Error añadiendo usuario ', error)
+      var usuario = firebaseAuth.currentUser
+      if (usuario != null) {
+        usuario.updateProfile({
+          displayName: this.usuario,
+          photoURL: this.foto,
+          name: this.name,
+          date: this.fecha
         })
+      }
     }
   }
 }
