@@ -31,7 +31,10 @@
       <div class="opciones">
         <q-card-actions>
           <div class="col-3 col-sm-3 text-center usuario">
-            <q-btn size="70%" flat round icon="account_circle">
+            <q-btn size="70%" flat round>
+              <q-avatar size="200%">
+                <img :src="this.foto_usuario" />
+              </q-avatar>
               <q-btn size="70%" flat>{{usuario}}</q-btn>
             </q-btn>
           </div>
@@ -92,6 +95,10 @@ export default {
       // required: true
     },
     usuario: {
+      // type: String,
+      // required: true
+    },
+    foto_usuario: {
       // type: String,
       // required: true
     },

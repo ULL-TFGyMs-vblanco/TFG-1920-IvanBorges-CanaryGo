@@ -45,7 +45,8 @@ export default {
             comentarios: doc.data().comentarios,
             usuario: doc.data().usuario,
             isla: doc.data().isla,
-            id: doc.id
+            id: doc.id,
+            foto_usuario: doc.data().foto_usuario
           }
 
           const storageRef = firebaseStg.ref('eventos/' + doc.id)

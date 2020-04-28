@@ -224,7 +224,8 @@ export default {
         comentarios: 0,
         usuario: this.usuario,
         isla: this.isla,
-        fecha_creacion: new Date().getDay() + '/' + new Date().getMonth() + '/' + new Date().getFullYear() + ',' + new Date().getHours() + ':' + new Date().getMinutes() + new Date().getMilliseconds()
+        fecha_creacion: new Date().getDay() + '/' + new Date().getMonth() + '/' + new Date().getFullYear() + ',' + new Date().getHours() + ':' + new Date().getMinutes() + new Date().getMilliseconds(),
+        foto_usuario: firebaseAuth.currentUser.photoURL
       })
         .then(function (docRef) {
           // Subir imagenes
