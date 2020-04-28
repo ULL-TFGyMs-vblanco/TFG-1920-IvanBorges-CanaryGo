@@ -9,6 +9,17 @@
       <br />
       <br />
       <form @submit.prevent.stop="onSubmit" @reset.prevent.stop="onReset" class="q-gutter-md">
+        <q-item>
+          <q-item-section>
+            <q-item-label style="color: #ec9718">{{$t('optional_photo')}}</q-item-label>
+          </q-item-section>
+        </q-item>
+
+        <!-- Imagen -->
+        <Selectorarchivos v-bind:anchura="500" v-bind:altura="500" />
+        <!-- <br />
+        <br />-->
+
         <q-input
           ref="nombre"
           class="Nombre"
@@ -31,6 +42,18 @@
           type="user"
           lazy-rules
           :rules="[ val => val && val.length > 0 || $t('user_fail')]"
+        />
+
+        <q-select
+          ref="genero"
+          class="Genero"
+          filled
+          v-model="genero"
+          :options="opciones_genero"
+          :label="$t('gender')"
+          :hint="$t('gender_hint')"
+          lazy-rules
+          :rules="[ val => val && val.length > 0 || $t('gender_fail')]"
         />
 
         <q-input
@@ -150,13 +173,16 @@
 
 <script>
 
-import { firebaseAuth, firebase } from 'boot/firebase'
+// eslint-disable-next-line no-unused-vars
+import { firebaseAuth, firebase, firebaseStg } from 'boot/firebase'
+import Selectorarchivos from '../components/Eventos/Selectorarchivos'
 import LoginButtons from 'components/Login/LoginButtons'
 
 export default {
   name: 'Signup',
   components: {
-    LoginButtons
+    LoginButtons,
+    Selectorarchivos
   },
   data () {
     return {
@@ -165,6 +191,8 @@ export default {
       prompt: false,
       nombre: null,
       usuario: null,
+      genero: null,
+      opciones_genero: ['Masculino', 'Femenino'],
       email: null,
       fecha: null,
       contrasena: null,
@@ -176,16 +204,15 @@ export default {
 
   methods: {
     onSubmit () {
-      this.$refs.email.validate()
-      this.$refs.contrasena.validate()
       this.$refs.nombre.validate()
       this.$refs.usuario.validate()
       this.$refs.email.validate()
       this.$refs.fecha.validate()
       this.$refs.contrasena.validate()
       this.$refs.contrasena2.validate()
+      this.$refs.genero.validate()
 
-      if (this.$refs.nombre.hasError || this.$refs.usuario.hasError || this.$refs.email.hasError || this.$refs.fecha.hasError || this.$refs.contrasena.hasError || this.$refs.contrasena2.hasError) {
+      if (this.$refs.nombre.hasError || this.$refs.usuario.hasError || this.$refs.genero.hasError || this.$refs.email.hasError || this.$refs.fecha.hasError || this.$refs.contrasena.hasError || this.$refs.contrasena2.hasError) {
         this.formHasError = true
       } else if (this.sesion !== true) {
         this.$q.notify({
@@ -207,6 +234,7 @@ export default {
       this.email = null
       this.contrasena = null
       this.contrasena2 = null
+      this.genero = null
 
       this.$refs.nombre.resetValidation()
       this.$refs.usuario.resetValidation()
@@ -214,6 +242,7 @@ export default {
       this.$refs.email.resetValidation()
       this.$refs.contrasena.resetValidation()
       this.$refs.contrasena2.resetValidation()
+      this.$refs.genero.resetValidation()
     },
     Registrar () {
       const correo = this.email
@@ -224,7 +253,6 @@ export default {
       // console.log(this.contrasena)
       firebaseAuth.createUserWithEmailAndPassword(correo, password2)
         .catch(function (error) {
-          // Handle Errors here.
           var errorCode = error.code
           var errorMessage = error.message
           console.log(errorCode)
@@ -238,6 +266,7 @@ export default {
             this.Success()
             this.Verificar()
             this.EnviarInfo()
+            this.ActualizarFoto()
           }
         })
     },
@@ -273,6 +302,10 @@ export default {
     },
     EnviarInfo () {
       // Subir informacion
+      const foto = document.getElementById('foto').files[0]
+      if (foto !== undefined) {
+
+      }
       var usuario = firebaseAuth.currentUser
       if (usuario != null) {
         usuario.updateProfile({
@@ -281,6 +314,75 @@ export default {
           name: this.name,
           date: this.fecha
         })
+      }
+    },
+    ActualizarFoto () {
+      const usuario = firebaseAuth.currentUser
+      const usuarioid = firebaseAuth.currentUser.uid
+      const storageRef = firebaseStg.ref('avatares/usuarios/' + usuarioid)
+      const fotoRef = storageRef.child('foto')
+      const foto = document.getElementById('foto').files[0]
+      let urlfoto
+
+      if (foto !== undefined) {
+        // Subir imagen
+        fotoRef.put(foto)
+          .then(function (snapshot) {
+            // console.log('Archivo subido')
+            // Obtener URL guardado
+            fotoRef.getDownloadURL().then(function (url) {
+              urlfoto = url
+            })
+              .then(function () {
+                if (usuario != null) {
+                  usuario.updateProfile({
+                    photoURL: urlfoto
+                  })
+                }
+              })
+          })
+      } else {
+        // Predefinidos
+        const usuarioid = firebaseAuth.currentUser.uid
+        const storageRef = firebaseStg.ref('avatares/usuarios/' + usuarioid)
+        const fotoRef = storageRef.child('foto')
+
+        const storageRefDefault = firebaseStg.ref('avatares/predefinidos/')
+        const fotoRefMale = storageRefDefault.child('Avatar_m.png')
+        const fotoRefFemale = storageRefDefault.child('Avatar_f.png')
+
+        let genero
+
+        if (this.genero === 'Masculino') {
+          console.log('Masculino')
+          genero = fotoRefMale
+        } else if (this.genero === 'Femenino') {
+          console.log('Femenino')
+          genero = fotoRefFemale
+        }
+
+        genero.getDownloadURL()
+          .catch(function (error) {
+            console.log('Error', error)
+          })
+          .then(function (url, archivo) {
+            var xhr = new XMLHttpRequest()
+            xhr.responseType = 'blob'
+            xhr.onload = function (event) {
+              var blob = xhr.response
+              fotoRef.put(blob)
+              console.log('Enviando')
+            }
+            xhr.open('GET', url)
+            xhr.send()
+          })
+          .then(function (snapshot) {
+            fotoRef.getDownloadURL().then(function (url) {
+              usuario.updateProfile({
+                photoURL: url
+              })
+            })
+          })
       }
     }
   }

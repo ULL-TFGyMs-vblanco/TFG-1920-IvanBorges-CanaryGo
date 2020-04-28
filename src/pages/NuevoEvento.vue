@@ -11,7 +11,8 @@
         <br />
         <form @submit.prevent.stop="onSubmit" @reset.prevent.stop="onReset" class="q-gutter-md">
           <!-- Selector -->
-          <Selectorarchivos class="selectorarchivos" />
+          <Selectorarchivos class="selectorarchivos" v-bind:anchura='550' v-bind:altura='550' />
+          <br />
           <q-input
             ref="nombre_evento"
             class="nombre_evento"

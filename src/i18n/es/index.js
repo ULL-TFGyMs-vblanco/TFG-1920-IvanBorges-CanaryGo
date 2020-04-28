@@ -49,6 +49,9 @@ export default {
   name: 'Nombre',
   name_hint: 'Escribe tu nombre',
   name_fail: 'Debes introducir un nombre',
+  gender_fail: 'Debes introducir un género',
+  gender: 'Género',
+  gender_hint: 'Selecciona tu género',
   user: 'Usuario',
   user_hint: 'Elige tu usuario',
   user_fail: 'Debes introducir un usuario',
@@ -116,5 +119,6 @@ export default {
   location: 'Isla',
   featured: 'Más destacados',
   new: 'Novedades',
-  location_user: 'En tu zona'
+  location_user: 'En tu zona',
+  optional_photo: 'Foto de perfil (opcional)'
 }

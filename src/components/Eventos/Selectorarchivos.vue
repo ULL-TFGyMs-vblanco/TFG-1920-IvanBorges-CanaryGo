@@ -3,11 +3,11 @@
     <picture-input
       ref="foto"
       id="foto"
-      width="600"
-      height="600"
+      :width="this.anchura"
+      :height="this.altura"
       margin="16"
       accept="image/jpeg, image/png"
-      size="50"
+      size="5"
       radius="5"
       button-class="primary"
       :key="$i18n.locale"
@@ -30,6 +30,16 @@ export default {
   data () {
     return {
       info1: this.$t('select')
+    }
+  },
+  props: {
+    anchura: {
+      // type: Number,
+      // required: true
+    },
+    altura: {
+      // type: Number,
+      // required: true
     }
   },
   components: {
@@ -56,5 +66,4 @@ export default {
   z-index: 0;
   background: none;
 }
-
 </style>

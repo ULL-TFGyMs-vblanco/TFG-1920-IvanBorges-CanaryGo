@@ -116,5 +116,9 @@ export default {
   location: 'Island',
   featured: 'Most featured',
   new: 'New',
-  location_user: 'In your zone'
+  location_user: 'In your zone',
+  optional_photo: 'Profile picture (optional)',
+  gender_fail: 'You must enter a gender',
+  gender: 'Gender',
+  gender_hint: 'Select your gender'
 }
