@@ -1,7 +1,8 @@
 // Variables
 var express = require('express')
 var bodyParser = require('body-parser')
-// var path = require('path')
+const router = express.Router()
+var path = require('path')
 var serveStatic = require('serve-static')
 // var fs = require('fs')
 global.XMLHttpRequest = require('xhr2')
@@ -23,6 +24,13 @@ app.use(bodyParser.json())
 require('./backend/requests/events')(app)
 require('./backend/requests/auth')(app)
 // ////////// //
+
+app.use('/', router)
+
+app.get('/*', function (req, res) {
+  // eslint-disable-next-line no-path-concat
+  res.sendFile(path.join(__dirname + '/dist/spa/index.html'))
+})
 
 // Server listening
 app.listen(port, hostname, () => {
