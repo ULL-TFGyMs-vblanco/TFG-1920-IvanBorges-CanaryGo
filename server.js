@@ -10,7 +10,7 @@ var app = express()
 // Config
 // eslint-disable-next-line no-path-concat
 app.use(serveStatic(__dirname + '/dist/spa'))
-var port = process.env.PORT || 5000
+var port = process.env.PORT || 4000
 var hostname = 'localhost'
 
 // configure the app to use bodyParser()
