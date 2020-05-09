@@ -68,7 +68,7 @@
 </template>
 
 <script>
-import { firebaseAuth, firebase } from 'boot/firebase'
+import { firebaseAuth } from 'boot/firebase'
 import LoginButtons from 'components/Login/LoginButtons'
 
 export default {
@@ -113,32 +113,30 @@ export default {
       this.$refs.contrasena.resetValidation()
     },
     IniciarSesion () {
-      let errorcodes = ''
-      // console.log('Estado', firebase.auth().currentUser.emailVerified)
+      // Simple POST request with a JSON body using fetch
+      const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: 'ivanbor_piano@hotmail.com',
+          contrasena: '123123'
+        })
+      }
+      fetch('http://localhost:5000/autorizar', requestOptions)
+        .then(response => response.json())
+        .then(data => (this.postId = data.id))
 
-      firebaseAuth.signInWithEmailAndPassword(this.email, this.contrasena)
-        .catch(function (error) {
-          // Errores
-          var errorCode = error.code
-          var errorMessage = error.message
-          console.log(errorCode)
-          console.log(errorMessage)
-          errorcodes = errorCode
-        })
-        .then(() => {
-          if (errorcodes === 'auth/user-not-found') {
-            this.Fail(this.$t('login_fail_user'))
-          } else if (errorcodes === 'auth/wrong-password') {
-            this.Fail(this.$t('login_fail_password'))
-          } else {
-            if (firebase.auth().currentUser.emailVerified === true) {
-              this.Success()
-              this.$router.push('events')
-            } else {
-              this.Fail(this.$t('login_fail_verify'))
-            }
-          }
-        })
+      // if (response === 'auth/user-not-found') {
+      //   this.Fail(this.$t('login_fail_user'))
+      // } else if (response === 'auth/wrong-password') {
+      //   this.Fail(this.$t('login_fail_password'))
+      // } else {
+      //   if (response === 'Usualio logueado') {
+      //     this.Success()
+      //     this.$router.push('events')
+      //   } else {
+      //     this.Fail(this.$t('login_fail_verify'))
+      //   }
     },
     Observador () {
       console.log('Dentro')

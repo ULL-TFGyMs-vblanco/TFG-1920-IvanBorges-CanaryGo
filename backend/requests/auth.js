@@ -8,7 +8,7 @@ module.exports = function (app) {
   // Get (Login)
   app.get('/autorizar', function (req, res) {
     console.log('HTTP Login')
-    // console.log('Funcionando', req.body)
+    console.log('Funcionando', req.body)
 
     let errorcodes = ''
 
