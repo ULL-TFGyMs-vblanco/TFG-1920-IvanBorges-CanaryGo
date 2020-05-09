@@ -8,13 +8,14 @@
   "author": "Ivan Josue Borges Gonzalez <alu0100880755@ull.edu.es>",
   "private": true,
   "scripts": {
-    "start": "npm run build && node server.js",
+    "local": "npm run build && node server.js",
     "build": "quasar build",
+    "start": "node server.js",
+    "heroku-postbuild": "yarn && yarn build",
     "deploy": "now",
     "lint": "eslint --ext .js,.vue src",
     "test": "echo \"No test specified\" && exit 0",
-    "cypress:open": "cypress open",
-    "heroku-postbuild": "node server.js"
+    "cypress:open": "cypress open"
   },
   "dependencies": {
     "@pderas/vue2-geocoder": "^1.1.0",
