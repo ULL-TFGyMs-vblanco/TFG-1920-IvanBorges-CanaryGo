@@ -52,7 +52,7 @@ app.use(bodyParser.json())
 app.use('/', router)
 
 // Serve only the static files form the dist directory
-app.use(express.static(__dirname + '/dist/instatech'))
+app.use(express.static(__dirname + '/dist/spa'))
 
 app.get('/*', function (req, res) {
   res.sendFile(path.join(__dirname + '/dist/spa/index.html'))
