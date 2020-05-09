@@ -11,7 +11,7 @@
     "local": "npm run build && node server.js",
     "build": "quasar build",
     "start": "node server.js",
-    "heroku-postbuild": "yarn && yarn build",
+    "heroku-postbuild": "npm && npm run build",
     "deploy": "now",
     "lint": "eslint --ext .js,.vue src",
     "test": "echo \"No test specified\" && exit 0",
