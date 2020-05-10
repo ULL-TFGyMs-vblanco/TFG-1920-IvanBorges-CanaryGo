@@ -11,7 +11,7 @@ var app = express()
 
 // Config
 // eslint-disable-next-line no-path-concat
-app.use(serveStatic(__dirname + '/dist/spa'))
+app.use(express.static(__dirname + '/dist/spa'))
 var port = process.env.PORT || 4000
 var hostname = 'localhost'
 
