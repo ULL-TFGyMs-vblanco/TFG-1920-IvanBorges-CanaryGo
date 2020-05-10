@@ -39,7 +39,7 @@ module.exports = function (app) {
   // Put (Register)
   app.put('/autorizar', function (req, res) {
     console.log('HTTP Registrar')
-    // console.log('Funcionando', req.body)
+    console.log('Funcionando', req.body)
 
     let errorcodes = false
 
