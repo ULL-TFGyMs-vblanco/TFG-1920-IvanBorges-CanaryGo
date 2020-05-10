@@ -52,6 +52,11 @@ const router = express.Router()
 app.use(cors())
 app.use(bodyParser.json())
 
+// OPERACIONES //
+require('./backend/requests/events')(app)
+require('./backend/requests/auth')(app)
+// ////////// //
+
 app.use('/', router)
 
 // Serve only the static files form the dist directory
@@ -60,11 +65,6 @@ app.use(express.static(__dirname + '/dist/spa'))
 app.get('/*', function (req, res) {
   res.sendFile(path.join(__dirname + '/dist/spa/index.html'))
 })
-
-// OPERACIONES //
-require('./backend/requests/events')(app)
-require('./backend/requests/auth')(app)
-// ////////// //
 
 // Start the app by listening on the default Heroku port
 
