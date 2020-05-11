@@ -6,6 +6,7 @@ module.exports = function (app) {
   // Get
   app.get('/eventos', function (req, res) {
     console.log('HTTP Obtener Evento')
+    console.log('Funcionando', req.body)
     // res.send('HTTP Obtener Evento')
   })
 

@@ -153,6 +153,7 @@
 import { firebaseDb, firebaseStg, firebaseAuth } from '../boot/firebase'
 import Selectorarchivos from '../components/Eventos/Selectorarchivos'
 import Mapa from '../components/Eventos/Mapa'
+// import axios from 'axios'
 
 export default {
   name: 'NuevoEvento',

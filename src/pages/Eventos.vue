@@ -52,7 +52,9 @@ export default {
         method: 'put',
         url: 'https://canarygo.herokuapp.com/eventos',
         data: {
-          tipo: 'Consultar'
+          tipo: 'Consultar',
+          tab: this.tab,
+          isla: this.isla
         }
       })
         .then((response) => {
