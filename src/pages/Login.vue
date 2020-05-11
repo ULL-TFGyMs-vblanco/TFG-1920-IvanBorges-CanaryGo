@@ -140,20 +140,20 @@ export default {
         method: 'put',
         url: 'https://canarygo.herokuapp.com/autorizar',
         data: {
-          tipo: 'login',
+          tipo: 'Login',
           correo: this.email,
-          contrasena2: this.contrasena
+          contrasena: this.contrasena
         }
       })
         .then((response) => {
           console.log('RESPUESTA DEL SERVER', response)
 
-          if (response === 'auth/user-not-found') {
+          if (response.data === 'auth/user-not-found') {
             this.Fail(this.$t('login_fail_user'))
-          } else if (response === 'auth/wrong-password') {
+          } else if (response.data === 'auth/wrong-password') {
             this.Fail(this.$t('login_fail_password'))
           } else {
-            if (response === 'Usuario logueado') {
+            if (response.data === 'Usuario logueado') {
               this.Success()
               this.$router.push('events')
             } else {

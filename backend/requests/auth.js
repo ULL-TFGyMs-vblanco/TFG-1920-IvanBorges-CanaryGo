@@ -237,7 +237,7 @@ module.exports = function (app) {
         console.log(error.code)
       })
       .then(() => {
-        // this.alert = true
+        console.log('Email de verificacion enviado')
       })
   }
 

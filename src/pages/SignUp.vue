@@ -1,6 +1,10 @@
 <template>
   <div class="row text-center">
-    <div class="q-pa-md" id="formulario" style="width: 100%;">
+    <div
+      class="q-pa-md"
+      id="formulario"
+      style="width: 100%;"
+    >
       <img
         src="../assets/images/CanaryGo/Canary_Go_Icon.png"
         style="width: 100px; height: 100px; border-radius: 20%;"
@@ -8,7 +12,11 @@
       <br />
       <br />
       <br />
-      <form @submit.prevent.stop="onSubmit" @reset.prevent.stop="onReset" class="q-gutter-md">
+      <form
+        @submit.prevent.stop="onSubmit"
+        @reset.prevent.stop="onReset"
+        class="q-gutter-md"
+      >
         <q-item>
           <q-item-section>
             <q-item-label style="color: #ec9718">{{$t('optional_photo')}}</q-item-label>
@@ -16,7 +24,10 @@
         </q-item>
 
         <!-- Imagen -->
-        <Selectorarchivos v-bind:anchura="500" v-bind:altura="500" />
+        <Selectorarchivos
+          v-bind:anchura="500"
+          v-bind:altura="500"
+        />
         <!-- <br />
         <br />-->
 
@@ -71,9 +82,19 @@
           ]"
         >
           <template v-slot:append>
-            <q-icon name="event" class="cursor-pointer">
-              <q-popup-proxy ref="qDateProxy" transition-show="scale" transition-hide="scale">
-                <q-date v-model="fecha" @input="() => $refs.qDateProxy.hide()" />
+            <q-icon
+              name="event"
+              class="cursor-pointer"
+            >
+              <q-popup-proxy
+                ref="qDateProxy"
+                transition-show="scale"
+                transition-hide="scale"
+              >
+                <q-date
+                  v-model="fecha"
+                  @input="() => $refs.qDateProxy.hide()"
+                />
               </q-popup-proxy>
             </q-icon>
           </template>
@@ -137,18 +158,37 @@
         </q-input>
 
         <div class="text-center">
-          <q-checkbox class="Terms" name="sesion" v-model="sesion" :label="$t('terms')" />
+          <q-checkbox
+            class="Terms"
+            name="sesion"
+            v-model="sesion"
+            :label="$t('terms')"
+          />
           <br />
           <!-- to="/terms" -->
-          <q-item clickable v-ripple>
+          <q-item
+            clickable
+            v-ripple
+          >
             <q-item-section>
               <q-item-label style="color: #ec9718">{{$t('terms2')}}</q-item-label>
             </q-item-section>
           </q-item>
         </div>
         <div>
-          <q-btn class="Registro" :label="$t('register')" type="submit" color="primary" />
-          <q-btn class="Reset" :label="$t('clean')" type="reset" color="primary" flat />
+          <q-btn
+            class="Registro"
+            :label="$t('register')"
+            type="submit"
+            color="primary"
+          />
+          <q-btn
+            class="Reset"
+            :label="$t('clean')"
+            type="reset"
+            color="primary"
+            flat
+          />
         </div>
       </form>
       <LoginButtons :key="$i18n.locale" />
@@ -162,7 +202,12 @@
           <q-card-section class="q-pt-none">{{$t('email_verification')}}</q-card-section>
 
           <q-card-actions align="right">
-            <q-btn flat label="OK" color="primary" v-close-popup />
+            <q-btn
+              flat
+              label="OK"
+              color="primary"
+              v-close-popup
+            />
           </q-card-actions>
         </q-card>
       </q-dialog>
@@ -177,6 +222,7 @@
 import { firebaseAuth, firebase, firebaseStg } from 'boot/firebase'
 import Selectorarchivos from '../components/Eventos/Selectorarchivos'
 import LoginButtons from 'components/Login/LoginButtons'
+import axios from 'axios'
 
 export default {
   name: 'Signup',
@@ -245,40 +291,30 @@ export default {
       this.$refs.genero.resetValidation()
     },
     Registrar () {
-      const correo = this.email
-      const password2 = this.contrasena
-      let errorcodes = false
+      axios({
+        method: 'put',
+        url: 'https://canarygo.herokuapp.com/autorizar',
+        data: {
+          tipo: 'Registro',
+          correo: this.email,
+          contrasena2: this.contrasena2,
+          nombre: this.nombre,
+          genero: this.genero,
+          fecha: this.fecha,
+          usuario: this.usuario
+        }
+      })
+        .then((response) => {
+          console.log('RESPUESTA DEL SERVER', response)
 
-      // console.log(this.email)
-      // console.log(this.contrasena)
-      firebaseAuth.createUserWithEmailAndPassword(correo, password2)
-        .catch(function (error) {
-          var errorCode = error.code
-          var errorMessage = error.message
-          console.log(errorCode)
-          console.log(errorMessage)
-          errorcodes = true
-        })
-        .then(() => {
-          if (errorcodes) {
+          if (response.data === 'Error al crear usuario') {
             this.Fail(this.$t('register_fail_2'))
-          } else {
+          } else if (response.data === 'Usuario creado') {
             this.Success()
-            this.Verificar()
-            this.EnviarInfo()
-            this.ActualizarFoto()
+            this.alert = true
           }
-        })
-    },
-    Verificar () {
-      var user = firebase.auth().currentUser
-      user.sendEmailVerification()
-        .catch(function (error) {
-          console.log(error)
-          console.log(error.code)
-        })
-        .then(() => {
-          this.alert = true
+        }, (error) => {
+          console.log('EL ERROR ES', error)
         })
     },
     Success () {
@@ -299,91 +335,6 @@ export default {
         timeout: 2000,
         progress: true
       })
-    },
-    EnviarInfo () {
-      // Subir informacion
-      const foto = document.getElementById('foto').files[0]
-      if (foto !== undefined) {
-
-      }
-      var usuario = firebaseAuth.currentUser
-      if (usuario != null) {
-        usuario.updateProfile({
-          displayName: this.usuario,
-          photoURL: this.foto,
-          name: this.name,
-          date: this.fecha
-        })
-      }
-    },
-    ActualizarFoto () {
-      const usuario = firebaseAuth.currentUser
-      const usuarioid = firebaseAuth.currentUser.uid
-      const storageRef = firebaseStg.ref('avatares/usuarios/' + usuarioid)
-      const fotoRef = storageRef.child('foto')
-      const foto = document.getElementById('foto').files[0]
-      let urlfoto
-
-      if (foto !== undefined) {
-        // Subir imagen
-        fotoRef.put(foto)
-          .then(function (snapshot) {
-            // console.log('Archivo subido')
-            // Obtener URL guardado
-            fotoRef.getDownloadURL().then(function (url) {
-              urlfoto = url
-            })
-              .then(function () {
-                if (usuario != null) {
-                  usuario.updateProfile({
-                    photoURL: urlfoto
-                  })
-                }
-              })
-          })
-      } else {
-        // Predefinidos
-        const usuarioid = firebaseAuth.currentUser.uid
-        const storageRef = firebaseStg.ref('avatares/usuarios/' + usuarioid)
-        const fotoRef = storageRef.child('foto')
-
-        const storageRefDefault = firebaseStg.ref('avatares/predefinidos/')
-        const fotoRefMale = storageRefDefault.child('Avatar_m.png')
-        const fotoRefFemale = storageRefDefault.child('Avatar_f.png')
-
-        let genero
-
-        if (this.genero === 'Masculino') {
-          console.log('Masculino')
-          genero = fotoRefMale
-        } else if (this.genero === 'Femenino') {
-          console.log('Femenino')
-          genero = fotoRefFemale
-        }
-
-        genero.getDownloadURL()
-          .catch(function (error) {
-            console.log('Error', error)
-          })
-          .then(function (url, archivo) {
-            var xhr = new XMLHttpRequest()
-            xhr.responseType = 'blob'
-            xhr.onload = function (event) {
-              var blob = xhr.response
-              fotoRef.put(blob)
-              console.log('Enviando')
-            }
-            xhr.open('GET', url)
-            xhr.send()
-          })
-          .then(function (snapshot) {
-            fotoRef.getDownloadURL().then(function (url) {
-              usuario.updateProfile({
-                photoURL: url
-              })
-            })
-          })
-      }
     }
   }
 }
