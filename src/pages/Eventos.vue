@@ -59,7 +59,7 @@ export default {
       })
         .then((response) => {
           console.log('RESPUESTA DEL SERVER', response)
-          this.datos_evento = response.datos_evento
+          this.datos_evento = response.data
         }, (error) => {
           console.log('EL ERROR ES', error)
         })
