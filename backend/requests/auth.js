@@ -9,31 +9,7 @@ module.exports = function (app) {
   app.get('/autorizar', function (req, res) {
     console.log('HTTP Login')
     console.log('Funcionando', req.body)
-
-    let errorcodes = ''
-
-    firebaseAuth.signInWithEmailAndPassword(req.body.correo, req.body.contrasena)
-      .catch(function (error) {
-      // Errores
-        var errorCode = error.code
-        var errorMessage = error.message
-        console.log(errorCode)
-        console.log(errorMessage)
-        errorcodes = errorCode
-      })
-      .then(() => {
-        if (errorcodes === 'auth/user-not-found') {
-          res.send(errorcodes)
-        } else if (errorcodes === 'auth/wrong-password') {
-          res.send(errorcodes)
-        } else {
-          if (firebase.auth().currentUser.emailVerified === true) {
-            res.send('Usuario logueado')
-          } else {
-            res.send('auth/must-verify')
-          }
-        }
-      })
+    res.send(UsuarioLogueado)
   })
 
   // Put (Register)
@@ -41,26 +17,53 @@ module.exports = function (app) {
     console.log('HTTP Registrar')
     console.log('Funcionando', req.body)
 
-    let errorcodes = false
+    if (req.body.tipo === 'Login') {
+      let errorcodes = ''
 
-    firebaseAuth.createUserWithEmailAndPassword(req.body.correo, req.body.contrasena2)
-      .catch(function (error) {
-        var errorCode = error.code
-        var errorMessage = error.message
-        console.log(errorCode)
-        console.log(errorMessage)
-        errorcodes = true
-      })
-      .then(() => {
-        if (errorcodes) {
-          res.send('Error al crear usuario')
-        } else {
-          res.send('Usuario creado')
-          Verificar()
-          ActualizarInfo(req.body.nombre, req.body.genero, req.body.fecha, req.body.usuario, req.body.correo)
-        // ActualizarFoto(req.body.foto)
-        }
-      })
+      firebaseAuth.signInWithEmailAndPassword(req.body.correo, req.body.contrasena)
+        .catch(function (error) {
+          // Errores
+          var errorCode = error.code
+          var errorMessage = error.message
+          console.log(errorCode)
+          console.log(errorMessage)
+          errorcodes = errorCode
+        })
+        .then(() => {
+          if (errorcodes === 'auth/user-not-found') {
+            res.send(errorcodes)
+          } else if (errorcodes === 'auth/wrong-password') {
+            res.send(errorcodes)
+          } else {
+            if (firebase.auth().currentUser.emailVerified === true) {
+              res.send('Usuario logueado')
+            } else {
+              res.send('auth/must-verify')
+            }
+          }
+        })
+    } else if (req.body.tipo === 'Registro') {
+      let errorcodes = false
+
+      firebaseAuth.createUserWithEmailAndPassword(req.body.correo, req.body.contrasena2)
+        .catch(function (error) {
+          var errorCode = error.code
+          var errorMessage = error.message
+          console.log(errorCode)
+          console.log(errorMessage)
+          errorcodes = true
+        })
+        .then(() => {
+          if (errorcodes) {
+            res.send('Error al crear usuario')
+          } else {
+            res.send('Usuario creado')
+            Verificar()
+            ActualizarInfo(req.body.nombre, req.body.genero, req.body.fecha, req.body.usuario, req.body.correo)
+            // ActualizarFoto(req.body.foto)
+          }
+        })
+    }
   })
 
   // Update
@@ -79,11 +82,11 @@ module.exports = function (app) {
         displayName: req.body.usuario,
         photoURL: req.body.foto
       }).then(function () {
-      // Update successful.
+        // Update successful.
         console.log('Usuario actualizado')
         res.send('Usuario actualizado')
       }).catch(function (error) {
-      // An error happened.
+        // An error happened.
         res.send('Fallo al actualizar')
         console.log('Error al actualizar usuario', error)
       })
@@ -92,11 +95,11 @@ module.exports = function (app) {
 
   // Delete
   app.delete('/autorizar', function (req, res) {
-  // res.send('Borrar perfil')
+    // res.send('Borrar perfil')
     // console.log('Funcionando', req.body)
 
     if (req.body.opcion === 'Borrar') {
-    // Opcion 1 (BORRAR)
+      // Opcion 1 (BORRAR)
       const usuarioactivo = UsuarioLogueado()
 
       let documento
@@ -113,7 +116,7 @@ module.exports = function (app) {
           console.error('Error encontrando usuario en db', error)
         })
         .then(function () {
-        // Borramos de la db
+          // Borramos de la db
           firebaseDb.collection('usuarios').doc(documento).delete()
             .then(function () {
               console.log('Usuario borrado de la db')
@@ -126,17 +129,17 @@ module.exports = function (app) {
 
       // Borramos usuario
       usuarioactivo.delete().then(function () {
-      // User deleted.
+        // User deleted.
         console.log('Usuario eliminado')
         res.send('Usuario eliminado')
       }).catch(function (error) {
         console.log('No se pudo eliminar el usuario', error)
       })
     } else {
-    // OPCION 2 (Salir)
+      // OPCION 2 (Salir)
 
       firebaseAuth.signOut().then(function () {
-      // Sign-out successful.
+        // Sign-out successful.
       })
         .catch(function (error) {
           console.log(error)
@@ -154,7 +157,7 @@ module.exports = function (app) {
 
     // Subir informacion
     if (usuarioactivo !== false) {
-    // Firestore
+      // Firestore
       firebaseDb.collection('usuarios').add({
         Nombre: nombre,
         Fecha: fecha,
@@ -171,10 +174,10 @@ module.exports = function (app) {
       usuarioactivo.updateProfile({
         displayName: usuario
       }).then(function () {
-      // Update successful.
+        // Update successful.
         console.log('Usuario actualizado')
       }).catch(function (error) {
-      // An error happened.
+        // An error happened.
         console.log('Error al actualizar usuario', error)
       })
     }
@@ -199,7 +202,7 @@ module.exports = function (app) {
           Fecha: fecha,
           Genero: genero
         }).then(function (docRef) {
-        // Subir imagenes
+          // Subir imagenes
           console.log('Info en db actualizada')
         })
           .catch(function (error) {
@@ -217,10 +220,10 @@ module.exports = function (app) {
     if (usuarioactivo !== false) {
       usuarioactivo.updatePassword(correo)
         .then(function () {
-        // Update successful.
+          // Update successful.
           console.log('Correo actualizado')
         }).catch(function (error) {
-        // An error happened.
+          // An error happened.
           console.log('Error al actualizar correo', error)
         })
     }
@@ -234,16 +237,16 @@ module.exports = function (app) {
         console.log(error.code)
       })
       .then(() => {
-      // this.alert = true
+        // this.alert = true
       })
   }
 
   function UsuarioLogueado () {
     if (firebaseAuth.currentUser !== undefined) {
-    // User is signed in.
+      // User is signed in.
       return firebaseAuth.currentUser
     } else {
-    // No user is signed in.
+      // No user is signed in.
       return false
     }
   }
@@ -253,10 +256,10 @@ module.exports = function (app) {
 
     if (usuarioactivo !== false) {
       usuarioactivo.updatePassword(contrasena).then(function () {
-      // Update successful.
+        // Update successful.
         console.log('Contraseña actualizada')
       }).catch(function (error) {
-      // An error happened.
+        // An error happened.
         console.log('Error al actualizar contraseña', error)
       })
     }
@@ -270,11 +273,11 @@ module.exports = function (app) {
     let urlfoto
 
     if (foto !== undefined) {
-    // Subir imagen
+      // Subir imagen
       fotoRef.put(foto)
         .then(function (snapshot) {
-        // console.log('Archivo subido')
-        // Obtener URL guardado
+          // console.log('Archivo subido')
+          // Obtener URL guardado
           fotoRef.getDownloadURL().then(function (url) {
             urlfoto = url
           })
@@ -287,7 +290,7 @@ module.exports = function (app) {
             })
         })
     } else {
-    // Predefinidos
+      // Predefinidos
       const usuarioid = firebaseAuth.currentUser.uid
       const storageRef = firebaseStg.ref('avatares/usuarios/' + usuarioid)
       const fotoRef = storageRef.child('foto')
