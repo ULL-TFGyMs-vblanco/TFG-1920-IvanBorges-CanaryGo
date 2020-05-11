@@ -1,6 +1,10 @@
 <template>
   <div class="row text-center">
-    <div class="q-pa-md" id="formulario" style="width: 100%;">
+    <div
+      class="q-pa-md"
+      id="formulario"
+      style="width: 100%;"
+    >
       <img
         src="../assets/images/CanaryGo/Canary_Go_Icon.png"
         style="width: 100px; height: 100px; border-radius: 20%;"
@@ -47,19 +51,37 @@
           </template>
         </q-input>
         <div class="text-center">
-          <q-checkbox name="sesion" v-model="sesion" :label="$t('remember')" />
+          <q-checkbox
+            name="sesion"
+            v-model="sesion"
+            :label="$t('remember')"
+          />
           <br />
 
           <!-- to="/restore" -->
-          <q-item clickable v-ripple>
+          <q-item
+            clickable
+            v-ripple
+          >
             <q-item-section>
               <q-item-label style="color: #ec9718">{{$t('password_reset')}}</q-item-label>
             </q-item-section>
           </q-item>
         </div>
         <div>
-          <q-btn class="Registro" :label="$t('login')" type="submit" color="primary" />
-          <q-btn class="Reset" :label="$t('clean')" type="reset" color="primary" flat />
+          <q-btn
+            class="Registro"
+            :label="$t('login')"
+            type="submit"
+            color="primary"
+          />
+          <q-btn
+            class="Reset"
+            :label="$t('clean')"
+            type="reset"
+            color="primary"
+            flat
+          />
         </div>
       </form>
       <LoginButtons :key="$i18n.locale" />
@@ -70,6 +92,7 @@
 <script>
 import { firebaseAuth } from 'boot/firebase'
 import LoginButtons from 'components/Login/LoginButtons'
+import axios from 'axios'
 
 export default {
   name: 'Login',
@@ -113,18 +136,19 @@ export default {
       this.$refs.contrasena.resetValidation()
     },
     IniciarSesion () {
-      // Simple POST request with a JSON body using fetch
-      const requestOptions = {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          email: 'ivanbor_piano@hotmail.com',
-          contrasena: '123123'
+      axios({
+        method: 'put',
+        url: 'https://canarygo.herokuapp.com/autorizar',
+        data: {
+          correo: this.email,
+          contrasena: this.contrasena
+        }
+      })
+        .then((response) => {
+          console.log('RESPUESTA DEL SERVER', response)
+        }, (error) => {
+          console.log('EL ERROR ES', error)
         })
-      }
-      fetch('http://localhost:5000/autorizar', requestOptions)
-        .then(response => response.json())
-        .then(data => (this.postId = data.id))
 
       // if (response === 'auth/user-not-found') {
       //   this.Fail(this.$t('login_fail_user'))
