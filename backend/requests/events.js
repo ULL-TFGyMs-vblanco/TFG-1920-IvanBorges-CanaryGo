@@ -1,5 +1,7 @@
 
 module.exports = function (app) {
+  global.XMLHttpRequest = require('xhr2')
+  global.xhr = new XMLHttpRequest()
   const { firebaseDb, firebaseStg, firebaseAuth } = require('../config/firebase')
 
   // /////////////////// EVENTOS ///////////////////////
@@ -40,7 +42,7 @@ module.exports = function (app) {
       /// ///////////
 
       // Leer bbdd
-      const datos_evento = []
+      const datosevento = []
 
       consulta.get().then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
@@ -58,24 +60,29 @@ module.exports = function (app) {
             foto_usuario: doc.data().foto_usuario
           }
 
-          const storageRef = firebaseStg.ref('eventos/' + doc.id)
+          // console.log('ID', evento.id)
+
+          const storageRef = firebaseStg.ref('eventos/' + evento.id)
           var fotoRef = storageRef.child('foto')
 
           // Obtener foto
-          fotoRef.getDownloadURL().then(function (url) {
-            console.log('Foto', url)
-            evento = {
-              foto: url
-            }
-          }).then(function (docRef) {
+          fotoRef.getDownloadURL()
+            .then(function (url) {
+              // console.log('Foto', url)
+              evento = {
+                foto: url
+              }
+            })
+            .catch(function (error) {
+              console.log(error)
+            })
 
-          })
-          datos_evento.push(evento)
+          datosevento.push(evento)
         })
       })
         .then(function (snapshot) {
           console.log('Eventos leidos')
-          res.send(datos_evento)
+          res.send(datosevento)
         })
         .catch(function (error) {
           console.error('Error leyendo eventos', error)
@@ -101,14 +108,14 @@ module.exports = function (app) {
         .then(function (docRef) {
           // Subir imagenes
           console.log('Eve')
-          const storageRef = firebaseStg.ref('prueba/' + docRef.id)
+          const storageRef = firebaseStg.ref('eventos/' + docRef.id)
           const thisRef = storageRef.child('foto')
 
-          // thisRef.put(req.body.file)
-          //   .then(function (snapshot) {
-          //     console.log('Archivo subido')
-          //     res.send('Evento añadido')
-          //   })
+          thisRef.put(req.body.file)
+            .then(function (snapshot) {
+              console.log('Archivo subido')
+              res.send('Evento añadido')
+            })
         })
         .catch(function (error) {
           console.error('Error añadiendo evento ', error)
