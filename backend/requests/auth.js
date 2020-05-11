@@ -60,9 +60,6 @@ module.exports = function (app) {
           ActualizarInfo(req.body.nombre, req.body.genero, req.body.fecha, req.body.usuario, req.body.correo)
           // ActualizarFoto(req.body.foto)
         }
-      }).catch(function (error) {
-        console.log(error)
-      })
   })
 
   // Update

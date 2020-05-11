@@ -141,7 +141,7 @@ export default {
         url: 'https://canarygo.herokuapp.com/autorizar',
         data: {
           correo: this.email,
-          contrasena: this.contrasena
+          contrasena: this.contrasena2
         }
       })
         .then((response) => {
