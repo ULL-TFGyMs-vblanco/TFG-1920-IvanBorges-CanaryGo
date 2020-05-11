@@ -45,7 +45,7 @@ module.exports = function (app) {
       consulta.get().then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
           // Leemos los datos
-          const evento = {
+          let evento = {
             nombre_evento: doc.data().nombre_evento,
             localizacion: doc.data().localizacion,
             precio: doc.data().precio,
@@ -55,8 +55,7 @@ module.exports = function (app) {
             usuario: doc.data().usuario,
             isla: doc.data().isla,
             id: doc.id,
-            foto_usuario: doc.data().foto_usuario,
-            foto: ''
+            foto_usuario: doc.data().foto_usuario
           }
 
           const storageRef = firebaseStg.ref('eventos/' + doc.id)
@@ -64,7 +63,10 @@ module.exports = function (app) {
 
           // Obtener foto
           fotoRef.getDownloadURL().then(function (url) {
-            evento.foto = url
+            console.log('Foto', url)
+            evento = {
+              foto: url
+            }
           }).then(function (docRef) {
 
           })
