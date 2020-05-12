@@ -105,14 +105,13 @@ module.exports = function (app) {
           //       console.log('Archivo subido')
           //       res.send('Evento añadido')
           //     })
+          res.send('Evento añadido')
+          console.log('Evento añadido')
         })
         .catch(function (error) {
           console.error('Error añadiendo evento ', error)
           res.send('Error al crear Evento')
         })
-
-      res.send('Evento añadido')
-      console.log('Evento añadido')
     }
   })
 
