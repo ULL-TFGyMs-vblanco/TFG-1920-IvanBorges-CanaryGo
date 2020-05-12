@@ -2,6 +2,7 @@
 module.exports = function (app) {
   global.XMLHttpRequest = require('xhr2')
   global.xhr = new XMLHttpRequest()
+  // eslint-disable-next-line no-unused-vars
   const { firebaseDb, firebaseStg, firebaseAuth } = require('../config/firebase')
 
   // /////////////////// EVENTOS ///////////////////////
@@ -16,8 +17,7 @@ module.exports = function (app) {
   app.put('/eventos', async function (req, res) {
     console.log('HTTP Crear Evento General')
     console.log('Funcionando', req.body)
-    console.log('Funcionando2', req.data)
-
+    // console.log('Funcionando2', req.data)
 
     if (req.body.tipo === 'Consultar') {
       // Consultas

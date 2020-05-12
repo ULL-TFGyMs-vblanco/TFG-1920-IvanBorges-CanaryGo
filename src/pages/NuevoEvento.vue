@@ -259,23 +259,22 @@ export default {
     añadirEvento () {
       // Subir informacion
       const formData = new FormData()
-      const file = document.getElementById('foto')
+      // const file = document.getElementById('foto')
 
       formData.set('tipo', 'Crear')
       formData.set('nombre_evento', this.nombre_evento)
       formData.set('localizacion', this.localizacion)
-      formData.set('precio', this.precio)
       formData.set('fecha_inicio', this.fecha_inicio)
       formData.set('fecha_fin', this.fecha_fin)
-      formData.set('fecha_creacion', this.fecha_inicio)
+      formData.set('precio', this.precio)
+      formData.set('descuento', this.descuento)
+      formData.set('descripcion', this.descripcion)
       formData.set('votos', 0)
       formData.set('comentarios', 0)
-      formData.set('usuario', this.usuario)
+      formData.set('usuario', 'usuario')
       formData.set('isla', this.isla)
-      formData.set('descuento', this.descuento)
       // formData.set('foto_usuario', this.foto_usuario)
-      formData.set('image', file.files[0])
-      const router = this.$router
+      // formData.append('image', file.files[0])
 
       axios({
         method: 'put',
@@ -323,7 +322,7 @@ export default {
           console.log('EL ERROR ES', error)
         })
 
-      router.push('events')
+      this.$router.push('events')
     },
     onReset () {
       this.nombre_evento = null
