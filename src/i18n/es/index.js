@@ -73,6 +73,7 @@ export default {
   register_fail_2: 'Se ha producido un error al registrar el usuario. El usuario ya existe',
   event_sucess: 'Evento agregado correctamente',
   event_fail: 'Debe confirmar la veracidad de la información',
+  event_fail2: 'Error al crear el evento inténtalo de nuevo',
   event: 'Ir al evento',
   settings: 'Ajustes',
   profile: 'Perfil',

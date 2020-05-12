@@ -13,7 +13,7 @@ module.exports = function (app) {
   })
 
   // Put
-  app.put('/eventos', function (req, res) {
+  app.put('/eventos', async function (req, res) {
     console.log('HTTP Crear Evento')
 
     if (req.body.tipo === 'Consultar') {
@@ -40,54 +40,45 @@ module.exports = function (app) {
       }
 
       /// ///////////
-
       // Leer bbdd
       const datosevento = []
 
-      consulta.get().then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-          // Leemos los datos
-          let evento = {
-            nombre_evento: doc.data().nombre_evento,
-            localizacion: doc.data().localizacion,
-            precio: doc.data().precio,
-            fecha_inicio: doc.data().fecha_inicio,
-            votos: doc.data().votos,
-            comentarios: doc.data().comentarios,
-            usuario: doc.data().usuario,
-            isla: doc.data().isla,
-            id: doc.id,
-            foto_usuario: doc.data().foto_usuario
-          }
+      // eslint-disable-next-line no-inner-declarations
 
-          // console.log('ID', evento.id)
+      consulta.get()
+        .then((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+            const storageRef = firebaseStg.ref('eventos/' + doc.id)
+            var fotoRef = storageRef.child('foto')
 
-          const storageRef = firebaseStg.ref('eventos/' + evento.id)
-          var fotoRef = storageRef.child('foto')
+            // Obtener foto
+            fotoRef.getDownloadURL()
+              .then(function (url) {
+                console.log('Tengo foto')
+                // Leemos los datos
+                const evento = {
+                  foto: url,
+                  nombre_evento: doc.data().nombre_evento,
+                  localizacion: doc.data().localizacion,
+                  precio: doc.data().precio,
+                  fecha_inicio: doc.data().fecha_inicio,
+                  votos: doc.data().votos,
+                  comentarios: doc.data().comentarios,
+                  usuario: doc.data().usuario,
+                  isla: doc.data().isla,
+                  id: doc.id,
+                  foto_usuario: doc.data().foto_usuario
+                }
 
-          // Obtener foto
-          fotoRef.getDownloadURL()
-            .then(function (url) {
-              // console.log('Foto', url)
-              evento = {
-                foto: url
-              }
-            })
-            .catch(function (error) {
-              console.log(error)
-            })
+                console.log('Tengo todo')
 
-          datosevento.push(evento)
+                datosevento.push(evento)
+                res.write(String(datosevento))
+              })
+          })
         })
-      })
-        .then(function (snapshot) {
-          console.log('Eventos leidos')
-          res.send(datosevento)
-        })
-        .catch(function (error) {
-          console.error('Error leyendo eventos', error)
-          res.send('Error al leer los eventos')
-        })
+
+      // //
     } else if (req.body.tipo === 'Crear') {
       // Insertar db
       firebaseDb.collection('prueba').add({
@@ -111,16 +102,16 @@ module.exports = function (app) {
           const storageRef = firebaseStg.ref('eventos/' + docRef.id)
           const thisRef = storageRef.child('foto')
 
-          thisRef.put(req.body.file)
-            .then(function (snapshot) {
-              console.log('Archivo subido')
-              res.send('Evento añadido')
-            })
+          //   thisRef.put(req.body.file)
+          //     .then(function (snapshot) {
+          //       console.log('Archivo subido')
+          res.send('Evento añadido')
+          //     })
         })
-        .catch(function (error) {
-          console.error('Error añadiendo evento ', error)
-          res.send('Error al crear Evento')
-        })
+      // .catch(function (error) {
+      //   console.error('Error añadiendo evento ', error)
+      //   res.send('Error al crear Evento')
+      // })
     }
   })
 

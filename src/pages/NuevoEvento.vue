@@ -253,14 +253,6 @@ export default {
           progress: true
         })
       } else {
-        this.$q.notify({
-          icon: 'done',
-          color: 'positive',
-          message: this.$t('event_sucess'),
-          position: 'bottom',
-          timeout: 1000,
-          progress: true
-        })
         this.añadirEvento()
       }
     },
@@ -268,6 +260,51 @@ export default {
       // Subir informacion
       // const file = document.getElementById('foto').files[0]
       const router = this.$router
+
+      axios({
+        method: 'put',
+        url: 'https://canarygo.herokuapp.com/eventos',
+        data: {
+          tipo: 'Crear',
+          // foto: file[0],
+          nombre_evento: this.nombre_evento,
+          localizacion: this.localizacion,
+          precio: this.precio,
+          fecha_inicio: this.fecha_inicio,
+          fecha_fin: this.fecha_fin,
+          fecha_creacion: this.fecha_inicio,
+          votos: this.votos,
+          comentarios: this.comentarios,
+          usuario: this.usuario,
+          isla: this.isla,
+          descuento: this.descuento,
+          foto_usuario: this.foto_usuario
+        }
+      })
+        .then((response) => {
+          console.log('RESPUESTA DEL SERVER', response.data)
+          if (response.data === 'Evento añadido') {
+            this.$q.notify({
+              icon: 'done',
+              color: 'positive',
+              message: this.$t('event_sucess'),
+              position: 'bottom',
+              timeout: 1000,
+              progress: true
+            })
+            this.$router.push('events')
+          } else {
+            this.$q.notify({
+              color: 'negative',
+              message: this.$t('event_fail2'),
+              position: 'bottom',
+              timeout: 2000,
+              progress: true
+            })
+          }
+        }, (error) => {
+          console.log('EL ERROR ES', error)
+        })
 
       router.push('events')
     },

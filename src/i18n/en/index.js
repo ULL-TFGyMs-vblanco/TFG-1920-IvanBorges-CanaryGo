@@ -70,6 +70,7 @@ export default {
   register_fail: 'You must agree to terms and conditions',
   event_sucess: 'Successfully added event',
   event_fail: 'You must confirm the veracity of the information',
+  event_fail2: 'Error creating event please try again',
   event: 'Go to event',
   settings: 'Settings',
   profile: 'Profile',
