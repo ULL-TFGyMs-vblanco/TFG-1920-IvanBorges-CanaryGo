@@ -259,7 +259,7 @@ export default {
     añadirEvento () {
       // Subir informacion
       const formData = new FormData()
-      const file = document.getElementById('foto').files[0]
+      const file = document.getElementById('foto')
 
       formData.set('tipo', 'Crear')
       formData.set('nombre_evento', this.nombre_evento)
@@ -268,13 +268,13 @@ export default {
       formData.set('fecha_inicio', this.fecha_inicio)
       formData.set('fecha_fin', this.fecha_fin)
       formData.set('fecha_creacion', this.fecha_inicio)
-      formData.set('votos', this.votos)
-      formData.set('comentarios', this.comentarios)
+      formData.set('votos', 0)
+      formData.set('comentarios', 0)
       formData.set('usuario', this.usuario)
       formData.set('isla', this.isla)
       formData.set('descuento', this.descuento)
       // formData.set('foto_usuario', this.foto_usuario)
-      formData.append('image', file)
+      formData.append('image', file.files[0])
       const router = this.$router
 
       axios({
