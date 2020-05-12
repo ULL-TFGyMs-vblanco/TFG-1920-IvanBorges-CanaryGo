@@ -107,10 +107,6 @@ export default {
       sesion: false
     }
   },
-  mounted () {
-    this.Observador()
-  },
-
   methods: {
 
     onSubmit () {

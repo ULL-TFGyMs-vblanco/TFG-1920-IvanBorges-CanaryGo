@@ -8,8 +8,13 @@ module.exports = function (app) {
   // Get (Login)
   app.get('/autorizar', function (req, res) {
     console.log('HTTP Login')
-    console.log('Funcionando', req.body)
-    res.send(UsuarioLogueado)
+    const usuario = {
+      email: UsuarioLogueado().email,
+      displayName: UsuarioLogueado().displayName,
+      photoURL: UsuarioLogueado().photoURL,
+      emailVerified: UsuarioLogueado().emailVerified
+    }
+    res.send(usuario)
   })
 
   // Put (Register)
