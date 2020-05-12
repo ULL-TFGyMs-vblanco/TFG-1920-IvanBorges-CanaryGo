@@ -274,7 +274,7 @@ export default {
       formData.set('isla', this.isla)
       formData.set('descuento', this.descuento)
       // formData.set('foto_usuario', this.foto_usuario)
-      formData.append('image', file.files[0])
+      formData.set('image', file.files[0])
       const router = this.$router
 
       axios({

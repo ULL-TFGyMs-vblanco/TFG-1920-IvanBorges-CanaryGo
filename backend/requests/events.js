@@ -73,7 +73,7 @@ module.exports = function (app) {
     } else if (req.body.tipo === 'Crear') {
       // Insertar db
       console.log('Nuevo evento')
-      console.log('DATOS', req.data)
+      console.log('DATOS', req.body)
       firebaseDb.collection('prueba').add({
         nombre_evento: req.body.nombre_evento,
         localizacion: req.body.localizacion,
@@ -90,24 +90,24 @@ module.exports = function (app) {
         // foto_usuario: firebaseAuth.currentUser.photoURL
         // foto:
       })
-        // .then(function (docRef) {
-        //   // Subir imagenes
-        //   console.log('Eve')
-        //   const storageRef = firebaseStg.ref('eventos/' + docRef.id)
-        //   const thisRef = storageRef.child('foto')
+      // .then(function (docRef) {
+      //   // Subir imagenes
+      //   console.log('Eve')
+      //   const storageRef = firebaseStg.ref('eventos/' + docRef.id)
+      //   const thisRef = storageRef.child('foto')
 
-        //   console.log('El archivo', req.body.image)
+      //   console.log('El archivo', req.body.image)
 
-        //   thisRef.put(req.body.image)
-        //     .then(function (snapshot) {
-        //       console.log('Archivo subido')
-        //       res.send('Evento añadido')
-        //     })
-        // })
-        // .catch(function (error) {
-        //   console.error('Error añadiendo evento ', error)
-        //   res.send('Error al crear Evento')
-        // })
+      //   thisRef.put(req.body.image)
+      //     .then(function (snapshot) {
+      //       console.log('Archivo subido')
+      //       res.send('Evento añadido')
+      //     })
+      // })
+      // .catch(function (error) {
+      //   console.error('Error añadiendo evento ', error)
+      //   res.send('Error al crear Evento')
+      // })
 
       res.send('Evento añadido')
       console.log('Evento añadido')
