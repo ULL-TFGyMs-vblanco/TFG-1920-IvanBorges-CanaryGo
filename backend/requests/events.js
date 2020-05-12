@@ -73,7 +73,7 @@ module.exports = function (app) {
                 console.log('Tengo todo')
 
                 datosevento.push(evento)
-                res.write(String(datosevento))
+                res.write(datosevento)
               })
           })
         })
