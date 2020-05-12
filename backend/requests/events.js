@@ -16,6 +16,8 @@ module.exports = function (app) {
   app.put('/eventos', async function (req, res) {
     console.log('HTTP Crear Evento General')
     console.log('Funcionando', req.body)
+    console.log('Funcionando2', req.data)
+
 
     if (req.body.tipo === 'Consultar') {
       // Consultas
