@@ -90,7 +90,6 @@
 </template>
 
 <script>
-import { firebaseAuth } from 'boot/firebase'
 import LoginButtons from 'components/Login/LoginButtons'
 import axios from 'axios'
 
@@ -163,28 +162,6 @@ export default {
         }, (error) => {
           console.log('EL ERROR ES', error)
         })
-    },
-    Observador () {
-      console.log('Dentro')
-      firebaseAuth.onAuthStateChanged(function (user) {
-        if (user) {
-          // User is signed in.
-          /* eslint-disable no-unused-vars */
-          var displayName = user.displayName
-          var email = user.email
-          var emailVerified = user.emailVerified
-          var photoURL = user.photoURL
-          var isAnonymous = user.isAnonymous
-          var uid = user.uid
-          var providerData = user.providerData
-
-          // Verificar
-          console.log('Usuario logueado')
-        } else {
-          // User is signed out.
-          console.log('Ningun usuario logueado')
-        }
-      })
     },
     Success () {
       this.$q.notify({

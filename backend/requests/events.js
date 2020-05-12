@@ -15,6 +15,7 @@ module.exports = function (app) {
   // Put
   app.put('/eventos', async function (req, res) {
     console.log('HTTP Crear Evento')
+    console.log(req.body)
 
     if (req.body.tipo === 'Consultar') {
       // Consultas
@@ -73,19 +74,21 @@ module.exports = function (app) {
       // //
     } else if (req.body.tipo === 'Crear') {
       // Insertar db
+      console.log('Nuevo evento')
+      console.log(req.data)
       firebaseDb.collection('prueba').add({
-        nombre_evento: req.body.nombre_evento,
-        localizacion: req.body.localizacion,
-        fecha_inicio: req.body.fecha_inicio,
-        fecha_fin: req.body.fecha_fin,
-        precio: req.body.precio,
-        descuento: req.body.descuento,
-        descripcion: req.body.descripcion,
-        votos: 0,
-        comentarios: 0,
-        usuario: 'usuario',
-        isla: req.body.isla,
-        fecha_creacion: new Date().getDay() + '/' + new Date().getMonth() + '/' + new Date().getFullYear() + ',' + new Date().getHours() + ':' + new Date().getMinutes() + new Date().getMilliseconds(),
+        nombre_evento: req.body.nombre_evento
+        // localizacion: req.body.localizacion,
+        // fecha_inicio: req.body.fecha_inicio,
+        // fecha_fin: req.body.fecha_fin,
+        // precio: req.body.precio,
+        // descuento: req.body.descuento,
+        // descripcion: req.body.descripcion,
+        // votos: 0,
+        // comentarios: 0,
+        // usuario: 'usuario',
+        // isla: req.body.isla,
+        // fecha_creacion: new Date().getDay() + '/' + new Date().getMonth() + '/' + new Date().getFullYear() + ',' + new Date().getHours() + ':' + new Date().getMinutes() + new Date().getMilliseconds(),
         // foto_usuario: firebaseAuth.currentUser.photoURL
         // foto:
       })
@@ -103,10 +106,10 @@ module.exports = function (app) {
           // res.send('Evento añadido')
           //     })
         })
-      // .catch(function (error) {
-      //   console.error('Error añadiendo evento ', error)
-      //   res.send('Error al crear Evento')
-      // })
+        .catch(function (error) {
+          console.error('Error añadiendo evento ', error)
+          res.send('Error al crear Evento')
+        })
 
       res.send('Evento añadido')
       console.log('Evento añadido')

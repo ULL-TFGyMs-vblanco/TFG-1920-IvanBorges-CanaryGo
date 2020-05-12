@@ -258,28 +258,45 @@ export default {
     },
     añadirEvento () {
       // Subir informacion
-      // const file = document.getElementById('foto').files[0]
+      const formData = new FormData()
+      const file = document.getElementById('foto').files[0]
+
+      formData.set('tipo', 'Crear')
+      formData.set('nombre_evento', this.nombre_evento)
+      formData.set('localizacion', this.localizacion)
+      formData.set('precio', this.precio)
+      formData.set('fecha_inicio', this.fecha_inicio)
+      formData.set('fecha_fin', this.fecha_fin)
+      formData.set('fecha_creacion', this.fecha_inicio)
+      formData.set('votos', this.votos)
+      formData.set('comentarios', this.comentarios)
+      formData.set('usuario', this.usuario)
+      formData.set('isla', this.isla)
+      formData.set('descuento', this.descuento)
+      // formData.set('foto_usuario', this.foto_usuario)
+      formData.append('image', file)
       const router = this.$router
 
       axios({
         method: 'put',
         url: 'https://canarygo.herokuapp.com/eventos',
-        data: {
-          tipo: 'Crear',
-          // foto: file[0],
-          nombre_evento: this.nombre_evento,
-          localizacion: this.localizacion,
-          precio: this.precio,
-          fecha_inicio: this.fecha_inicio,
-          fecha_fin: this.fecha_fin,
-          fecha_creacion: this.fecha_inicio,
-          votos: this.votos,
-          comentarios: this.comentarios,
-          usuario: this.usuario,
-          isla: this.isla,
-          descuento: this.descuento
-          // foto_usuario: this.foto_usuario
-        }
+        data: formData
+        // data: {
+        //   tipo: 'Crear',
+        //   foto: formData,
+        //   nombre_evento: this.nombre_evento,
+        //   localizacion: this.localizacion,
+        //   precio: this.precio,
+        //   fecha_inicio: this.fecha_inicio,
+        //   fecha_fin: this.fecha_fin,
+        //   fecha_creacion: this.fecha_inicio,
+        //   votos: this.votos,
+        //   comentarios: this.comentarios,
+        //   usuario: this.usuario,
+        //   isla: this.isla,
+        //   descuento: this.descuento
+        //   // foto_usuario: this.foto_usuario
+        // }
       })
         .then((response) => {
           console.log('RESPUESTA DEL SERVER', response.data)
