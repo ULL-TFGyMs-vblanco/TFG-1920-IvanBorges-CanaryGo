@@ -44,40 +44,52 @@ module.exports = function (app) {
       const datosevento = []
 
       // eslint-disable-next-line no-inner-declarations
+      const userinfo = async () => {
+        return new Promise((resolve, reject) => {
+          consulta.get()
+            .then((querySnapshot) => {
+              return querySnapshot.forEach((doc) => {
+                const storageRef = firebaseStg.ref('eventos/' + doc.id)
+                var fotoRef = storageRef.child('foto')
 
-      consulta.get()
-        .then((querySnapshot) => {
-          querySnapshot.forEach((doc) => {
-            const storageRef = firebaseStg.ref('eventos/' + doc.id)
-            var fotoRef = storageRef.child('foto')
+                // Obtener foto
+                fotoRef.getDownloadURL()
+                  .then(function (url) {
+                    console.log('Tengo foto')
+                    // Leemos los datos
+                    const evento = {
+                      foto: url,
+                      nombre_evento: doc.data().nombre_evento,
+                      localizacion: doc.data().localizacion,
+                      precio: doc.data().precio,
+                      fecha_inicio: doc.data().fecha_inicio,
+                      votos: doc.data().votos,
+                      comentarios: doc.data().comentarios,
+                      usuario: doc.data().usuario,
+                      isla: doc.data().isla,
+                      id: doc.id,
+                      foto_usuario: doc.data().foto_usuario
+                    }
 
-            // Obtener foto
-            fotoRef.getDownloadURL()
-              .then(function (url) {
-                console.log('Tengo foto')
-                // Leemos los datos
-                const evento = {
-                  foto: url,
-                  nombre_evento: doc.data().nombre_evento,
-                  localizacion: doc.data().localizacion,
-                  precio: doc.data().precio,
-                  fecha_inicio: doc.data().fecha_inicio,
-                  votos: doc.data().votos,
-                  comentarios: doc.data().comentarios,
-                  usuario: doc.data().usuario,
-                  isla: doc.data().isla,
-                  id: doc.id,
-                  foto_usuario: doc.data().foto_usuario
-                }
+                    console.log('Tengo todo')
 
-                console.log('Tengo todo')
-
-                datosevento.push(evento)
-                res.write(datosevento)
+                    datosevento.push(evento)
+                    resolve({
+                      datosevento
+                    })
+                  })
               })
-          })
+            })
         })
+      }
 
+      userinfo().then(function (value) {
+        console.log('loles', value)
+        return value
+      })
+        .then(function (value) {
+          res.send(value)
+        })
       // //
     } else if (req.body.tipo === 'Crear') {
       // Insertar db
