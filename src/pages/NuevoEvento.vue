@@ -277,8 +277,8 @@ export default {
           comentarios: this.comentarios,
           usuario: this.usuario,
           isla: this.isla,
-          descuento: this.descuento,
-          foto_usuario: this.foto_usuario
+          descuento: this.descuento
+          // foto_usuario: this.foto_usuario
         }
       })
         .then((response) => {

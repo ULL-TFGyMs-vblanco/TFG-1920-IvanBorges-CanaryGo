@@ -82,36 +82,38 @@ module.exports = function (app) {
     } else if (req.body.tipo === 'Crear') {
       // Insertar db
       firebaseDb.collection('prueba').add({
-        Nombre_evento: req.body.nombre_evento,
-        Localizacion: req.body.localizacion,
-        Fecha_inicio: req.body.fecha_inicio,
-        Fecha_fin: req.body.fecha_fin,
-        Precio: req.body.precio,
-        Descuento: req.body.descuento,
-        Descripcion: req.body.descripcion,
-        Votos: 0,
-        Comentarios: 0,
-        Usuario: req.body.usuario,
-        Isla: req.body.isla,
-        Fecha_creacion: new Date().getDay() + '/' + new Date().getMonth() + '/' + new Date().getFullYear() + ',' + new Date().getHours() + ':' + new Date().getMinutes() + new Date().getMilliseconds(),
-        Foto_usuario: firebaseAuth.currentUser.photoURL
+        nombre_evento: req.body.nombre_evento,
+        localizacion: req.body.localizacion,
+        fecha_inicio: req.body.fecha_inicio,
+        fecha_fin: req.body.fecha_fin,
+        precio: req.body.precio,
+        descuento: req.body.descuento,
+        descripcion: req.body.descripcion,
+        votos: 0,
+        comentarios: 0,
+        usuario: 'usuario',
+        isla: req.body.isla,
+        fecha_creacion: new Date().getDay() + '/' + new Date().getMonth() + '/' + new Date().getFullYear() + ',' + new Date().getHours() + ':' + new Date().getMinutes() + new Date().getMilliseconds(),
+        foto_usuario: firebaseAuth.currentUser.photoURL
       })
-        .then(function (docRef) {
-          // Subir imagenes
-          console.log('Eve')
-          const storageRef = firebaseStg.ref('eventos/' + docRef.id)
-          const thisRef = storageRef.child('foto')
+      // .then(function (docRef) {
+      // Subir imagenes
+      // console.log('Eve')
+      // const storageRef = firebaseStg.ref('eventos/' + docRef.id)
+      // const thisRef = storageRef.child('foto')
 
-          //   thisRef.put(req.body.file)
-          //     .then(function (snapshot) {
-          //       console.log('Archivo subido')
-          res.send('Evento añadido')
-          //     })
-        })
+      //   thisRef.put(req.body.file)
+      //     .then(function (snapshot) {
+      //       console.log('Archivo subido')
+      // res.send('Evento añadido')
+      //     })
+      // })
       // .catch(function (error) {
       //   console.error('Error añadiendo evento ', error)
       //   res.send('Error al crear Evento')
       // })
+      res.send('Evento añadido')
+      console.log('Evento añadido')
     }
   })
 
