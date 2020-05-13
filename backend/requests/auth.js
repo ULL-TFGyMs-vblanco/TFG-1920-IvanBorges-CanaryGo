@@ -2,7 +2,7 @@
 // var express = require('express')
 
 module.exports = function (app) {
-  const { firebase, firebaseAuth, firebaseDb, firebaseStg } = require('../config/firebase')
+  const { firebase, firebaseAuth, firebaseDb, firebaseStg, firebaseAuthGoogle, firebaseAuthFacebook } = require('../config/firebase')
 
   // /////////////////// IDENTIFICACIÓN ///////////////////////
   // Get (Login)
@@ -23,30 +23,38 @@ module.exports = function (app) {
     console.log('Funcionando', req.body)
 
     if (req.body.tipo === 'Login') {
-      let errorcodes = ''
 
-      firebaseAuth.signInWithEmailAndPassword(req.body.correo, req.body.contrasena)
-        .catch(function (error) {
-          // Errores
-          var errorCode = error.code
-          var errorMessage = error.message
-          console.log(errorCode)
-          console.log(errorMessage)
-          errorcodes = errorCode
-        })
-        .then(() => {
-          if (errorcodes === 'auth/user-not-found') {
-            res.send(errorcodes)
-          } else if (errorcodes === 'auth/wrong-password') {
-            res.send(errorcodes)
-          } else {
-            if (firebase.auth().currentUser.emailVerified === true) {
-              res.send('Usuario logueado')
+      if (req.body.tipo2 === 'Estandar') {
+        let errorcodes = ''
+
+        firebaseAuth.signInWithEmailAndPassword(req.body.correo, req.body.contrasena)
+          .catch(function (error) {
+            // Errores
+            var errorCode = error.code
+            var errorMessage = error.message
+            console.log(errorCode)
+            console.log(errorMessage)
+            errorcodes = errorCode
+          })
+          .then(() => {
+            if (errorcodes === 'auth/user-not-found') {
+              res.send(errorcodes)
+            } else if (errorcodes === 'auth/wrong-password') {
+              res.send(errorcodes)
             } else {
-              res.send('auth/must-verify')
+              if (firebase.auth().currentUser.emailVerified === true) {
+                res.send('Usuario logueado')
+              } else {
+                res.send('auth/must-verify')
+              }
             }
-          }
-        })
+          })
+      } else if (req.body.tipo2 === 'Google') {
+        IniciarSesionGoogle(req)
+      } else if (req.body.tipo2 === 'Facebook') {
+        IniciarSesionGoogle(req)
+      }
+
     } else if (req.body.tipo === 'Registro') {
       let errorcodes = false
 
@@ -190,7 +198,7 @@ module.exports = function (app) {
 
   function ActualizarInfoDb (nombre, fecha, genero, correo) {
     const usuarios = firebaseDb.collection('usuarios')
-    const usuarioactivo = UsuarioLogueado()
+    // const usuarioactivo = UsuarioLogueado()
     let documento
 
     firebaseDb.collection('usuarios').where('Correo', '==', correo).get()
@@ -337,6 +345,70 @@ module.exports = function (app) {
           })
         })
     }
+  }
+
+  function IniciarSesionGoogle (res) {
+    const provider = firebaseAuthGoogle
+    // provider.addScope('https://www.googleapis.com/auth/contacts.readonly')
+    firebaseAuth.useDeviceLanguage()
+    provider.setCustomParameters({
+      login_hint: 'user@example.com'
+    })
+
+    let errorcode = false
+    /* eslint-disable no-unused-vars */
+    firebaseAuth.signInWithPopup(provider)
+      .catch(function (error) {
+        const errorCode = error.code
+        const errorMessage = error.message
+        const email = error.email
+        const credential = error.credential
+        errorcode = true
+      })
+      .then(function (result) {
+        // Google Access Token
+        const token = result.credential.accessToken
+        const user = result.user
+      })
+      .then(() => {
+        if (errorcode === true) {
+          res.send('Error al loguear con Google')
+        } else {
+          res.send('Usuario logueado')
+        }
+      })
+  }
+
+  function IniciarSesionFacebook (res) {
+    const provider = firebaseAuthFacebook
+    provider.addScope('user_birthday')
+    firebaseAuth.useDeviceLanguage()
+    provider.setCustomParameters({
+      login_hint: 'user@example.com'
+    })
+
+    let errorcode = false
+    /* eslint-disable no-unused-vars */
+    firebaseAuth.signInWithPopup(provider)
+      .catch(function (error) {
+        const errorCode = error.code
+        const errorMessage = error.message
+        const email = error.email
+        const credential = error.credential
+        errorcode = true
+      })
+      .then(function (result) {
+        // Google Access Token
+        const token = result.credential.accessToken
+        const user = result.user
+      })
+      .then(() => {
+        if (errorcode === true) {
+          res.send('Error al loguear con Facebook')
+        } else {
+          res.send('Usuario logueado')
+        }
+      })
   }
 
   /// //////////////////////////////
