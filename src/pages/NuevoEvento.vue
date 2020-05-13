@@ -349,7 +349,7 @@ export default {
         .then(function (snapshot) {
           console.log('actualizando foto')
           thisRef.getDownloadURL().then(function (url) {
-            console.log('Datos fotito', id + ': ', url)
+            // console.log('Datos fotito', id + ': ', url)
             axios({
               method: 'post',
               url: 'https://canarygo.herokuapp.com/eventos',

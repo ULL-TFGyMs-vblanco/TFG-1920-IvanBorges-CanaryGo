@@ -50,7 +50,7 @@ module.exports = function (app) {
           return querySnapshot.forEach((doc) => {
             // Leemos los datos
             const evento = {
-              // foto: doc.data().foto,
+              foto: doc.data().foto,
               nombre_evento: doc.data().nombre_evento,
               localizacion: doc.data().localizacion,
               precio: doc.data().precio,
@@ -60,7 +60,7 @@ module.exports = function (app) {
               usuario: doc.data().usuario,
               isla: doc.data().isla,
               id: doc.id,
-              foto_usuario: doc.data().foto_usuario
+              foto_usuario: doc.data().foto_usuario,
             }
 
             datosevento.push(evento)
@@ -77,7 +77,7 @@ module.exports = function (app) {
       console.log('Nuevo evento')
       console.log('DATOS', req.body)
 
-      firebaseDb.collection('prueba').add({
+      firebaseDb.collection('evento').add({
         nombre_evento: req.body.nombre_evento,
         localizacion: req.body.localizacion,
         fecha_inicio: req.body.fecha_inicio,
@@ -114,7 +114,6 @@ module.exports = function (app) {
     } else if (req.body.operacion === 'Restar') {
       Sumar(req.body.id, res)
     } else if (req.body.operacion === 'Evento') {
-      console.log('Datos sever -> ', req.body.foto, req.body.id)
       EstablecerFoto(req.body.foto, req.body.id, res)
     }
   })
@@ -152,7 +151,7 @@ module.exports = function (app) {
   }
 
   function EstablecerFoto (url, id, res) {
-    firebaseDb.collection('prueba').doc(id).update({
+    firebaseDb.collection('eventos').doc(id).update({
       foto: url
     })
   }
