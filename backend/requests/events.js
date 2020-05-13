@@ -60,7 +60,7 @@ module.exports = function (app) {
               usuario: doc.data().usuario,
               isla: doc.data().isla,
               id: doc.id,
-              foto_usuario: doc.data().foto_usuario,
+              foto_usuario: doc.data().foto_usuario
             }
 
             datosevento.push(evento)
