@@ -301,7 +301,7 @@ export default {
                 progress: true
               })
               var id = response.data.split(':')
-              // this.$router.push('events')
+              this.$router.push('events')
               this.subirImagen(id[1], file)
             } else {
               this.$q.notify({
@@ -342,7 +342,7 @@ export default {
       this.isla = isla
     },
     subirImagen (id, image) {
-      const storageRef = firebaseStg.ref('prueba/' + id)
+      const storageRef = firebaseStg.ref('eventos/' + id)
       const thisRef = storageRef.child('foto')
 
       thisRef.put(image)

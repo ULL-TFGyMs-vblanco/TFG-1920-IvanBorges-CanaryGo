@@ -77,7 +77,7 @@ module.exports = function (app) {
       console.log('Nuevo evento')
       console.log('DATOS', req.body)
 
-      firebaseDb.collection('evento').add({
+      firebaseDb.collection('eventos').add({
         nombre_evento: req.body.nombre_evento,
         localizacion: req.body.localizacion,
         fecha_inicio: req.body.fecha_inicio,
