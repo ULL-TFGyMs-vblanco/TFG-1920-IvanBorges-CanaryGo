@@ -114,7 +114,7 @@ module.exports = function (app) {
     } else if (req.data.operacion === 'Restar') {
       Sumar()
     } else if (req.data.operacion === 'Evento') {
-      EstablecerFoto(req.body.url, req.body.id)
+      EstablecerFoto(req.body.foto, req.body.id)
     }
 
     res.send('Votos actualizados')
@@ -150,7 +150,7 @@ module.exports = function (app) {
 
   function EstablecerFoto (url, id) {
     firebaseDb.collection('prueba').doc(id).update({
-      url: url
+      foto: url
     })
   }
 }

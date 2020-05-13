@@ -346,18 +346,22 @@ export default {
       const thisRef = storageRef.child('foto')
 
       thisRef.put(image)
-        .then(function (snapshot, url) {
-          thisRef.getDownloadURL().then(function (url) {
+        .then(function (snapshot) {
+          console.log('actualizando foto')
+          thisRef.getDownloadURL().then(function (urlfoto) {
             axios({
               method: 'post',
               url: 'https://canarygo.herokuapp.com/eventos',
               data: {
-                tipo: 'Evento',
-                foto: url,
+                operacion: 'Evento',
+                foto: urlfoto,
                 id: id
               }
             })
           })
+        })
+        .catch(function (error) {
+          console.log(error)
         })
     }
   }
