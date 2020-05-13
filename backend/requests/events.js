@@ -109,15 +109,14 @@ module.exports = function (app) {
     console.log('Actualizar evento')
     res.send('Actualizar evento')
 
-    if (req.data.operacion === 'Restar') {
-      Restar()
-    } else if (req.data.operacion === 'Restar') {
-      Sumar()
-    } else if (req.data.operacion === 'Evento') {
-      EstablecerFoto(req.body.foto, req.body.id)
+    if (req.body.operacion === 'Restar') {
+      Restar(req.body.id, res)
+    } else if (req.body.operacion === 'Restar') {
+      Sumar(req.body.id, res)
+    } else if (req.body.operacion === 'Evento') {
+      console.log('Datos sever -> ', req.body.foto, req.body.id)
+      EstablecerFoto(req.body.foto, req.body.id, res)
     }
-
-    res.send('Votos actualizados')
   })
 
   // Delete
@@ -128,27 +127,31 @@ module.exports = function (app) {
 
   /// ///////////// UTILIDADES /////////////////
 
-  function Sumar (id) {
+  function Sumar (id, res) {
     var votosactuales = 0
     firebaseDb.collection('eventos').doc(id).get().then((querySnapshot) => {
       votosactuales = querySnapshot.data().votos
       firebaseDb.collection('eventos').doc(id).update({
         votos: votosactuales + 1
+      }).then(function () {
+        res.send('Votos actualizados')
       })
     })
   }
 
-  function Restar (id) {
+  function Restar (id, res) {
     var votosactuales = 0
     firebaseDb.collection('eventos').doc(id).get().then((querySnapshot) => {
       votosactuales = querySnapshot.data().votos
       firebaseDb.collection('eventos').doc(id).update({
         votos: votosactuales - 1
+      }).then(function () {
+        res.send('Votos actualizados')
       })
     })
   }
 
-  function EstablecerFoto (url, id) {
+  function EstablecerFoto (url, id, res) {
     firebaseDb.collection('prueba').doc(id).update({
       foto: url
     })

@@ -348,13 +348,14 @@ export default {
       thisRef.put(image)
         .then(function (snapshot) {
           console.log('actualizando foto')
-          thisRef.getDownloadURL().then(function (urlfoto) {
+          thisRef.getDownloadURL().then(function (url) {
+            console.log('Datos fotito', id + ': ', url)
             axios({
               method: 'post',
               url: 'https://canarygo.herokuapp.com/eventos',
               data: {
                 operacion: 'Evento',
-                foto: urlfoto,
+                foto: url,
                 id: id
               }
             })
