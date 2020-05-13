@@ -154,9 +154,9 @@
                   size="40px"
                   label="cuenta"
                 >
-                  <img :src="this.img" />
+                  <!-- <img :src="this.img" /> -->
                 </q-avatar>
-                {{usuario}}
+                <!-- {{usuario}} -->
               </q-item-label>
             </q-item-section>
           </q-item>
@@ -210,6 +210,7 @@
 import Selectorarchivos from '../components/Eventos/Selectorarchivos'
 import Mapa from '../components/Eventos/Mapa'
 import axios from 'axios'
+import { firebaseStg } from 'boot/firebase'
 
 export default {
   name: 'NuevoEvento',
@@ -258,44 +259,27 @@ export default {
     },
     añadirEvento () {
       // Subir informacion
-      const formData = new FormData()
-      // const file = document.getElementById('foto')
 
-      formData.set('tipo', 'Crear')
-      formData.set('nombre_evento', this.nombre_evento)
-      formData.set('localizacion', this.localizacion)
-      formData.set('fecha_inicio', this.fecha_inicio)
-      formData.set('fecha_fin', this.fecha_fin)
-      formData.set('precio', this.precio)
-      formData.set('descuento', this.descuento)
-      formData.set('descripcion', this.descripcion)
-      formData.set('votos', 0)
-      formData.set('comentarios', 0)
-      formData.set('usuario', 'usuario')
-      formData.set('isla', this.isla)
-      // formData.set('foto_usuario', this.foto_usuario)
-      // formData.append('image', file.files[0])
+      // const file = document.getElementById('foto')
 
       axios({
         method: 'put',
         url: 'https://canarygo.herokuapp.com/eventos',
-        data: formData
-        // data: {
-        //   tipo: 'Crear',
-        //   foto: formData,
-        //   nombre_evento: this.nombre_evento,
-        //   localizacion: this.localizacion,
-        //   precio: this.precio,
-        //   fecha_inicio: this.fecha_inicio,
-        //   fecha_fin: this.fecha_fin,
-        //   fecha_creacion: this.fecha_inicio,
-        //   votos: this.votos,
-        //   comentarios: this.comentarios,
-        //   usuario: this.usuario,
-        //   isla: this.isla,
-        //   descuento: this.descuento
-        //   // foto_usuario: this.foto_usuario
-        // }
+        data: {
+          tipo: 'Crear',
+          nombre_evento: this.nombre_evento,
+          localizacion: this.localizacion,
+          precio: this.precio,
+          fecha_inicio: this.fecha_inicio,
+          fecha_fin: this.fecha_fin,
+          fecha_creacion: this.fecha_inicio,
+          votos: this.votos,
+          comentarios: this.comentarios,
+          usuario: this.usuario,
+          isla: this.isla,
+          descuento: this.descuento,
+          descripcion: this.descripcion
+        }
       })
         .then((response) => {
           console.log('RESPUESTA DEL SERVER', response.data)
@@ -309,6 +293,7 @@ export default {
               progress: true
             })
             this.$router.push('events')
+            this.subirImagen()
           } else {
             this.$q.notify({
               color: 'negative',
@@ -345,6 +330,15 @@ export default {
     onClickChild (ubicacion, isla) {
       this.localizacion = String(ubicacion).slice(7, -1)
       this.isla = isla
+    },
+    subirImagen (id, image) {
+      const storageRef = firebaseStg.ref('prueba/' + id)
+      const thisRef = storageRef.child('foto')
+
+      thisRef.put(image)
+        .then(function (snapshot, url) {
+          console.log('Archivo subido', snapshot, url)
+        })
     }
   }
 }

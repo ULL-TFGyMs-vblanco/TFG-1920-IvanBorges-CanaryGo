@@ -76,6 +76,7 @@ module.exports = function (app) {
       // Insertar db
       console.log('Nuevo evento')
       console.log('DATOS', req.body)
+
       firebaseDb.collection('prueba').add({
         nombre_evento: req.body.nombre_evento,
         localizacion: req.body.localizacion,
@@ -88,23 +89,11 @@ module.exports = function (app) {
         comentarios: 0,
         usuario: 'usuario',
         isla: req.body.isla,
-        fecha_creacion: new Date().getDay() + '/' + new Date().getMonth() + '/' + new Date().getFullYear() + ',' + new Date().getHours() + ':' + new Date().getMinutes() + new Date().getMilliseconds()
-        // foto_usuario: firebaseAuth.currentUser.photoURL
-        // foto:
+        fecha_creacion: new Date().getDay() + '/' + new Date().getMonth() + '/' + new Date().getFullYear() + ',' + new Date().getHours() + ':' + new Date().getMinutes() + new Date().getMilliseconds(),
+        foto_usuario: firebaseAuth.currentUser.photoURL,
+        foto: ''
       })
         .then(function (docRef) {
-          //   // Subir imagenes
-          //   console.log('Eve')
-          //   const storageRef = firebaseStg.ref('eventos/' + docRef.id)
-          //   const thisRef = storageRef.child('foto')
-
-          //   console.log('El archivo', req.body.image)
-
-          //   thisRef.put(req.body.image)
-          //     .then(function (snapshot) {
-          //       console.log('Archivo subido')
-          //       res.send('Evento añadido')
-          //     })
           res.send('Evento añadido')
           console.log('Evento añadido')
         })
