@@ -21,6 +21,7 @@
 
 <script>
 import axios from 'axios'
+import { firebaseAuth, firebaseAuthGoogle, firebaseConfig } from 'boot/firebase'
 
 export default {
   name: 'LoginButtons',
@@ -32,25 +33,57 @@ export default {
   },
   methods: {
     IniciarSesionGoogle () {
-      axios({
-        method: 'put',
-        url: 'https://canarygo.herokuapp.com/autorizar',
-        data: {
-          tipo: 'Login',
-          tipo2: 'Google'
-        }
+      const provider = firebaseAuthGoogle
+      // provider.addScope('https://www.googleapis.com/auth/contacts.readonly')
+      firebaseAuth.useDeviceLanguage()
+      provider.setCustomParameters({
+        login_hint: 'user@example.com'
       })
-        .then((response) => {
-          console.log('RESPUESTA DEL SERVER', response)
 
-          if (response.data === 'Usuario logueado') {
-            this.Success()
-            this.$router.push('events')
-          } else {
+      let errorcode = false
+      /* eslint-disable no-unused-vars */
+
+      firebaseAuth.signInWithPopup(provider)
+        .catch(function (error) {
+          const errorCode = error.code
+          const errorMessage = error.message
+          const email = error.email
+          const credential = error.credential
+          errorcode = true
+        })
+        .then(function (result) {
+          // Google Access Token
+          const token = result.credential.accessToken
+          const user = result.user
+          return token
+        })
+        .then((token) => {
+          if (errorcode === true) {
             this.Fail(this.$t('error_google'))
+          } else {
+            axios({
+              method: 'put',
+              url: 'https://canarygo.herokuapp.com/autorizar',
+              data: {
+                tipo: 'Login',
+                tipo2: 'Google',
+                token: token,
+                id_client: firebaseConfig.apiKey
+              }
+            })
+              .then((response) => {
+                console.log('RESPUESTA DEL SERVER', response)
+
+                if (response.data === 'Usuario logueado') {
+                  this.Success()
+                  this.$router.push('events')
+                } else {
+                  this.Fail(this.$t('error_google'))
+                }
+              }, (error) => {
+                console.log('EL ERROR ES', error)
+              })
           }
-        }, (error) => {
-          console.log('EL ERROR ES', error)
         })
     },
     IniciarSesionFacebook () {

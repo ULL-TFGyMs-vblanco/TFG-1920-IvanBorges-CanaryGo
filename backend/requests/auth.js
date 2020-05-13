@@ -2,7 +2,8 @@
 // var express = require('express')
 
 module.exports = function (app) {
-  const { firebase, firebaseAuth, firebaseDb, firebaseStg, firebaseAuthGoogle, firebaseAuthFacebook } = require('../config/firebase')
+  const { firebase, firebaseAuth, firebaseDb, firebaseStg, firebaseAuthFacebook } = require('../config/firebase')
+  const { OAuth2Client } = require('google-auth-library')
 
   // /////////////////// IDENTIFICACIÓN ///////////////////////
   // Get (Login)
@@ -23,7 +24,6 @@ module.exports = function (app) {
     console.log('Funcionando', req.body)
 
     if (req.body.tipo === 'Login') {
-
       if (req.body.tipo2 === 'Estandar') {
         let errorcodes = ''
 
@@ -50,11 +50,10 @@ module.exports = function (app) {
             }
           })
       } else if (req.body.tipo2 === 'Google') {
-        IniciarSesionGoogle(req)
+        IniciarSesionGoogle(req, res)
       } else if (req.body.tipo2 === 'Facebook') {
-        IniciarSesionGoogle(req)
+        IniciarSesionFacebook(req, res)
       }
-
     } else if (req.body.tipo === 'Registro') {
       let errorcodes = false
 
@@ -347,39 +346,39 @@ module.exports = function (app) {
     }
   }
 
-  function IniciarSesionGoogle (res) {
-    const provider = firebaseAuthGoogle
-    // provider.addScope('https://www.googleapis.com/auth/contacts.readonly')
-    firebaseAuth.useDeviceLanguage()
-    provider.setCustomParameters({
-      login_hint: 'user@example.com'
-    })
+  function IniciarSesionGoogle (req, res) {
+    const client = new OAuth2Client(req.body.id_client)
 
-    let errorcode = false
-    /* eslint-disable no-unused-vars */
-    firebaseAuth.signInWithPopup(provider)
-      .catch(function (error) {
-        const errorCode = error.code
-        const errorMessage = error.message
-        const email = error.email
-        const credential = error.credential
-        errorcode = true
+    async function verify () {
+      const ticket = await client.verifyIdToken({
+        idToken: req.body.token,
+        audience: req.body.id_client
       })
-      .then(function (result) {
-        // Google Access Token
-        const token = result.credential.accessToken
-        const user = result.user
-      })
-      .then(() => {
-        if (errorcode === true) {
-          res.send('Error al loguear con Google')
-        } else {
+      const payload = ticket.getPayload()
+      const userid = payload.sub
+      // If request specified a G Suite domain:
+      // const domain = payload['hd'];
+    }
+    verify()
+      .catch(
+        console.error,
+        res.send('Error login Google')
+      )
+      .then(function () {
+
+        // Login si no hay errores
+        firebase.auth().signInWithCustomToken(req.body.token).catch(function (error) {
+          var errorCode = error.code
+          var errorMessage = error.message
+          console.loh(errorCode, errorMessage)
+          res.send('Error login Google')
+        }).then(function () {
           res.send('Usuario logueado')
-        }
+        })
       })
   }
 
-  function IniciarSesionFacebook (res) {
+  function IniciarSesionFacebook (req, res) {
     const provider = firebaseAuthFacebook
     provider.addScope('user_birthday')
     firebaseAuth.useDeviceLanguage()
