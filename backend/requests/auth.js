@@ -365,14 +365,14 @@ module.exports = function (app) {
         res.send('Error login Google')
       )
       .then(function () {
-
         // Login si no hay errores
         firebase.auth().signInWithCustomToken(req.body.token).catch(function (error) {
           var errorCode = error.code
           var errorMessage = error.message
-          console.loh(errorCode, errorMessage)
+          console.log(errorCode, errorMessage)
           res.send('Error login Google')
         }).then(function () {
+          console.log('Usuario logueado')
           res.send('Usuario logueado')
         })
       })

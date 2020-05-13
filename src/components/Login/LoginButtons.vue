@@ -68,7 +68,7 @@ export default {
                 tipo: 'Login',
                 tipo2: 'Google',
                 token: token,
-                id_client: firebaseConfig.apiKey
+                id_client: firebaseConfig.projectId
               }
             })
               .then((response) => {
