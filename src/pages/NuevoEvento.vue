@@ -259,7 +259,6 @@ export default {
     },
     añadirEvento () {
       // Subir informacion
-
       // const file = document.getElementById('foto')
 
       axios({
@@ -283,7 +282,7 @@ export default {
       })
         .then((response) => {
           console.log('RESPUESTA DEL SERVER', response.data)
-          if (response.data === 'Evento añadido') {
+          if (response.data.includes('Evento añadido')) {
             this.$q.notify({
               icon: 'done',
               color: 'positive',
@@ -292,8 +291,9 @@ export default {
               timeout: 1000,
               progress: true
             })
-            this.$router.push('events')
-            this.subirImagen()
+            console.log('DATITOS', response.data.split(':'))
+            // this.$router.push('events')
+            // this.subirImagen(response.data.split(':'), file)
           } else {
             this.$q.notify({
               color: 'negative',
@@ -307,7 +307,7 @@ export default {
           console.log('EL ERROR ES', error)
         })
 
-      this.$router.push('events')
+      // this.$router.push('events')
     },
     onReset () {
       this.nombre_evento = null

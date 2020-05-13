@@ -94,7 +94,7 @@ module.exports = function (app) {
         foto: ''
       })
         .then(function (docRef) {
-          res.send('Evento añadido')
+          res.send('Evento añadido:' + docRef.id)
           console.log('Evento añadido')
         })
         .catch(function (error) {
