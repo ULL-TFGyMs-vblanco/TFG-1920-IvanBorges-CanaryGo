@@ -137,9 +137,9 @@ export default {
       url: 'https://canarygo.herokuapp.com/autorizar'
     })
       .then((response) => {
-        console.log('RESPESTA', response)
-        // this.saludo = this.$t('welcome') + ' ' + response.currentUser.displayName.split(' ')[0]
-        // this.img = response.currentUser.photoURL
+        console.log('USUARIO PAGINA', response)
+        this.saludo = this.$t('welcome') + ' ' + response.data.displayName.split(' ')[0]
+        this.img = response.data.photoURL
       }, (error) => {
         console.log('EL ERROR ES', error)
       })

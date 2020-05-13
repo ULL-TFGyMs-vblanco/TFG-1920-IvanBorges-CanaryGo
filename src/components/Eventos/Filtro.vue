@@ -37,7 +37,7 @@ export default {
   data () {
     return {
       tab: 'tab1',
-      model: null,
+      model: '',
       options: [
         'Tenerife', 'Gran Canaria', 'La Palma', 'La Gomera', 'El Hierro', 'Lanzarote', 'Fuerteventura', ''
       ]

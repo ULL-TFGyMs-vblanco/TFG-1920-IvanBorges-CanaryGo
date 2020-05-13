@@ -4,7 +4,7 @@
     <Usuario :key="$i18n.locale"></Usuario>
     <Filtro
       class="filtro"
-      @clicked="DataChild"
+      @clicked="onClickChild"
     />
     <Evento
       class="evento"
@@ -33,7 +33,7 @@ import axios from 'axios'
 export default {
   name: 'Eventos',
   components: {
-    // eslint-disable-next-line vue/no-unused-components
+
     Evento, Usuario, Filtro
     //  Toolbar
   },
@@ -63,6 +63,12 @@ export default {
         }, (error) => {
           console.log('EL ERROR ES', error)
         })
+    },
+    onClickChild (tab, isla) {
+      this.tab = tab
+      this.isla = isla
+
+      this.Mostrar()
     }
   },
   mounted () {
