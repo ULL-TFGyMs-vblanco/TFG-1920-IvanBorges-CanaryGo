@@ -111,8 +111,10 @@ module.exports = function (app) {
 
     if (req.data.operacion === 'Restar') {
       Restar()
-    } else {
+    } else if (req.data.operacion === 'Restar') {
       Sumar()
+    } else if (req.data.operacion === 'Evento') {
+      EstablecerFoto(req.body.url, req.body.id)
     }
 
     res.send('Votos actualizados')
@@ -143,6 +145,12 @@ module.exports = function (app) {
       firebaseDb.collection('eventos').doc(id).update({
         votos: votosactuales - 1
       })
+    })
+  }
+
+  function EstablecerFoto (url, id) {
+    firebaseDb.collection('prueba').doc(id).update({
+      url: url
     })
   }
 }

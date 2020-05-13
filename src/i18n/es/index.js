@@ -74,6 +74,7 @@ export default {
   event_sucess: 'Evento agregado correctamente',
   event_fail: 'Debe confirmar la veracidad de la información',
   event_fail2: 'Error al crear el evento inténtalo de nuevo',
+  event_fail_3: 'Inserta una foto',
   event: 'Ir al evento',
   settings: 'Ajustes',
   profile: 'Perfil',

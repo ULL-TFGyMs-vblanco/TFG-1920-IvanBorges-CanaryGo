@@ -259,55 +259,65 @@ export default {
     },
     añadirEvento () {
       // Subir informacion
-      // const file = document.getElementById('foto')
+      const file = document.getElementById('foto').files[0]
 
-      axios({
-        method: 'put',
-        url: 'https://canarygo.herokuapp.com/eventos',
-        data: {
-          tipo: 'Crear',
-          nombre_evento: this.nombre_evento,
-          localizacion: this.localizacion,
-          precio: this.precio,
-          fecha_inicio: this.fecha_inicio,
-          fecha_fin: this.fecha_fin,
-          fecha_creacion: this.fecha_inicio,
-          votos: this.votos,
-          comentarios: this.comentarios,
-          usuario: this.usuario,
-          isla: this.isla,
-          descuento: this.descuento,
-          descripcion: this.descripcion
-        }
-      })
-        .then((response) => {
-          console.log('RESPUESTA DEL SERVER', response.data)
-          if (response.data.includes('Evento añadido')) {
-            this.$q.notify({
-              icon: 'done',
-              color: 'positive',
-              message: this.$t('event_sucess'),
-              position: 'bottom',
-              timeout: 1000,
-              progress: true
-            })
-            console.log('DATITOS', response.data.split(':'))
-            // this.$router.push('events')
-            // this.subirImagen(response.data.split(':'), file)
-          } else {
-            this.$q.notify({
-              color: 'negative',
-              message: this.$t('event_fail2'),
-              position: 'bottom',
-              timeout: 2000,
-              progress: true
-            })
-          }
-        }, (error) => {
-          console.log('EL ERROR ES', error)
+      if (file === undefined) {
+        this.$q.notify({
+          color: 'negative',
+          message: this.$t('event_fail_3'),
+          position: 'bottom',
+          timeout: 2000,
+          progress: true
         })
+      } else {
+        axios({
+          method: 'put',
+          url: 'https://canarygo.herokuapp.com/eventos',
+          data: {
+            tipo: 'Crear',
+            nombre_evento: this.nombre_evento,
+            localizacion: this.localizacion,
+            precio: this.precio,
+            fecha_inicio: this.fecha_inicio,
+            fecha_fin: this.fecha_fin,
+            fecha_creacion: this.fecha_inicio,
+            votos: this.votos,
+            comentarios: this.comentarios,
+            usuario: this.usuario,
+            isla: this.isla,
+            descuento: this.descuento,
+            descripcion: this.descripcion
+          }
+        })
+          .then((response) => {
+            // console.log('RESPUESTA DEL SERVER', response.data)
+            if (response.data.includes('Evento añadido')) {
+              this.$q.notify({
+                icon: 'done',
+                color: 'positive',
+                message: this.$t('event_sucess'),
+                position: 'bottom',
+                timeout: 1000,
+                progress: true
+              })
+              var id = response.data.split(':')
+              // this.$router.push('events')
+              this.subirImagen(id[1], file)
+            } else {
+              this.$q.notify({
+                color: 'negative',
+                message: this.$t('event_fail2'),
+                position: 'bottom',
+                timeout: 2000,
+                progress: true
+              })
+            }
+          }, (error) => {
+            console.log('EL ERROR ES', error)
+          })
 
-      // this.$router.push('events')
+        // this.$router.push('events')
+      }
     },
     onReset () {
       this.nombre_evento = null
@@ -337,7 +347,17 @@ export default {
 
       thisRef.put(image)
         .then(function (snapshot, url) {
-          console.log('Archivo subido', snapshot, url)
+          thisRef.getDownloadURL().then(function (url) {
+            axios({
+              method: 'post',
+              url: 'https://canarygo.herokuapp.com/eventos',
+              data: {
+                tipo: 'Evento',
+                foto: url,
+                id: id
+              }
+            })
+          })
         })
     }
   }
