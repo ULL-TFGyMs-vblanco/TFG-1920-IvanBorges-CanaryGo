@@ -57,17 +57,8 @@ export default {
           const token2 = result.credential.idToken
           const user = result.user
 
-          console.log('Token1 -> ', token)
-          console.log('Token2 -> ', token2)
-
-          firebaseAuth().createCustomToken(token2)
-            .then(function (customToken) {
-              // Send token back to client
-              console.log('Token3 -> ', customToken)
-            })
-            .catch(function (error) {
-              console.log('Error creating custom token:', error)
-            })
+          // console.log('Token1 -> ', token)
+          // console.log('Token2 -> ', token2)
 
           return token2
         })

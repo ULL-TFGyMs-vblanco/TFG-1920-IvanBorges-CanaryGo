@@ -355,17 +355,15 @@ module.exports = function (app) {
         idToken: req.body.token,
         audience: req.body.id_client
       })
-      const payload = ticket.getPayload()
-      const userid = payload.sub
-      // If request specified a G Suite domain:
-      const domain = payload.hd
-
-      console.log('los datos google', payload, userid, domain)
+      // const payload = ticket.getPayload()
+      // const userid = payload.sub
+      // const domain = payload.hd
+      return ticket
     }
     verify()
-      .then(function () {
+      .then(function (ticket) {
         // Login si no hay errores
-        res.send('Usuario logueado')
+        res.send(ticket)
       })
       .catch(function (error) {
         console.log(error)
