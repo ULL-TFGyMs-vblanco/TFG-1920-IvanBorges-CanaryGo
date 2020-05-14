@@ -57,8 +57,8 @@ export default {
           const token2 = result.credential.idToken
           const user = result.user
 
-          // console.log('Token1 -> ', token)
-          // console.log('Token2 -> ', result.credential.idToken)
+          console.log('Token1 -> ', token)
+          console.log('Token2 -> ', result.credential.idToken)
 
           return token2
         })

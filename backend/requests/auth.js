@@ -360,8 +360,8 @@ module.exports = function (app) {
       // If request specified a G Suite domain:
       // const domain = payload['hd'];
     }
-    verify()
-      .then(function () {
+    // verify()
+    //   .then(function () {
         // Login si no hay errores
         firebase.auth().signInWithCustomToken(req.body.token)
           .then(function () {
@@ -374,11 +374,11 @@ module.exports = function (app) {
             console.log(errorCode, errorMessage)
             res.send('Error login Google')
           })
-      })
-      .catch(function (error) {
-        console.log(error)
-        res.send('Error login Google')
-      })
+      // })
+      // .catch(function (error) {
+      //   console.log(error)
+      //   res.send('Error login Google')
+      // })
   }
 
   function IniciarSesionFacebook (req, res) {

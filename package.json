@@ -28,6 +28,7 @@
     "filepond-plugin-file-validate-type": "^1.2.5",
     "filepond-plugin-image-preview": "^4.6.1",
     "firebase": "^7.14.3",
+    "firebase-admin": "^8.12.1",
     "fs": "0.0.1-security",
     "geocoder": "^0.2.3",
     "google-auth-library": "^6.0.0",
