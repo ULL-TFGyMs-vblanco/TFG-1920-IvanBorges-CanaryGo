@@ -54,8 +54,13 @@ export default {
         .then(function (result) {
           // Google Access Token
           const token = result.credential.accessToken
+          const token2 = result.credential.idToken
           const user = result.user
-          return token
+
+          // console.log('Token1 -> ', token)
+          // console.log('Token2 -> ', result.credential.idToken)
+
+          return token2
         })
         .then((token) => {
           if (errorcode === true) {
@@ -68,7 +73,7 @@ export default {
                 tipo: 'Login',
                 tipo2: 'Google',
                 token: token,
-                id_client: firebaseConfig.projectId
+                id_client: firebaseConfig.client_id
               }
             })
               .then((response) => {

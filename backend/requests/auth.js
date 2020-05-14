@@ -350,6 +350,7 @@ module.exports = function (app) {
     const client = new OAuth2Client(req.body.id_client)
 
     async function verify () {
+      console.log('Verificando')
       const ticket = await client.verifyIdToken({
         idToken: req.body.token,
         audience: req.body.id_client
@@ -364,8 +365,8 @@ module.exports = function (app) {
         // Login si no hay errores
         // firebase.auth().signInWithCustomToken(req.body.token)
         //   .then(function () {
-        //     console.log('Usuario logueado')
-        res.send('Usuario logueado')
+        console.log('Usuario logueado')
+        // res.send('Usuario logueado')
         //   })
         //   .catch(function (error) {
         //     var errorCode = error.code
@@ -376,7 +377,7 @@ module.exports = function (app) {
       })
       .catch(
         console.error,
-        res.send('Error login Google')
+        // res.send('Error login Google')
       )
   }
 
