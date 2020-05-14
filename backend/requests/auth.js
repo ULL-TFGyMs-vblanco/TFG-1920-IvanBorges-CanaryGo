@@ -363,22 +363,22 @@ module.exports = function (app) {
     verify()
       .then(function () {
         // Login si no hay errores
-        // firebase.auth().signInWithCustomToken(req.body.token)
-        //   .then(function () {
-        console.log('Usuario logueado')
-        // res.send('Usuario logueado')
-        //   })
-        //   .catch(function (error) {
-        //     var errorCode = error.code
-        //     var errorMessage = error.message
-        //     console.log(errorCode, errorMessage)
-        //     res.send('Error login Google')
-        //   })
+        firebase.auth().signInWithCustomToken(req.body.token)
+          .then(function () {
+            console.log('Usuario logueado')
+            res.send('Usuario logueado')
+          })
+          .catch(function (error) {
+            var errorCode = error.code
+            var errorMessage = error.message
+            console.log(errorCode, errorMessage)
+            res.send('Error login Google')
+          })
       })
-      .catch(
-        console.error,
-        // res.send('Error login Google')
-      )
+      .catch(function (error) {
+        console.log(error)
+        res.send('Error login Google')
+      })
   }
 
   function IniciarSesionFacebook (req, res) {
