@@ -70,9 +70,14 @@ export default {
                 console.log('RESPUESTA DEL SERVER', response)
 
                 if (response.data === 'Usuario correcto') {
-                  this.$store.dispatch('store/anadirUsuario', firebaseAuth.currentUser)
-                  this.Success()
-                  this.$router.push('events')
+                  // console.log('usuario google', firebaseAuth.currentUser)
+                  this.$store.dispatch('store/anadirUsuario', firebaseAuth.currentUser.providerData[0]).then(() => {
+                    setTimeout(() => {
+                      this.$store.dispatch('store/anadirToken', token)
+                      this.Success()
+                      this.$router.push('events')
+                    }, 500)
+                  })
                 } else {
                   this.Fail(this.$t('error_google'))
                 }
@@ -119,9 +124,13 @@ export default {
                 console.log('RESPUESTA DEL SERVER', response)
 
                 if (response.data === 'Usuario correcto') {
-                  this.$store.dispatch('store/anadirUsuario', firebaseAuth.currentUser)
-                  this.Success()
-                  this.$router.push('events')
+                  this.$store.dispatch('store/anadirUsuario', firebaseAuth.currentUser.providerData[0]).then(() => {
+                    setTimeout(() => {
+                      this.$store.dispatch('store/anadirToken', token)
+                      this.Success()
+                      this.$router.push('events')
+                    }, 500)
+                  })
                 } else {
                   this.Fail(this.$t('error_facebook'))
                 }
@@ -140,7 +149,6 @@ export default {
         timeout: 1000,
         progress: true
       })
-      this.$router.push('./events')
     },
     Fail (error) {
       this.$q.notify({

@@ -152,9 +152,13 @@ export default {
 
               firebaseAuth.signInWithCustomToken(token).then(() => {
                 // Guardamos datos persistentes en state
-                this.$store.dispatch('store/anadirUsuario', firebaseAuth.currentUser)
-                this.Success()
-                this.$router.push('events')
+                this.$store.dispatch('store/anadirUsuario', firebaseAuth.currentUser.providerData[0]).then(() => {
+                  setTimeout(() => {
+                    console.log('usuario normal', firebaseAuth.currentUser)
+                    this.Success()
+                    this.$router.push('events')
+                  }, 500)
+                })
               }).catch(function (error) {
                 console.log(error)
               })

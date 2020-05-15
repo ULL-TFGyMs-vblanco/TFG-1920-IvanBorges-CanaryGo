@@ -104,8 +104,7 @@
 </template>
 
 <script>
-import axios from 'axios'
-// import { firebaseAuth } from '../../boot/firebase'
+import { firebaseAuth } from '../../boot/firebase'
 
 export default {
   name: 'Usuario',
@@ -119,21 +118,16 @@ export default {
   },
   methods: {
     Salir () {
-      axios({
-        method: 'delete',
-        url: 'https://canarygo.herokuapp.com/autorizar',
-        data: {
-          opcion: 'Salir'
-        }
-      })
-        .then((response) => {
-          this.$router.push('home')
-        }, (error) => {
-          console.log('EL ERROR ES', error)
-        })
+      firebaseAuth.signOut()
+      this.$store.dispatch('store/borrarUsuario')
+      this.saludo = ''
+      this.img = ''
+      this.$router.push('home')
     }
   },
   mounted () {
+    console.log('eventos')
+    // console.log('USUARIO GENERAL', this.$store.state.store.datosUsuario)
     this.saludo = this.$t('welcome') + ' ' + this.$store.state.store.datosUsuario.displayName.split(' ')[0]
     this.img = this.$store.state.store.datosUsuario.photoURL
   }

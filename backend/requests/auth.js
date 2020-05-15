@@ -7,22 +7,17 @@ module.exports = function (app) {
   const { OAuth2Client } = require('google-auth-library')
 
   // /////////////////// IDENTIFICACIÓN ///////////////////////
-  // Get (Login)
+  // Get ()
   app.get('/autorizar', function (req, res) {
     console.log('HTTP Login')
-    // const usuario = {
-    //   email: UsuarioLogueado().email,
-    //   displayName: UsuarioLogueado().displayName,
-    //   photoURL: UsuarioLogueado().photoURL,
-    //   emailVerified: UsuarioLogueado().emailVerified
-    // }
-    // res.send(usuario)
   })
 
-  // Put (Register)
+  // Put (Login - Registro)
   app.put('/autorizar', function (req, res) {
     console.log('HTTP Registrar')
     console.log('Funcionando', req.body)
+
+    // ///////////////////// LOGIN //////////////////////////
 
     if (req.body.tipo === 'Login') {
       if (req.body.tipo2 === 'Estandar') {
@@ -55,9 +50,9 @@ module.exports = function (app) {
                     res.send('Usuario correcto:' + customToken)
                   })
                   .catch(function (error) {
-                    console.log('Error creating custom token:', error)
+                    console.log('Error al crear token:', error)
+                    res.send('auth/user-not-found')
                   })
-                // res.send(user.displayName)
               } else {
                 res.send('auth/must-verify')
               }
@@ -66,6 +61,8 @@ module.exports = function (app) {
       } else if (req.body.tipo2 === 'OAuth') {
         IniciarSesionOAuth(req, res)
       }
+
+      // ///////////////////// REGISTRO //////////////////////////
     } else if (req.body.tipo === 'Registro') {
       let errorcodes = false
 
@@ -77,14 +74,17 @@ module.exports = function (app) {
           console.log(errorMessage)
           errorcodes = true
         })
-        .then(() => {
+        .then((datos) => {
+          const user = datos
+          firebaseAuth.signOut()
+          // Gestionamos
           if (errorcodes) {
             res.send('Error al crear usuario')
           } else {
             res.send('Usuario creado')
             Verificar()
             ActualizarInfo(req.body.nombre, req.body.genero, req.body.fecha, req.body.usuario, req.body.correo)
-            ActualizarFoto(req.body.genero, firebaseAuth.currentUser)
+            FotoDefault(req.body.genero, user)
             firebaseAuth.signOut()
           }
         })
@@ -107,11 +107,10 @@ module.exports = function (app) {
         displayName: req.body.usuario,
         photoURL: req.body.foto
       }).then(function () {
-        // Update successful.
+        // Correcto
         console.log('Usuario actualizado')
         res.send('Usuario actualizado')
       }).catch(function (error) {
-        // An error happened.
         res.send('Fallo al actualizar')
         console.log('Error al actualizar usuario', error)
       })
@@ -123,56 +122,42 @@ module.exports = function (app) {
     // res.send('Borrar perfil')
     // console.log('Funcionando', req.body)
 
-    if (req.body.opcion === 'Borrar') {
-      // Opcion 1 (BORRAR)
-      const usuarioactivo = UsuarioLogueado()
+    // ///////////////////// ELIMINAR USUARIO //////////////////////////
+    const usuarioactivo = UsuarioLogueado()
 
-      let documento
+    let documento
 
-      console.log('El rollo', usuarioactivo.email)
+    console.log('El rollo', usuarioactivo.email)
 
-      //  Obtenemos id de la db
-      firebaseDb.collection('usuarios').where('Correo', '==', usuarioactivo.email).get()
-        .then((querySnapshot) => {
-          querySnapshot.forEach((doc) => {
-            documento = doc.id
-          })
-        }).catch(function (error) {
-          console.error('Error encontrando usuario en db', error)
+    //  Obtenemos id de la db
+    firebaseDb.collection('usuarios').where('Correo', '==', usuarioactivo.email).get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          documento = doc.id
         })
-        .then(function () {
-          // Borramos de la db
-          firebaseDb.collection('usuarios').doc(documento).delete()
-            .then(function () {
-              console.log('Usuario borrado de la db')
-            }).catch(function (error) {
-              console.error('Erro al borrar el usuario de la db ', error)
-            })
-        }).catch(function (error) {
-          console.error('Error borrando db', error)
-        })
-
-      // Borramos usuario
-      usuarioactivo.delete().then(function () {
-        // User deleted.
-        console.log('Usuario eliminado')
-        res.send('Usuario eliminado')
       }).catch(function (error) {
-        console.log('No se pudo eliminar el usuario', error)
+        console.error('Error encontrando usuario en db', error)
       })
-    } else {
-      // OPCION 2 (Salir)
+      .then(function () {
+        // Borramos de la db
+        firebaseDb.collection('usuarios').doc(documento).delete()
+          .then(function () {
+            console.log('Usuario borrado de la db')
+          }).catch(function (error) {
+            console.error('Erro al borrar el usuario de la db ', error)
+          })
+      }).catch(function (error) {
+        console.error('Error borrando db', error)
+      })
 
-      firebaseAuth.signOut().then(function () {
-        // Sign-out successful.
-      })
-        .catch(function (error) {
-          console.log(error)
-          console.log('Usuario desconectaod')
-          res.send('Error al desconectar usuario')
-        })
-        .then(res.send('Usuario desconectado'))
-    }
+    // Borramos usuario
+    usuarioactivo.delete().then(function () {
+      // User deleted.
+      console.log('Usuario eliminado')
+      res.send('Usuario eliminado')
+    }).catch(function (error) {
+      console.log('No se pudo eliminar el usuario', error)
+    })
   })
 
   /// ///////////// UTILIDADES /////////////////
@@ -290,7 +275,7 @@ module.exports = function (app) {
     }
   }
 
-  function ActualizarFoto (genero, usuario) {
+  function FotoDefault (genero, usuario) {
     const storageRefDefault = firebaseStg.ref('avatares/predefinidos/')
     const fotoRefMale = storageRefDefault.child('Avatar_m.png')
     const fotoRefFemale = storageRefDefault.child('Avatar_f.png')

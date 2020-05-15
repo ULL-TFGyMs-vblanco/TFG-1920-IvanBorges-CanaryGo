@@ -1,11 +1,11 @@
 
-import state from './state'
+// import state from './state'
 
 const getters = {
-  infoUsuario () {
-    console.log('Devolviendo')
-    return state.datosUsuario
-  }
+  // infoUsuario (state) {
+  //   console.log('Devolviendo')
+  //   return state.datosUsuario
+  // }
 }
 
 export default getters

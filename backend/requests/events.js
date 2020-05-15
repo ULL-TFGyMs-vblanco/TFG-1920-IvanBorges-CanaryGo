@@ -10,7 +10,7 @@ module.exports = function (app) {
   app.get('/eventos', function (req, res) {
     console.log('HTTP Obtener Evento')
     console.log('Funcionando', req.body)
-    // res.send('HTTP Obtener Evento')
+    res.send('HTTP Obtener Evento')
   })
 
   // Put
