@@ -118,8 +118,6 @@ export default {
         this.formHasError = true
       } else if (this.sesion !== true) {
 
-      } else {
-
       }
       this.IniciarSesion()
     },
@@ -150,7 +148,7 @@ export default {
           } else if (response.data === 'auth/wrong-password') {
             this.Fail(this.$t('login_fail_password'))
           } else {
-            if (response.data === 'Usuario logueado') {
+            if (response.data.includes('Usuario logueado')) {
               // this.anadirUsuario()
               // this.$store.commit('anadirUsuario', )
               this.Success()

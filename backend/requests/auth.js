@@ -37,18 +37,24 @@ module.exports = function (app) {
             errorcodes = errorCode
           })
           .then(() => {
+            const user = firebaseAuth.currentUser
+            firebaseAuth.signOut()
+            console.log('USUARIO LOGUEADO', user.displayName)
             if (errorcodes === 'auth/user-not-found') {
               res.send(errorcodes)
             } else if (errorcodes === 'auth/wrong-password') {
               res.send(errorcodes)
             } else {
-              if (firebase.auth().currentUser.emailVerified === true) {
-                res.send('Usuario logueado')
+              // Creamos token de sesion
+              if (user.emailVerified === true) {
+                // user.getIdToken().then(function (token) {
+                //   res.send('Usuario logueado:' + token)
+                // })
+                res.send(user.displayName)
               } else {
                 res.send('auth/must-verify')
               }
             }
-            firebaseAuth.signOut()
           })
       } else if (req.body.tipo2 === 'Google') {
         IniciarSesionGoogle(req, res)
@@ -320,7 +326,7 @@ module.exports = function (app) {
     }
     verify()
       .then(function (ticket) {
-      // Login si no hay errores
+        // Login si no hay errores
         res.send(ticket)
       })
       .catch(function (error) {
@@ -348,7 +354,7 @@ module.exports = function (app) {
         errorcode = true
       })
       .then(function (result) {
-      // Google Access Token
+        // Google Access Token
         const token = result.credential.accessToken
         const user = result.user
       })
