@@ -2,7 +2,7 @@
 // var express = require('express')
 
 module.exports = function (app) {
-  const { firebase, firebaseAuth, firebaseDb, firebaseStg, firebaseAuthFacebook } = require('../config/firebase')
+  const { firebase, firebaseAuth, firebaseDb, firebaseStg } = require('../config/firebase')
   const { admin } = require('../config/firebaseadmin')
   const { OAuth2Client } = require('google-auth-library')
 
