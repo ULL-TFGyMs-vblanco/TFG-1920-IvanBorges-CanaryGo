@@ -48,6 +48,7 @@ module.exports = function (app) {
                 res.send('auth/must-verify')
               }
             }
+            firebaseAuth.signOut()
           })
       } else if (req.body.tipo2 === 'Google') {
         IniciarSesionGoogle(req, res)
@@ -72,7 +73,8 @@ module.exports = function (app) {
             res.send('Usuario creado')
             Verificar()
             ActualizarInfo(req.body.nombre, req.body.genero, req.body.fecha, req.body.usuario, req.body.correo)
-            // ActualizarFoto(req.body.foto)
+            ActualizarFoto(req.body.genero, firebaseAuth.currentUser)
+            firebaseAuth.signOut()
           }
         })
     }
@@ -277,73 +279,29 @@ module.exports = function (app) {
     }
   }
 
-  function ActualizarFoto (foto) {
-    const usuario = UsuarioLogueado()
-    const usuarioid = UsuarioLogueado().id
-    const storageRef = firebaseStg.ref('avatares/usuarios/' + usuarioid)
-    const fotoRef = storageRef.child('foto')
-    let urlfoto
+  function ActualizarFoto (genero, usuario) {
+    const storageRefDefault = firebaseStg.ref('avatares/predefinidos/')
+    const fotoRefMale = storageRefDefault.child('Avatar_m.png')
+    const fotoRefFemale = storageRefDefault.child('Avatar_f.png')
 
-    if (foto !== undefined) {
-      // Subir imagen
-      fotoRef.put(foto)
-        .then(function (snapshot) {
-          // console.log('Archivo subido')
-          // Obtener URL guardado
-          fotoRef.getDownloadURL().then(function (url) {
-            urlfoto = url
-          })
-            .then(function () {
-              if (usuario != null) {
-                usuario.updateProfile({
-                  photoURL: urlfoto
-                })
-              }
-            })
-        })
-    } else {
-      // Predefinidos
-      const usuarioid = firebaseAuth.currentUser.uid
-      const storageRef = firebaseStg.ref('avatares/usuarios/' + usuarioid)
-      const fotoRef = storageRef.child('foto')
-
-      const storageRefDefault = firebaseStg.ref('avatares/predefinidos/')
-      const fotoRefMale = storageRefDefault.child('Avatar_m.png')
-      const fotoRefFemale = storageRefDefault.child('Avatar_f.png')
-
-      let genero
-
-      if (this.genero === 'Masculino') {
-        console.log('Masculino')
-        genero = fotoRefMale
-      } else if (this.genero === 'Femenino') {
-        console.log('Femenino')
-        genero = fotoRefFemale
-      }
-
-      genero.getDownloadURL()
-        .catch(function (error) {
-          console.log('Error', error)
-        })
-        .then(function (url, archivo) {
-          var xhr = new XMLHttpRequest()
-          xhr.responseType = 'blob'
-          xhr.onload = function (event) {
-            var blob = xhr.response
-            fotoRef.put(blob)
-            console.log('Enviando')
-          }
-          xhr.open('GET', url)
-          xhr.send()
-        })
-        .then(function (snapshot) {
-          fotoRef.getDownloadURL().then(function (url) {
-            usuario.updateProfile({
-              photoURL: url
-            })
-          })
-        })
+    let tipofoto
+    if (genero === 'Masculino') {
+      console.log('Masculino')
+      tipofoto = fotoRefMale
+    } else if (this.genero === 'Femenino') {
+      console.log('Femenino')
+      tipofoto = fotoRefFemale
     }
+
+    tipofoto.getDownloadURL()
+      .catch(function (error) {
+        console.log('Error', error)
+      })
+      .then(function (url) {
+        usuario.updateProfile({
+          photoURL: url
+        })
+      })
   }
 
   function IniciarSesionGoogle (req, res) {
@@ -362,7 +320,7 @@ module.exports = function (app) {
     }
     verify()
       .then(function (ticket) {
-        // Login si no hay errores
+      // Login si no hay errores
         res.send(ticket)
       })
       .catch(function (error) {
@@ -390,7 +348,7 @@ module.exports = function (app) {
         errorcode = true
       })
       .then(function (result) {
-        // Google Access Token
+      // Google Access Token
         const token = result.credential.accessToken
         const user = result.user
       })

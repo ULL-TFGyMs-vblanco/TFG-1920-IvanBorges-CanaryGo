@@ -1,2 +1,9 @@
-export function someAction (/* context */) {
+// export function someAction (/* context */) {
+// }
+// import { firebaseAuth } from 'boot/firebase'
+
+const actions = {
+
 }
+
+export default actions

@@ -105,6 +105,8 @@
 
 <script>
 import axios from 'axios'
+import { mapMutations, mapGetters } from 'vuex'
+
 export default {
   name: 'Usuario',
   data () {
@@ -116,6 +118,8 @@ export default {
     }
   },
   methods: {
+    ...mapMutations('store', ['anadirUsuario']),
+    ...mapGetters('store', ['Infousuario']),
     Salir () {
       axios({
         method: 'delete',
@@ -138,8 +142,13 @@ export default {
     })
       .then((response) => {
         console.log('USUARIO PAGINA', response)
-        this.saludo = this.$t('welcome') + ' ' + response.data.displayName.split(' ')[0]
-        this.img = response.data.photoURL
+        this.saludo = this.$t('welcome') + ' ' + this.$store.state.store.datosUsuario.displayName.split(' ')[0]
+        this.img = this.$store.state.store.datosUsuario.phootoURL
+
+        this.anadirUsuario(response.data)
+
+        // console.log('USUARIO PAGINA', this.infoUsuario())
+        console.log('USUARIO PAGINA', this.$store.state.store.datosUsuario.displayName)
       }, (error) => {
         console.log('EL ERROR ES', error)
       })

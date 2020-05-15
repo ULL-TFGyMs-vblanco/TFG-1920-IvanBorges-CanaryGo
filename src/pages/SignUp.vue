@@ -17,17 +17,7 @@
         @reset.prevent.stop="onReset"
         class="q-gutter-md"
       >
-        <q-item>
-          <q-item-section>
-            <q-item-label style="color: #ec9718">{{$t('optional_photo')}}</q-item-label>
-          </q-item-section>
-        </q-item>
 
-        <!-- Imagen -->
-        <Selectorarchivos
-          v-bind:anchura="500"
-          v-bind:altura="500"
-        />
         <!-- <br />
         <br />-->
 
@@ -220,15 +210,13 @@
 
 // eslint-disable-next-line no-unused-vars
 import { firebaseAuth, firebase, firebaseStg } from 'boot/firebase'
-import Selectorarchivos from '../components/Eventos/Selectorarchivos'
 import LoginButtons from 'components/Login/LoginButtons'
 import axios from 'axios'
 
 export default {
   name: 'Signup',
   components: {
-    LoginButtons,
-    Selectorarchivos
+    LoginButtons
   },
   data () {
     return {
@@ -309,7 +297,7 @@ export default {
 
           if (response.data === 'Error al crear usuario') {
             this.Fail(this.$t('register_fail_2'))
-          } else if (response.data === 'Usuario creado') {
+          } else if (response.data.includes('Usuario creado')) {
             this.Success()
             this.alert = true
           }
@@ -317,6 +305,7 @@ export default {
           console.log('EL ERROR ES', error)
         })
     },
+
     Success () {
       this.$q.notify({
         icon: 'done',

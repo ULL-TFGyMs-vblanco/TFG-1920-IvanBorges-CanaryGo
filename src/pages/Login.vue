@@ -92,6 +92,7 @@
 <script>
 import LoginButtons from 'components/Login/LoginButtons'
 import axios from 'axios'
+import { mapMutations } from 'vuex'
 
 export default {
   name: 'Login',
@@ -108,7 +109,7 @@ export default {
     }
   },
   methods: {
-
+    ...mapMutations('store', ['anadirUsuario']),
     onSubmit () {
       this.$refs.email.validate()
       this.$refs.contrasena.validate()
@@ -150,6 +151,8 @@ export default {
             this.Fail(this.$t('login_fail_password'))
           } else {
             if (response.data === 'Usuario logueado') {
+              // this.anadirUsuario()
+              // this.$store.commit('anadirUsuario', )
               this.Success()
               this.$router.push('events')
             } else {
