@@ -87,10 +87,10 @@ module.exports = function (app) {
         descripcion: req.body.descripcion,
         votos: 0,
         comentarios: 0,
-        usuario: firebaseAuth.currentUser.displayName,
+        usuario: req.body.usuario,
         isla: req.body.isla,
         fecha_creacion: new Date().getDay() + '/' + new Date().getMonth() + '/' + new Date().getFullYear() + ',' + new Date().getHours() + ':' + new Date().getMinutes() + new Date().getMilliseconds(),
-        foto_usuario: firebaseAuth.currentUser.photoURL,
+        foto_usuario: req.body.foto_usuario,
         foto: ''
       })
         .then(function (docRef) {

@@ -2,7 +2,7 @@
 // var express = require('express')
 
 module.exports = function (app) {
-  const { firebase, firebaseAuth, firebaseDb, firebaseStg } = require('../config/firebase')
+  const { firebaseAuth, firebaseDb, firebaseStg } = require('../config/firebase')
   const { admin } = require('../config/firebaseadmin')
   const { OAuth2Client } = require('google-auth-library')
 
@@ -75,17 +75,16 @@ module.exports = function (app) {
           errorcodes = true
         })
         .then((datos) => {
-          const user = datos
+          const user = firebaseAuth.currentUser
           firebaseAuth.signOut()
           // Gestionamos
           if (errorcodes) {
             res.send('Error al crear usuario')
           } else {
-            res.send('Usuario creado')
-            Verificar()
-            ActualizarInfo(req.body.nombre, req.body.genero, req.body.fecha, req.body.usuario, req.body.correo)
+            Verificar(user)
+            ActualizarInfo(req.body.nombre, req.body.genero, req.body.fecha, req.body.usuario, req.body.correo, user)
             FotoDefault(req.body.genero, user)
-            firebaseAuth.signOut()
+            res.send('Usuario creado')
           }
         })
     }
@@ -162,35 +161,33 @@ module.exports = function (app) {
 
   /// ///////////// UTILIDADES /////////////////
 
-  function ActualizarInfo (nombre, genero, fecha, usuario, correo) {
-    const usuarioactivo = UsuarioLogueado()
+  function ActualizarInfo (nombre, genero, fecha, usuario, correo, user) {
+    const usuarioactivo = user
 
     // Subir informacion
-    if (usuarioactivo !== false) {
-      // Firestore
-      firebaseDb.collection('usuarios').add({
-        Nombre: nombre,
-        Fecha: fecha,
-        Genero: genero,
-        Correo: correo
-      }).then(function (docRef) {
+
+    // Firestore
+    admin.firestore().collection('usuarios').add({
+      nombre: nombre,
+      fecha: fecha,
+      genero: genero,
+      correo: correo
+    })
+      .then(() => {
         console.log('Usuarios añadido a la db')
       })
-        .catch(function (error) {
-          console.error('Error añadiendo usuario a la db', error)
-        })
-
-      // Authentification
-      usuarioactivo.updateProfile({
-        displayName: usuario
-      }).then(function () {
-        // Update successful.
-        console.log('Usuario actualizado')
-      }).catch(function (error) {
-        // An error happened.
-        console.log('Error al actualizar usuario', error)
+      .catch(function (error) {
+        console.error('Error añadiendo usuario a la db', error)
       })
-    }
+
+    // Autentificacion
+    usuarioactivo.updateProfile({
+      displayName: usuario
+    }).then(function () {
+      console.log('Usuario actualizado')
+    }).catch(function (error) {
+      console.log('Error al actualizar usuario', error)
+    })
   }
 
   function ActualizarInfoDb (nombre, fecha, genero, correo) {
@@ -239,8 +236,7 @@ module.exports = function (app) {
     }
   }
 
-  function Verificar () {
-    var user = firebase.auth().currentUser
+  function Verificar (user) {
     user.sendEmailVerification()
       .catch(function (error) {
         console.log(error)

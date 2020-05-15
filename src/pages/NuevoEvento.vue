@@ -154,9 +154,9 @@
                   size="40px"
                   label="cuenta"
                 >
-                  <!-- <img :src="this.img" /> -->
+                  <img :src="this.foto_usuario" />
                 </q-avatar>
-                <!-- {{usuario}} -->
+                {{usuario}}
               </q-item-label>
             </q-item-section>
           </q-item>
@@ -226,8 +226,8 @@ export default {
       descripcion: '',
       descuento: '',
       sesion: false,
-      // usuario: firebaseAuth.currentUser.displayName,
-      // img: firebaseAuth.currentUser.photoURL,
+      usuario: this.$store.state.store.datosUsuario.displayName.split(' ')[0],
+      foto_usuario: this.$store.state.store.datosUsuario.photoURL,
       id: '',
       isla: ''
     }
@@ -286,7 +286,8 @@ export default {
             usuario: this.usuario,
             isla: this.isla,
             descuento: this.descuento,
-            descripcion: this.descripcion
+            descripcion: this.descripcion,
+            foto_usuario: this.foto_usuario
           }
         })
           .then((response) => {
@@ -303,6 +304,7 @@ export default {
               var id = response.data.split(':')
               this.$router.push('events')
               this.subirImagen(id[1], file)
+              this.$router.push('events')
             } else {
               this.$q.notify({
                 color: 'negative',
@@ -315,8 +317,6 @@ export default {
           }, (error) => {
             console.log('EL ERROR ES', error)
           })
-
-        // this.$router.push('events')
       }
     },
     onReset () {
