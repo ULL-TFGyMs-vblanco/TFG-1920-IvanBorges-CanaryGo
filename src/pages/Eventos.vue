@@ -59,7 +59,6 @@ export default {
       })
         .then((response) => {
           console.log('RESPUESTA DEL SERVER', response.data)
-          this.datos_evento = response.data
         }, (error) => {
           console.log('EL ERROR ES', error)
         })

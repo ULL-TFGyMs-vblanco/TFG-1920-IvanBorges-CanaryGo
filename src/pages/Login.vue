@@ -92,7 +92,7 @@
 <script>
 import LoginButtons from 'components/Login/LoginButtons'
 import axios from 'axios'
-import { mapMutations } from 'vuex'
+import { firebaseAuth } from 'boot/firebase'
 
 export default {
   name: 'Login',
@@ -109,7 +109,6 @@ export default {
     }
   },
   methods: {
-    ...mapMutations('store', ['anadirUsuario']),
     onSubmit () {
       this.$refs.email.validate()
       this.$refs.contrasena.validate()
@@ -148,12 +147,17 @@ export default {
           } else if (response.data === 'auth/wrong-password') {
             this.Fail(this.$t('login_fail_password'))
           } else {
-            if (response.data.includes('Usuario logueado')) {
-              console.log('DATITAS', response.data.split(':')[1])
-              // this.anadirUsuario()
-              // this.$store.commit('anadirUsuario', )
-              this.Success()
-              this.$router.push('events')
+            if (response.data.includes('Usuario correcto:')) {
+              const token = response.data.split(':')[1]
+
+              firebaseAuth.signInWithCustomToken(token).then(() => {
+                // Guardamos datos persistentes en state
+                this.$store.dispatch('store/anadirUsuario', firebaseAuth.currentUser)
+                this.Success()
+                this.$router.push('events')
+              }).catch(function (error) {
+                console.log(error)
+              })
             } else {
               this.Fail(this.$t('login_fail_verify'))
             }

@@ -105,7 +105,7 @@
 
 <script>
 import axios from 'axios'
-import { mapMutations, mapGetters } from 'vuex'
+// import { firebaseAuth } from '../../boot/firebase'
 
 export default {
   name: 'Usuario',
@@ -118,8 +118,6 @@ export default {
     }
   },
   methods: {
-    ...mapMutations('store', ['anadirUsuario']),
-    ...mapGetters('store', ['Infousuario']),
     Salir () {
       axios({
         method: 'delete',
@@ -136,22 +134,8 @@ export default {
     }
   },
   mounted () {
-    axios({
-      method: 'get',
-      url: 'https://canarygo.herokuapp.com/autorizar'
-    })
-      .then((response) => {
-        console.log('USUARIO PAGINA', response)
-        this.saludo = this.$t('welcome') + ' ' + this.$store.state.store.datosUsuario.displayName.split(' ')[0]
-        this.img = this.$store.state.store.datosUsuario.phootoURL
-
-        this.anadirUsuario(response.data)
-
-        // console.log('USUARIO PAGINA', this.infoUsuario())
-        console.log('USUARIO PAGINA', this.$store.state.store.datosUsuario.displayName)
-      }, (error) => {
-        console.log('EL ERROR ES', error)
-      })
+    this.saludo = this.$t('welcome') + ' ' + this.$store.state.store.datosUsuario.displayName.split(' ')[0]
+    this.img = this.$store.state.store.datosUsuario.photoURL
   }
 }
 </script>

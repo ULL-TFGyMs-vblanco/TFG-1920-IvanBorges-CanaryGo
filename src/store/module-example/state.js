@@ -1,11 +1,6 @@
-// export default function () {
-//   return {
-//     //
-//   }
-// }
 
 const state = {
-  datosUsuario: {}
+  datosUsuario: []
 }
 
 export default state

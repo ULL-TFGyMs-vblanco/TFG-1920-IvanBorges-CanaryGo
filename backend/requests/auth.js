@@ -10,13 +10,13 @@ module.exports = function (app) {
   // Get (Login)
   app.get('/autorizar', function (req, res) {
     console.log('HTTP Login')
-    const usuario = {
-      email: UsuarioLogueado().email,
-      displayName: UsuarioLogueado().displayName,
-      photoURL: UsuarioLogueado().photoURL,
-      emailVerified: UsuarioLogueado().emailVerified
-    }
-    res.send(usuario)
+    // const usuario = {
+    //   email: UsuarioLogueado().email,
+    //   displayName: UsuarioLogueado().displayName,
+    //   photoURL: UsuarioLogueado().photoURL,
+    //   emailVerified: UsuarioLogueado().emailVerified
+    // }
+    // res.send(usuario)
   })
 
   // Put (Register)
@@ -51,7 +51,7 @@ module.exports = function (app) {
                 // Generamos el token del cliente
                 admin.auth().createCustomToken(user.user.uid)
                   .then(function (customToken) {
-                    // Send token back to client
+                    // Enviamos token al cliente
                     res.send('Usuario correcto:' + customToken)
                   })
                   .catch(function (error) {
@@ -321,20 +321,17 @@ module.exports = function (app) {
     const client = new OAuth2Client(req.body.id_client)
 
     async function verify () {
-      console.log('Verificando')
-      const ticket = await client.verifyIdToken({
+      // Comprobar que la consulta se haga desde nuestra app y sea un usuario valido
+      await client.verifyIdToken({
         idToken: req.body.token,
         audience: req.body.id_client
       })
-      // const payload = ticket.getPayload()
-      // const userid = payload.sub
-      // const domain = payload.hd
-      return ticket
+
     }
     verify()
       .then(function (ticket) {
         // Login si no hay errores
-        res.send(ticket)
+        res.send('Usuario correcto')
       })
       .catch(function (error) {
         console.log(error)

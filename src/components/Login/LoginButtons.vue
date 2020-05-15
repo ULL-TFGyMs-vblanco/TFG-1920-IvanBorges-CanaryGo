@@ -57,9 +57,6 @@ export default {
           const token2 = result.credential.idToken
           const user = result.user
 
-          // console.log('Token1 -> ', token)
-          // console.log('Token2 -> ', token2)
-
           return token2
         })
         .then((token) => {
@@ -79,7 +76,8 @@ export default {
               .then((response) => {
                 console.log('RESPUESTA DEL SERVER', response)
 
-                if (response.data === 'Usuario logueado') {
+                if (response.data === 'Usuario correcto') {
+                  this.$store.dispatch('store/anadirUsuario', firebaseAuth.currentUser)
                   this.Success()
                   this.$router.push('events')
                 } else {
