@@ -63,10 +63,8 @@ module.exports = function (app) {
               }
             }
           })
-      } else if (req.body.tipo2 === 'Google') {
-        IniciarSesionGoogle(req, res)
-      } else if (req.body.tipo2 === 'Facebook') {
-        IniciarSesionFacebook(req, res)
+      } else if (req.body.tipo2 === 'OAuth') {
+        IniciarSesionOAuth(req, res)
       }
     } else if (req.body.tipo === 'Registro') {
       let errorcodes = false
@@ -317,7 +315,7 @@ module.exports = function (app) {
       })
   }
 
-  function IniciarSesionGoogle (req, res) {
+  function IniciarSesionOAuth (req, res) {
     const client = new OAuth2Client(req.body.id_client)
 
     async function verify () {
@@ -326,7 +324,6 @@ module.exports = function (app) {
         idToken: req.body.token,
         audience: req.body.id_client
       })
-
     }
     verify()
       .then(function (ticket) {
@@ -335,39 +332,7 @@ module.exports = function (app) {
       })
       .catch(function (error) {
         console.log(error)
-        res.send('Error login Google')
-      })
-  }
-
-  function IniciarSesionFacebook (req, res) {
-    const provider = firebaseAuthFacebook
-    provider.addScope('user_birthday')
-    firebaseAuth.useDeviceLanguage()
-    provider.setCustomParameters({
-      login_hint: 'user@example.com'
-    })
-
-    let errorcode = false
-    /* eslint-disable no-unused-vars */
-    firebaseAuth.signInWithPopup(provider)
-      .catch(function (error) {
-        const errorCode = error.code
-        const errorMessage = error.message
-        const email = error.email
-        const credential = error.credential
-        errorcode = true
-      })
-      .then(function (result) {
-        // Google Access Token
-        const token = result.credential.accessToken
-        const user = result.user
-      })
-      .then(() => {
-        if (errorcode === true) {
-          res.send('Error al loguear con Facebook')
-        } else {
-          res.send('Usuario logueado')
-        }
+        res.send('Usuario incorrecto')
       })
   }
 

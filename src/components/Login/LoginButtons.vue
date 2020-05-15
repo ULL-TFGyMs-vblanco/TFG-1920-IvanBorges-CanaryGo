@@ -21,7 +21,7 @@
 
 <script>
 import axios from 'axios'
-import { firebaseAuth, firebaseAuthGoogle, firebaseConfig } from 'boot/firebase'
+import { firebaseAuth, firebaseAuthGoogle, firebaseAuthFacebook, firebaseConfig } from 'boot/firebase'
 
 export default {
   name: 'LoginButtons',
@@ -41,23 +41,16 @@ export default {
       })
 
       let errorcode = false
-      /* eslint-disable no-unused-vars */
 
       firebaseAuth.signInWithPopup(provider)
         .catch(function (error) {
-          const errorCode = error.code
-          const errorMessage = error.message
-          const email = error.email
-          const credential = error.credential
+          console.log(error)
           errorcode = true
         })
         .then(function (result) {
           // Google Access Token
-          const token = result.credential.accessToken
-          const token2 = result.credential.idToken
-          const user = result.user
-
-          return token2
+          const token = result.credential.idToken
+          return token
         })
         .then((token) => {
           if (errorcode === true) {
@@ -68,7 +61,7 @@ export default {
               url: 'https://canarygo.herokuapp.com/autorizar',
               data: {
                 tipo: 'Login',
-                tipo2: 'Google',
+                tipo2: 'OAuth',
                 token: token,
                 id_client: firebaseConfig.client_id
               }
@@ -90,25 +83,52 @@ export default {
         })
     },
     IniciarSesionFacebook () {
-      axios({
-        method: 'put',
-        url: 'https://canarygo.herokuapp.com/autorizar',
-        data: {
-          tipo: 'Login',
-          tipo2: 'Facebook'
-        }
+      const provider = firebaseAuthFacebook
+      provider.addScope('user_birthday')
+      firebaseAuth.useDeviceLanguage()
+      provider.setCustomParameters({
+        login_hint: 'user@example.com'
       })
-        .then((response) => {
-          console.log('RESPUESTA DEL SERVER', response)
 
-          if (response.data === 'Usuario logueado') {
-            this.Success()
-            this.$router.push('events')
-          } else {
+      let errorcode = false
+      firebaseAuth.signInWithPopup(provider)
+        .catch(function (error) {
+          console.log(error)
+          errorcode = true
+        })
+        .then(function (result) {
+          // Facebook Access Token
+          const token = result.credential.idToken
+          return token
+        })
+        .then((token) => {
+          if (errorcode === true) {
             this.Fail(this.$t('error_facebook'))
+          } else {
+            axios({
+              method: 'put',
+              url: 'https://canarygo.herokuapp.com/autorizar',
+              data: {
+                tipo: 'Login',
+                tipo2: 'OAuth',
+                token: token,
+                id_client: firebaseConfig.client_id
+              }
+            })
+              .then((response) => {
+                console.log('RESPUESTA DEL SERVER', response)
+
+                if (response.data === 'Usuario correcto') {
+                  this.$store.dispatch('store/anadirUsuario', firebaseAuth.currentUser)
+                  this.Success()
+                  this.$router.push('events')
+                } else {
+                  this.Fail(this.$t('error_facebook'))
+                }
+              }, (error) => {
+                console.log(error)
+              })
           }
-        }, (error) => {
-          console.log('EL ERROR ES', error)
         })
     },
     Success () {
