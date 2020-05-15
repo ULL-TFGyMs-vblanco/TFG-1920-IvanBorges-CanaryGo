@@ -145,7 +145,6 @@
           />
 
           <q-item
-            v-ripple
             class="text-left"
           >
             <q-item-section>
