@@ -149,6 +149,7 @@ export default {
             this.Fail(this.$t('login_fail_password'))
           } else {
             if (response.data.includes('Usuario logueado')) {
+              console.log('DATITAS', response.data.split(':')[1])
               // this.anadirUsuario()
               // this.$store.commit('anadirUsuario', )
               this.Success()

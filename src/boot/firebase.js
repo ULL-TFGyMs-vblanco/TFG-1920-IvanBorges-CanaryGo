@@ -1,5 +1,4 @@
-/* eslint-disable prefer-const */
-// Firebase App (the core Firebase SDK) is always required and must be listed first
+
 import * as firebase from 'firebase/app'
 
 // Add the Firebase products that you want to use
@@ -23,12 +22,12 @@ const firebaseConfig = {
 }
 
 // Initialize Firebase
-let firebaseApp = firebase.initializeApp(firebaseConfig)
-let firebaseAuth = firebaseApp.auth()
-let firebaseAuthGoogle = new firebase.auth.GoogleAuthProvider()
-let firebaseAuthFacebook = new firebase.auth.FacebookAuthProvider()
-let firebaseDb = firebaseApp.firestore()
-let firebaseStg = firebaseApp.storage()
+const firebaseApp = firebase.initializeApp(firebaseConfig)
+const firebaseAuth = firebaseApp.auth()
+const firebaseAuthGoogle = new firebase.auth.GoogleAuthProvider()
+const firebaseAuthFacebook = new firebase.auth.FacebookAuthProvider()
+const firebaseDb = firebaseApp.firestore()
+const firebaseStg = firebaseApp.storage()
 firebase.analytics()
 
-export { firebaseConfig, firebaseAuth, firebaseDb, firebaseStg, firebaseAuthGoogle, firebaseAuthFacebook, firebase }
+export default { firebaseAuth, firebaseDb, firebaseStg, firebaseAuthGoogle, firebaseAuthFacebook }

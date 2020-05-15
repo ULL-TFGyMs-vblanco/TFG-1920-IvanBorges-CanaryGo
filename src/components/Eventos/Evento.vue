@@ -57,7 +57,7 @@
 </template>
 
 <script>
-import { firebaseDb } from '../../boot/firebase'
+import firebaseDb from '../../boot/firebase'
 
 export default {
   name: 'Evento',

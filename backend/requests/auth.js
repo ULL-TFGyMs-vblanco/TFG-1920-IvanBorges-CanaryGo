@@ -3,6 +3,7 @@
 
 module.exports = function (app) {
   const { firebase, firebaseAuth, firebaseDb, firebaseStg, firebaseAuthFacebook } = require('../config/firebase')
+  const { admin } = require('../config/firebaseadmin')
   const { OAuth2Client } = require('google-auth-library')
 
   // /////////////////// IDENTIFICACIÓN ///////////////////////
@@ -36,21 +37,27 @@ module.exports = function (app) {
             console.log(errorMessage)
             errorcodes = errorCode
           })
-          .then(() => {
-            const user = firebaseAuth.currentUser
+          .then((datos) => {
+            const user = datos
             firebaseAuth.signOut()
-            console.log('USUARIO LOGUEADO', user.displayName)
+            console.log('USUARIO LOGUEADO', user.user.displayName)
             if (errorcodes === 'auth/user-not-found') {
               res.send(errorcodes)
             } else if (errorcodes === 'auth/wrong-password') {
               res.send(errorcodes)
             } else {
               // Creamos token de sesion
-              if (user.emailVerified === true) {
-                // user.getIdToken().then(function (token) {
-                //   res.send('Usuario logueado:' + token)
-                // })
-                res.send(user.displayName)
+              if (user.user.emailVerified === true) {
+                // Generamos el token del cliente
+                admin.auth().createCustomToken(user.user.uid)
+                  .then(function (customToken) {
+                    // Send token back to client
+                    res.send('Usuario correcto:' + customToken)
+                  })
+                  .catch(function (error) {
+                    console.log('Error creating custom token:', error)
+                  })
+                // res.send(user.displayName)
               } else {
                 res.send('auth/must-verify')
               }
