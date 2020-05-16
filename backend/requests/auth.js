@@ -35,7 +35,7 @@ module.exports = function (app) {
           .then(() => {
             const user = firebaseAuth.currentUser
             firebaseAuth.signOut()
-            console.log('USUARIO LOGUEADO', user.displayName)
+            // console.log('USUARIO LOGUEADO', user.displayName)
             if (errorcodes === 'auth/user-not-found') {
               res.send(errorcodes)
             } else if (errorcodes === 'auth/wrong-password') {
