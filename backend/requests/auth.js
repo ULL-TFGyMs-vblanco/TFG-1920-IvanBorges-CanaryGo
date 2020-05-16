@@ -32,19 +32,21 @@ module.exports = function (app) {
             console.log(errorMessage)
             errorcodes = errorCode
           })
-          .then((datos) => {
-            const user = datos
+          .then(() => {
+            const user = firebaseAuth.currentUser
             firebaseAuth.signOut()
-            console.log('USUARIO LOGUEADO', user.user.displayName)
+            console.log('USUARIO LOGUEADO', user.displayName)
             if (errorcodes === 'auth/user-not-found') {
               res.send(errorcodes)
             } else if (errorcodes === 'auth/wrong-password') {
               res.send(errorcodes)
+            } else if (errorcodes === 'auth/too-many-requests') {
+              res.send(errorcodes)
             } else {
               // Creamos token de sesion
-              if (user.user.emailVerified === true) {
+              if (user.emailVerified === true) {
                 // Generamos el token del cliente
-                admin.auth().createCustomToken(user.user.uid)
+                admin.auth().createCustomToken(user.uid)
                   .then(function (customToken) {
                     // Enviamos token al cliente
                     res.send('Usuario correcto:' + customToken)
@@ -96,15 +98,17 @@ module.exports = function (app) {
     // res.send('Actualizar perfil')
     // console.log('Funcionando', req.body)
 
-    const usuarioactivo = UsuarioLogueado()
+    firebaseAuth.signInWithCustomToken(req.body.token).then(() => {
+      const user = firebaseAuth.currentUser
+      firebaseAuth.signOut()
+      // Subir informacion
 
-    // Subir informacion
-    if (usuarioactivo !== false) {
-      ActualizarContrasena(req.body.contrasena)
+      ActualizarContrasena(req.body.contrasena, user)
       ActualizarInfoDb(req.body.nombre, req.body.fecha, req.body.genero, req.body.correo)
-      usuarioactivo.updateProfile({
-        displayName: req.body.usuario,
-        photoURL: req.body.foto
+      ActualizarCorreo(req.body.correo, req.body.token)
+      user.updateProfile({
+        displayName: req.body.usuario
+        // photoURL: req.body.foto
       }).then(function () {
         // Correcto
         console.log('Usuario actualizado')
@@ -113,7 +117,9 @@ module.exports = function (app) {
         res.send('Fallo al actualizar')
         console.log('Error al actualizar usuario', error)
       })
-    }
+    }).catch(function (error) {
+      console.log(error)
+    })
   })
 
   // Delete
@@ -122,40 +128,45 @@ module.exports = function (app) {
     // console.log('Funcionando', req.body)
 
     // ///////////////////// ELIMINAR USUARIO //////////////////////////
-    const usuarioactivo = UsuarioLogueado()
+    firebaseAuth.signInWithCustomToken(req.body.token).then(() => {
+      const user = firebaseAuth.currentUser
+      firebaseAuth.signOut()
 
-    let documento
+      let documento
 
-    console.log('El rollo', usuarioactivo.email)
+      console.log('El rollo', user.email)
 
-    //  Obtenemos id de la db
-    firebaseDb.collection('usuarios').where('Correo', '==', usuarioactivo.email).get()
-      .then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-          documento = doc.id
-        })
-      }).catch(function (error) {
-        console.error('Error encontrando usuario en db', error)
-      })
-      .then(function () {
-        // Borramos de la db
-        firebaseDb.collection('usuarios').doc(documento).delete()
-          .then(function () {
-            console.log('Usuario borrado de la db')
-          }).catch(function (error) {
-            console.error('Erro al borrar el usuario de la db ', error)
+      //  Obtenemos id de la db
+      firebaseDb.collection('usuarios').where('Correo', '==', user.email).get()
+        .then((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+            documento = doc.id
           })
-      }).catch(function (error) {
-        console.error('Error borrando db', error)
-      })
+        }).catch(function (error) {
+          console.error('Error encontrando usuario en db', error)
+        })
+        .then(function () {
+          // Borramos de la db
+          firebaseDb.collection('usuarios').doc(documento).delete()
+            .then(function () {
+              console.log('Usuario borrado de la db')
+            }).catch(function (error) {
+              console.error('Erro al borrar el usuario de la db ', error)
+            })
+        }).catch(function (error) {
+          console.error('Error borrando db', error)
+        })
 
-    // Borramos usuario
-    usuarioactivo.delete().then(function () {
-      // User deleted.
-      console.log('Usuario eliminado')
-      res.send('Usuario eliminado')
+      // Borramos usuario
+      user.delete().then(function () {
+        // User deleted.
+        console.log('Usuario eliminado')
+        res.send('Usuario eliminado')
+      }).catch(function (error) {
+        console.log('No se pudo eliminar el usuario', error)
+      })
     }).catch(function (error) {
-      console.log('No se pudo eliminar el usuario', error)
+      console.log(error)
     })
   })
 
@@ -220,20 +231,23 @@ module.exports = function (app) {
       })
   }
 
-  function ActualizarCorreo (correo) {
-    const usuarioactivo = UsuarioLogueado()
+  function ActualizarCorreo (correo, token) {
+    firebaseAuth.signInWithCustomToken(token).then(() => {
+      const user = firebaseAuth.currentUser
+      firebaseAuth.signOut()
 
-    // Subir informacion
-    if (usuarioactivo !== false) {
-      usuarioactivo.updatePassword(correo)
+      // Subir informacion
+      user.updateEmail(correo)
         .then(function () {
-          // Update successful.
+          // correcto
           console.log('Correo actualizado')
         }).catch(function (error) {
-          // An error happened.
+          // error
           console.log('Error al actualizar correo', error)
         })
-    }
+    }).catch(function (error) {
+      console.log(error)
+    })
   }
 
   function Verificar (user) {
@@ -247,28 +261,14 @@ module.exports = function (app) {
       })
   }
 
-  function UsuarioLogueado () {
-    if (firebaseAuth.currentUser !== undefined) {
-      // User is signed in.
-      return firebaseAuth.currentUser
-    } else {
-      // No user is signed in.
-      return false
-    }
-  }
-
-  function ActualizarContrasena (contrasena) {
-    const usuarioactivo = UsuarioLogueado()
-
-    if (usuarioactivo !== false) {
-      usuarioactivo.updatePassword(contrasena).then(function () {
-        // Update successful.
-        console.log('Contraseña actualizada')
-      }).catch(function (error) {
-        // An error happened.
-        console.log('Error al actualizar contraseña', error)
-      })
-    }
+  function ActualizarContrasena (contrasena, user) {
+    user.updatePassword(contrasena).then(function () {
+      // Correcto
+      console.log('Contraseña actualizada')
+    }).catch(function (error) {
+      // error
+      console.log('Error al actualizar contraseña', error)
+    })
   }
 
   function FotoDefault (genero, usuario) {

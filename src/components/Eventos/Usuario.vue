@@ -130,6 +130,7 @@ export default {
     // console.log('USUARIO GENERAL', this.$store.state.store.datosUsuario)
     this.saludo = this.$t('welcome') + ' ' + this.$store.state.store.datosUsuario.displayName.split(' ')[0]
     this.img = this.$store.state.store.datosUsuario.photoURL
+    // console.log('El token-> ', this.$store.state.store.token)
   }
 }
 </script>

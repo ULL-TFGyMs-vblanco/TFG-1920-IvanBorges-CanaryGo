@@ -146,6 +146,8 @@ export default {
             this.Fail(this.$t('login_fail_user'))
           } else if (response.data === 'auth/wrong-password') {
             this.Fail(this.$t('login_fail_password'))
+          } else if (response.data === 'auth/too-many-requests') {
+            this.Fail(this.$t('login_fail_attemps'))
           } else {
             if (response.data.includes('Usuario correcto:')) {
               const token = response.data.split(':')[1]
