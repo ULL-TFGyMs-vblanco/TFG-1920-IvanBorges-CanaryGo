@@ -1,7 +1,11 @@
 <template>
   <q-page padding>
     <div class="row text-center">
-      <div class="q-pa-md" id="formulario" style="width: 100%;">
+      <div
+        class="q-pa-md"
+        id="formulario"
+        style="width: 100%;"
+      >
         <img
           src="../assets/images/CanaryGo/Canary_Go_Icon.png"
           style="width: 100px; height: 100px; border-radius: 20%;"
@@ -9,9 +13,17 @@
         <br />
         <br />
         <br />
-        <form @submit.prevent.stop="onSubmit" @reset.prevent.stop="onReset" class="q-gutter-md">
+        <form
+          @submit.prevent.stop="onSubmit"
+          @reset.prevent.stop="onReset"
+          class="q-gutter-md"
+        >
           <!-- Selector -->
-          <Selectorarchivos class="selectorarchivos" v-bind:anchura='550' v-bind:altura='550' />
+          <Selectorarchivos
+            class="selectorarchivos"
+            v-bind:anchura='550'
+            v-bind:altura='550'
+          />
           <br />
           <q-input
             ref="nombre_evento"
@@ -25,7 +37,10 @@
             :rules="[ val => val && val.length > 0 || $t('event_name_fail')]"
           />
 
-          <Mapa :key="$i18n.locale" @clicked="onClickChild" />
+          <Mapa
+            :key="$i18n.locale"
+            @clicked="onClickChild"
+          />
 
           <q-input
             ref="localizacion"
@@ -56,9 +71,19 @@
           ]"
           >
             <template v-slot:append>
-              <q-icon name="event" class="cursor-pointer">
-                <q-popup-proxy ref="qDateProxy" transition-show="scale" transition-hide="scale">
-                  <q-date v-model="fecha_inicio" @input="() => $refs.qDateProxy.hide()" />
+              <q-icon
+                name="event"
+                class="cursor-pointer"
+              >
+                <q-popup-proxy
+                  ref="qDateProxy"
+                  transition-show="scale"
+                  transition-hide="scale"
+                >
+                  <q-date
+                    v-model="fecha_inicio"
+                    @input="() => $refs.qDateProxy.hide()"
+                  />
                 </q-popup-proxy>
               </q-icon>
             </template>
@@ -79,9 +104,19 @@
           ]"
           >
             <template v-slot:append>
-              <q-icon name="event" class="cursor-pointer">
-                <q-popup-proxy ref="qDateProxy2" transition-show="scale" transition-hide="scale">
-                  <q-date v-model="fecha_fin" @input="() => $refs.qDateProxy2.hide()" />
+              <q-icon
+                name="event"
+                class="cursor-pointer"
+              >
+                <q-popup-proxy
+                  ref="qDateProxy2"
+                  transition-show="scale"
+                  transition-hide="scale"
+                >
+                  <q-date
+                    v-model="fecha_fin"
+                    @input="() => $refs.qDateProxy2.hide()"
+                  />
                 </q-popup-proxy>
               </q-icon>
             </template>
@@ -109,11 +144,16 @@
             type="name"
           />
 
-          <q-item v-ripple class="text-left">
+          <q-item
+            class="text-left"
+          >
             <q-item-section>
               <q-item-label>
-                <q-avatar size="40px" label="cuenta">
-                  <img :src="this.img" />
+                <q-avatar
+                  size="40px"
+                  label="cuenta"
+                >
+                  <img :src="this.foto_usuario" />
                 </q-avatar>
                 {{usuario}}
               </q-item-label>
@@ -135,12 +175,28 @@
           />
 
           <div class="text-center">
-            <q-checkbox class="Terms" name="sesion" v-model="sesion" :label="$t('event_terms')" />
+            <q-checkbox
+              class="Terms"
+              name="sesion"
+              v-model="sesion"
+              :label="$t('event_terms')"
+            />
             <br />
           </div>
           <div>
-            <q-btn class="Compartir" :label="$t('share')" type="submit" color="primary" />
-            <q-btn class="Reset" :label="$t('clean')" type="reset" color="primary" flat />
+            <q-btn
+              class="Compartir"
+              :label="$t('share')"
+              type="submit"
+              color="primary"
+            />
+            <q-btn
+              class="Reset"
+              :label="$t('clean')"
+              type="reset"
+              color="primary"
+              flat
+            />
           </div>
         </form>
       </div>
@@ -150,9 +206,10 @@
 
 <script>
 
-import { firebaseDb, firebaseStg, firebaseAuth } from '../boot/firebase'
 import Selectorarchivos from '../components/Eventos/Selectorarchivos'
 import Mapa from '../components/Eventos/Mapa'
+import axios from 'axios'
+import { firebaseStg } from 'boot/firebase'
 
 export default {
   name: 'NuevoEvento',
@@ -168,8 +225,8 @@ export default {
       descripcion: '',
       descuento: '',
       sesion: false,
-      usuario: firebaseAuth.currentUser.displayName,
-      img: firebaseAuth.currentUser.photoURL,
+      usuario: this.$store.state.store.datosUsuario.displayName.split(' ')[0],
+      foto_usuario: this.$store.state.store.datosUsuario.photoURL,
       id: '',
       isla: ''
     }
@@ -196,51 +253,70 @@ export default {
           progress: true
         })
       } else {
-        this.$q.notify({
-          icon: 'done',
-          color: 'positive',
-          message: this.$t('event_sucess'),
-          position: 'bottom',
-          timeout: 1000,
-          progress: true
-        })
         this.añadirEvento()
       }
     },
     añadirEvento () {
       // Subir informacion
       const file = document.getElementById('foto').files[0]
-      const router = this.$router
 
-      firebaseDb.collection('eventos').add({
-        nombre_evento: this.nombre_evento,
-        localizacion: this.localizacion,
-        fecha_inicio: this.fecha_inicio,
-        fecha_fin: this.fecha_fin,
-        precio: this.precio,
-        descuento: this.descuento,
-        descripcion: this.descripcion,
-        votos: 0,
-        comentarios: 0,
-        usuario: this.usuario,
-        isla: this.isla,
-        fecha_creacion: new Date().getDay() + '/' + new Date().getMonth() + '/' + new Date().getFullYear() + ',' + new Date().getHours() + ':' + new Date().getMinutes() + new Date().getMilliseconds(),
-        foto_usuario: firebaseAuth.currentUser.photoURL
-      })
-        .then(function (docRef) {
-          // Subir imagenes
-          const storageRef = firebaseStg.ref('eventos/' + docRef.id)
-          const thisRef = storageRef.child('foto')
-
-          thisRef.put(file)
-            .then(function (snapshot) {
-              // console.log('Archivo subido')
-              router.push('events')
-            })
+      if (file === undefined) {
+        this.$q.notify({
+          color: 'negative',
+          message: this.$t('event_fail_3'),
+          position: 'bottom',
+          timeout: 2000,
+          progress: true
         })
-        .catch(function (error) {
-          console.error('Error añadiendo evento ', error)
+      } else {
+        axios({
+          method: 'put',
+          url: 'https://canarygo.herokuapp.com/eventos',
+          data: {
+            tipo: 'Crear',
+            nombre_evento: this.nombre_evento,
+            localizacion: this.localizacion,
+            precio: this.precio,
+            fecha_inicio: this.fecha_inicio,
+            fecha_fin: this.fecha_fin,
+            fecha_creacion: this.fecha_inicio,
+            votos: this.votos,
+            comentarios: this.comentarios,
+            usuario: this.usuario,
+            isla: this.isla,
+            descuento: this.descuento,
+            descripcion: this.descripcion,
+            foto_usuario: this.foto_usuario
+          }
         })
+          .then((response) => {
+            // console.log('RESPUESTA DEL SERVER', response.data)
+            if (response.data.includes('Evento añadido')) {
+              this.$q.notify({
+                icon: 'done',
+                color: 'positive',
+                message: this.$t('event_sucess'),
+                position: 'bottom',
+                timeout: 1000,
+                progress: true
+              })
+              var id = response.data.split(':')
+              this.$router.push('events')
+              this.subirImagen(id[1], file)
+              this.$router.push('events')
+            } else {
+              this.$q.notify({
+                color: 'negative',
+                message: this.$t('event_fail2'),
+                position: 'bottom',
+                timeout: 2000,
+                progress: true
+              })
+            }
+          }, (error) => {
+            console.log('EL ERROR ES', error)
+          })
+      }
     },
     onReset () {
       this.nombre_evento = null
@@ -261,9 +337,32 @@ export default {
       this.$refs.descripcion.resetValidation()
     },
     onClickChild (ubicacion, isla) {
-      console.log('USUARIO FIREBASE', firebaseAuth.currentUser)
       this.localizacion = String(ubicacion).slice(7, -1)
       this.isla = isla
+    },
+    subirImagen (id, image) {
+      const storageRef = firebaseStg.ref('eventos/' + id)
+      const thisRef = storageRef.child('foto')
+
+      thisRef.put(image)
+        .then(function (snapshot) {
+          console.log('actualizando foto')
+          thisRef.getDownloadURL().then(function (url) {
+            // console.log('Datos fotito', id + ': ', url)
+            axios({
+              method: 'post',
+              url: 'https://canarygo.herokuapp.com/eventos',
+              data: {
+                operacion: 'Evento',
+                foto: url,
+                id: id
+              }
+            })
+          })
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
     }
   }
 }

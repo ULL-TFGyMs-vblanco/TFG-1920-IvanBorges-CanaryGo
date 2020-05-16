@@ -1,5 +1,7 @@
-export default function () {
-  return {
-    //
-  }
+
+const state = {
+  datosUsuario: [],
+  token: ''
 }
+
+export default state

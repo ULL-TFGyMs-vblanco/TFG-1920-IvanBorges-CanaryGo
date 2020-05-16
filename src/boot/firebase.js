@@ -18,7 +18,8 @@ const firebaseConfig = {
   storageBucket: 'canarygo-f725d.appspot.com',
   messagingSenderId: '622261513235',
   appId: '1:622261513235:web:54a52232eeeec673fb63e6',
-  measurementId: 'G-LJ9G5QJCF9'
+  measurementId: 'G-LJ9G5QJCF9',
+  client_id: '622261513235-g4q6mq2h4hgvc223usp1v24fl9abolt9.apps.googleusercontent.com'
 }
 
 // Initialize Firebase

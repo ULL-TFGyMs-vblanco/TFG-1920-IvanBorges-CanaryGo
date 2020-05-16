@@ -38,7 +38,6 @@ import 'leaflet-control-geocoder'
 import 'leaflet/dist/leaflet.css'
 import { OpenStreetMapProvider } from 'leaflet-geosearch'
 import VGeosearch from 'vue2-leaflet-geosearch'
-// import $ from 'jquery'
 
 // esta parte resuelve un problema donde los marcadores no aparecían
 delete Icon.Default.prototype._getIconUrl

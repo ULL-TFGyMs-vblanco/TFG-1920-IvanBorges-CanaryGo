@@ -1,6 +1,10 @@
 <template>
   <div class="row text-center">
-    <div class="q-pa-md" id="formulario" style="width: 100%;">
+    <div
+      class="q-pa-md"
+      id="formulario"
+      style="width: 100%;"
+    >
       <img
         src="../assets/images/CanaryGo/Canary_Go_Icon.png"
         style="width: 100px; height: 100px; border-radius: 20%;"
@@ -47,19 +51,37 @@
           </template>
         </q-input>
         <div class="text-center">
-          <q-checkbox name="sesion" v-model="sesion" :label="$t('remember')" />
+          <q-checkbox
+            name="sesion"
+            v-model="sesion"
+            :label="$t('remember')"
+          />
           <br />
 
           <!-- to="/restore" -->
-          <q-item clickable v-ripple>
+          <q-item
+            clickable
+            v-ripple
+          >
             <q-item-section>
               <q-item-label style="color: #ec9718">{{$t('password_reset')}}</q-item-label>
             </q-item-section>
           </q-item>
         </div>
         <div>
-          <q-btn class="Registro" :label="$t('login')" type="submit" color="primary" />
-          <q-btn class="Reset" :label="$t('clean')" type="reset" color="primary" flat />
+          <q-btn
+            class="Registro"
+            :label="$t('login')"
+            type="submit"
+            color="primary"
+          />
+          <q-btn
+            class="Reset"
+            :label="$t('clean')"
+            type="reset"
+            color="primary"
+            flat
+          />
         </div>
       </form>
       <LoginButtons :key="$i18n.locale" />
@@ -68,8 +90,9 @@
 </template>
 
 <script>
-import { firebaseAuth, firebase } from 'boot/firebase'
 import LoginButtons from 'components/Login/LoginButtons'
+import axios from 'axios'
+import { firebaseAuth } from 'boot/firebase'
 
 export default {
   name: 'Login',
@@ -85,12 +108,7 @@ export default {
       sesion: false
     }
   },
-  mounted () {
-    this.Observador()
-  },
-
   methods: {
-
     onSubmit () {
       this.$refs.email.validate()
       this.$refs.contrasena.validate()
@@ -98,8 +116,6 @@ export default {
       if (this.$refs.email.hasError || this.$refs.contrasena.hasError) {
         this.formHasError = true
       } else if (this.sesion !== true) {
-
-      } else {
 
       }
       this.IniciarSesion()
@@ -113,54 +129,48 @@ export default {
       this.$refs.contrasena.resetValidation()
     },
     IniciarSesion () {
-      let errorcodes = ''
-      // console.log('Estado', firebase.auth().currentUser.emailVerified)
+      axios({
+        method: 'put',
+        url: 'https://canarygo.herokuapp.com/autorizar',
+        data: {
+          tipo: 'Login',
+          tipo2: 'Estandar',
+          correo: this.email,
+          contrasena: this.contrasena
+        }
+      })
+        .then((response) => {
+          console.log('RESPUESTA DEL SERVER', response)
 
-      firebaseAuth.signInWithEmailAndPassword(this.email, this.contrasena)
-        .catch(function (error) {
-          // Errores
-          var errorCode = error.code
-          var errorMessage = error.message
-          console.log(errorCode)
-          console.log(errorMessage)
-          errorcodes = errorCode
-        })
-        .then(() => {
-          if (errorcodes === 'auth/user-not-found') {
+          if (response.data === 'auth/user-not-found') {
             this.Fail(this.$t('login_fail_user'))
-          } else if (errorcodes === 'auth/wrong-password') {
+          } else if (response.data === 'auth/wrong-password') {
             this.Fail(this.$t('login_fail_password'))
+          } else if (response.data === 'auth/too-many-requests') {
+            this.Fail(this.$t('login_fail_attemps'))
           } else {
-            if (firebase.auth().currentUser.emailVerified === true) {
-              this.Success()
-              this.$router.push('events')
+            if (response.data.includes('Usuario correcto:')) {
+              const token = response.data.split(':')[1]
+
+              firebaseAuth.signInWithCustomToken(token).then(() => {
+                // Guardamos datos persistentes en state
+                this.$store.dispatch('store/anadirUsuario', firebaseAuth.currentUser.providerData[0]).then(() => {
+                  setTimeout(() => {
+                    console.log('usuario normal', firebaseAuth.currentUser)
+                    this.Success()
+                    this.$router.push('events')
+                  }, 500)
+                })
+              }).catch(function (error) {
+                console.log(error)
+              })
             } else {
               this.Fail(this.$t('login_fail_verify'))
             }
           }
+        }, (error) => {
+          console.log('EL ERROR ES', error)
         })
-    },
-    Observador () {
-      console.log('Dentro')
-      firebaseAuth.onAuthStateChanged(function (user) {
-        if (user) {
-          // User is signed in.
-          /* eslint-disable no-unused-vars */
-          var displayName = user.displayName
-          var email = user.email
-          var emailVerified = user.emailVerified
-          var photoURL = user.photoURL
-          var isAnonymous = user.isAnonymous
-          var uid = user.uid
-          var providerData = user.providerData
-
-          // Verificar
-          console.log('Usuario logueado')
-        } else {
-          // User is signed out.
-          console.log('Ningun usuario logueado')
-        }
-      })
     },
     Success () {
       this.$q.notify({

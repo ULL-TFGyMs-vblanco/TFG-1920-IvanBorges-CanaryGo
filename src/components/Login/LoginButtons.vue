@@ -1,16 +1,27 @@
 <template>
   <div class="login-box">
-    <a href="#" class="social-button" id="facebook-connect" @click="IniciarSesionFacebook">
+    <a
+      href="#"
+      class="social-button"
+      id="facebook-connect"
+      @click="IniciarSesionFacebook"
+    >
       <span>{{facebook}}</span>
     </a>
-    <a href="#" class="social-button" id="google-connect" @click="IniciarSesionGoogle">
+    <a
+      href="#"
+      class="social-button"
+      id="google-connect"
+      @click="IniciarSesionGoogle"
+    >
       <span>{{google}}</span>
     </a>
   </div>
 </template>
 
 <script>
-import { firebaseAuth, firebaseAuthGoogle, firebaseAuthFacebook } from 'boot/firebase'
+import axios from 'axios'
+import { firebaseAuth, firebaseAuthGoogle, firebaseAuthFacebook, firebaseConfig } from 'boot/firebase'
 
 export default {
   name: 'LoginButtons',
@@ -30,25 +41,49 @@ export default {
       })
 
       let errorcode = false
-      /* eslint-disable no-unused-vars */
+
       firebaseAuth.signInWithPopup(provider)
         .catch(function (error) {
-          const errorCode = error.code
-          const errorMessage = error.message
-          const email = error.email
-          const credential = error.credential
+          console.log(error)
           errorcode = true
         })
         .then(function (result) {
           // Google Access Token
-          const token = result.credential.accessToken
-          const user = result.user
+          const token = result.credential.idToken
+          return token
         })
-        .then(() => {
+        .then((token) => {
           if (errorcode === true) {
             this.Fail(this.$t('error_google'))
           } else {
-            this.Success()
+            axios({
+              method: 'put',
+              url: 'https://canarygo.herokuapp.com/autorizar',
+              data: {
+                tipo: 'Login',
+                tipo2: 'OAuth',
+                token: token,
+                id_client: firebaseConfig.client_id
+              }
+            })
+              .then((response) => {
+                console.log('RESPUESTA DEL SERVER', response)
+
+                if (response.data === 'Usuario correcto') {
+                  // console.log('usuario google', firebaseAuth.currentUser)
+                  this.$store.dispatch('store/anadirUsuario', firebaseAuth.currentUser.providerData[0]).then(() => {
+                    setTimeout(() => {
+                      this.$store.dispatch('store/anadirToken', token)
+                      this.Success()
+                      this.$router.push('events')
+                    }, 500)
+                  })
+                } else {
+                  this.Fail(this.$t('error_google'))
+                }
+              }, (error) => {
+                console.log('EL ERROR ES', error)
+              })
           }
         })
     },
@@ -61,25 +96,47 @@ export default {
       })
 
       let errorcode = false
-      /* eslint-disable no-unused-vars */
       firebaseAuth.signInWithPopup(provider)
         .catch(function (error) {
-          const errorCode = error.code
-          const errorMessage = error.message
-          const email = error.email
-          const credential = error.credential
+          console.log(error)
           errorcode = true
         })
         .then(function (result) {
-          // Google Access Token
-          const token = result.credential.accessToken
-          const user = result.user
+          // Facebook Access Token
+          const token = result.credential.idToken
+          return token
         })
-        .then(() => {
+        .then((token) => {
           if (errorcode === true) {
             this.Fail(this.$t('error_facebook'))
           } else {
-            this.Success()
+            axios({
+              method: 'put',
+              url: 'https://canarygo.herokuapp.com/autorizar',
+              data: {
+                tipo: 'Login',
+                tipo2: 'OAuth',
+                token: token,
+                id_client: firebaseConfig.client_id
+              }
+            })
+              .then((response) => {
+                console.log('RESPUESTA DEL SERVER', response)
+
+                if (response.data === 'Usuario correcto') {
+                  this.$store.dispatch('store/anadirUsuario', firebaseAuth.currentUser.providerData[0]).then(() => {
+                    setTimeout(() => {
+                      this.$store.dispatch('store/anadirToken', token)
+                      this.Success()
+                      this.$router.push('events')
+                    }, 500)
+                  })
+                } else {
+                  this.Fail(this.$t('error_facebook'))
+                }
+              }, (error) => {
+                console.log(error)
+              })
           }
         })
     },
@@ -92,7 +149,6 @@ export default {
         timeout: 1000,
         progress: true
       })
-      this.$router.push('./events')
     },
     Fail (error) {
       this.$q.notify({
