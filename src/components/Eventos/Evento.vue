@@ -3,20 +3,35 @@
     <q-card class="my-card">
       <q-card-section class="fecha text-right">{{ fecha_inicio }}</q-card-section>
       <q-card-section horizontal>
-        <q-img class="col-5" :src="foto" />
+        <q-img
+          class="col-5"
+          :src="foto"
+        />
         <q-card-section vertical>
           <q-card-section horizontal>
             <div class="votos_">
               <q-card-section class="votos">
                 <div class="votos_box">
-                  <q-btn size="70%" flat round icon="thumb_down" @click="Restar" />
+                  <q-btn
+                    size="70%"
+                    flat
+                    round
+                    icon="thumb_down"
+                    @click="Restar"
+                  />
                   <q-btn
                     class="votos_evento"
                     size="100%"
                     flat
                     style="pointer-events: none;"
                   >{{votos}}</q-btn>
-                  <q-btn size="70%" flat round icon="thumb_up" @click="Sumar" />
+                  <q-btn
+                    size="70%"
+                    flat
+                    round
+                    icon="thumb_up"
+                    @click="Sumar"
+                  />
                 </div>
               </q-card-section>
             </div>
@@ -31,23 +46,49 @@
       <div class="opciones">
         <q-card-actions>
           <div class="col-3 col-sm-3 text-center usuario">
-            <q-btn size="70%" flat round>
+            <q-btn
+              size="70%"
+              flat
+              round
+            >
               <q-avatar size="200%">
                 <img :src="this.foto_usuario" />
               </q-avatar>
-              <q-btn size="70%" flat>{{usuario}}</q-btn>
+              <q-btn
+                size="70%"
+                flat
+              >{{usuario}}</q-btn>
             </q-btn>
           </div>
           <div class="col-3 col-sm-3 text-center calendario">
-            <q-btn size="70%" flat round icon="save" />
+            <q-btn
+              size="70%"
+              flat
+              round
+              icon="save"
+            />
           </div>
           <div class="col-3 col-sm-3 text-center comentarios">
-            <q-btn size="70%" flat round icon="chat">
-              <q-btn size="70%" flat>{{comentarios}}</q-btn>
+            <q-btn
+              size="70%"
+              flat
+              round
+              icon="chat"
+            >
+              <q-btn
+                size="70%"
+                flat
+              >{{comentarios}}</q-btn>
             </q-btn>
           </div>
           <div class="col-3 col-sm-3 text-center evento">
-            <q-btn size="70%" unelevated rounded color="primary">{{$t('event')}}</q-btn>
+            <q-btn
+              size="70%"
+              unelevated
+              rounded
+              color="primary"
+              @click="Descripcion"
+            >{{$t('event')}}</q-btn>
           </div>
         </q-card-actions>
       </div>
@@ -129,6 +170,13 @@ export default {
           votos: votosactuales - 1
         })
       })
+    },
+    Descripcion () {
+      let ruta = unescape(this.nombre_evento)
+      ruta = ruta.replace(/ /g, '-')
+      ruta = ruta.toLowerCase()
+      ruta = ruta.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+      this.$router.push('events/' + ruta)
     }
 
   }
@@ -141,7 +189,7 @@ export default {
   max-width: 98%;
   text-align: justify;
   left: 1%;
-  font-size: calc(8px + 6 * ((100vw - 20px) / 680));
+  font-size: calc(5px + 6 * ((100vw - 20px) / 680));
 }
 
 .votos_box {

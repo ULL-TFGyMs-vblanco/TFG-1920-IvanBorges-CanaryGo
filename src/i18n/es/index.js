@@ -74,6 +74,7 @@ export default {
   event_sucess: 'Evento agregado correctamente',
   event_fail: 'Debe confirmar la veracidad de la información',
   event: 'Ir al evento',
+  event_register: 'Ir al registro',
   settings: 'Ajustes',
   profile: 'Perfil',
   alerts: 'Alertas',

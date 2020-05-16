@@ -71,6 +71,7 @@ export default {
   event_sucess: 'Successfully added event',
   event_fail: 'You must confirm the veracity of the information',
   event: 'Go to event',
+  event_register: 'Go to registry',
   settings: 'Settings',
   profile: 'Profile',
   alerts: 'Alerts',
