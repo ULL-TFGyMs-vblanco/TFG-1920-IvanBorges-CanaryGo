@@ -46,7 +46,7 @@ export default {
   },
   methods: {
     Mostrar () {
-      console.log('LEYENDO DOC')
+      console.log('LEYENDO DOC', this.$store.state.store.token)
 
       axios({
         method: 'put',
