@@ -54,7 +54,8 @@ export default {
         data: {
           tipo: 'Consultar',
           tab: this.tab,
-          isla: this.isla
+          isla: this.isla,
+          token: this.$store.state.store.token
         }
       })
         .then((response) => {

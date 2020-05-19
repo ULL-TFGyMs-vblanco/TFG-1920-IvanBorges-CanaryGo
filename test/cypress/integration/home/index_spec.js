@@ -14,7 +14,7 @@ describe('ESPAÑOL', () => {
   describe('Seccion 1 funciona correctamente', () => {
     it('Se muestran los datos correctamente', () => {
       cy.get('#seccionhtml > .q-parallax__content').contains('Encuentra los eventos que tanto buscas')
-      cy.get('#expanded1 > .q-btn__wrapper > .q-btn__content > div').contains('Más información')
+      cy.get('#seccionhtml > .q-parallax__content > .q-card__actions').contains('Más información')
     })
 
     it('Al expandir se muestra el contenido', () => {
@@ -40,7 +40,7 @@ describe('ESPAÑOL', () => {
   describe('Seccion 2 funciona correctamente', () => {
     it('Se muestran los datos correctamente', () => {
       cy.get('#seccionhtml2 > .q-parallax__content').contains('Organiza el calendario a tu manera')
-      cy.get('#expanded1 > .q-btn__wrapper > .q-btn__content > div').contains('Más información')
+      cy.get('#seccionhtml2 > .q-parallax__content > .q-card__actions').contains('Más información')
     })
 
     it('Al expandir se muestra el contenido', () => {
@@ -64,7 +64,7 @@ describe('ESPAÑOL', () => {
   describe('Seccion 3 funciona correctamente', () => {
     it('Se muestran los datos correctamente', () => {
       cy.get('#seccionhtml3 > .q-parallax__content').contains('Conoce gente nueva dentro de la comunidad')
-      cy.get('#expanded1 > .q-btn__wrapper > .q-btn__content > div').contains('Más información')
+      cy.get('#seccionhtml3 > .q-parallax__content > .q-card__actions').contains('Más información')
     })
 
     it('Al expandir se muestra el contenido', () => {
@@ -90,7 +90,7 @@ describe('ESPAÑOL', () => {
   describe('Seccion 4 funciona correctamente', () => {
     it('Se muestran los datos correctamente', () => {
       cy.get('#seccionhtml4 > .q-parallax__content').contains('Mejora en la gestión de viajes')
-      cy.get('#expanded1 > .q-btn__wrapper > .q-btn__content > div').contains('Más información')
+      cy.get('#seccionhtml4 > .q-parallax__content > .q-card__actions').contains('Más información')
     })
 
     it('Al expandir se muestra el contenido', () => {
@@ -138,7 +138,7 @@ describe('ENGLISH', () => {
   describe('Section 1 works properly', () => {
     it('Data is displayed correctly', () => {
       cy.get('#seccionhtml > .q-parallax__content').contains('Find the events you are looking for')
-      cy.get('#expanded1 > .q-btn__wrapper > .q-btn__content > div').contains('More info')
+      cy.get('#seccionhtml > .q-parallax__content > .q-card__actions').contains('More info')
     })
 
     it('Expanding content is displayed', () => {
@@ -164,7 +164,7 @@ describe('ENGLISH', () => {
   describe('Section 2 works properly', () => {
     it('Data is displayed correctly', () => {
       cy.get('#seccionhtml2 > .q-parallax__content').contains('Organize the calendar your way')
-      cy.get('#expanded1 > .q-btn__wrapper > .q-btn__content > div').contains('More info')
+      cy.get('#seccionhtml2 > .q-parallax__content > .q-card__actions').contains('More info')
     })
 
     it('Expanding content is displayed', () => {
@@ -188,7 +188,7 @@ describe('ENGLISH', () => {
   describe('Section 3 works properly', () => {
     it('Data is displayed correctly', () => {
       cy.get('#seccionhtml3 > .q-parallax__content').contains('Meet new people in the community')
-      cy.get('#expanded1 > .q-btn__wrapper > .q-btn__content > div').contains('More info')
+      cy.get('#seccionhtml3 > .q-parallax__content > .q-card__actions').contains('More info')
     })
 
     it('Expanding content is displayed', () => {
@@ -214,7 +214,7 @@ describe('ENGLISH', () => {
   describe('Section 4 works properly', () => {
     it('Data is displayed correctly', () => {
       cy.get('#seccionhtml4 > .q-parallax__content').contains('Improved travel management')
-      cy.get('#expanded1 > .q-btn__wrapper > .q-btn__content > div').contains('More info')
+      cy.get('#seccionhtml4 > .q-parallax__content > .q-card__actions').contains('More info')
     })
 
     it('Expanding content is displayed', () => {

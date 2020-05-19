@@ -54,6 +54,7 @@ describe('ESPAÑOL', () => {
     it('Login correcto', () => {
       cy.get('.Email > .q-field__inner > .q-field__control').type('alu0100880755@ull.edu.es')
       cy.get('.Contrasena > .q-field__inner > .q-field__control').type('123123')
+      cy.get('.Registro > .q-btn__wrapper').click()
     })
 
     // it('Al ingresar se indica todo correcto', () => {
@@ -63,8 +64,8 @@ describe('ESPAÑOL', () => {
     //     })
     // })
 
-    it('Al intentar registrarse se mantiene en la página', () => {
-      cy.url().should('include', '/login')
+    it('Al intentar hacer login se mueve a la página eventos', () => {
+      cy.url().should('include', '/events')
     })
   })
 })
@@ -134,6 +135,7 @@ describe('ENGLISH', () => {
     it('Login correct', () => {
       cy.get('.Email > .q-field__inner > .q-field__control').type('alu0100880755@ull.edu.es')
       cy.get('.Contrasena > .q-field__inner > .q-field__control').type('123123')
+      cy.get('.Registro > .q-btn__wrapper').click()
     })
 
     // it('When entering everything is indicated correct', () => {
@@ -143,8 +145,8 @@ describe('ENGLISH', () => {
     //     })
     // })
 
-    it('When trying to register, it stays on the page', () => {
-      cy.url().should('include', '/login')
+    it('Trying to login moves to the events page', () => {
+      cy.url().should('include', '/events')
     })
   })
 })

@@ -14,7 +14,8 @@ describe('ESPAÑOL', () => {
   describe('Registro falla correctamente', () => {
     it('Registro con datos mal', () => {
       cy.get('.Nombre > .q-field__inner > .q-field__control').type('Ivan')
-      cy.get('.Usuario > .q-field__inner > .q-field__control').type('ivanbor')
+      cy.get('.Usuario > .q-field__inner > .q-field__control').type('alu0100880755')
+      cy.get('.Genero > .q-field__inner > .q-field__control').click().get('.q-virtual-scroll__content > :nth-child(1)').click()
       cy.get('.Fecha > .q-field__inner > .q-field__control').type('19960701')
       cy.get('.Email > .q-field__inner > .q-field__control').type('alu0100880755ull.edu.es')
       cy.get('.Contrasena > .q-field__inner > .q-field__control').type('123123')
@@ -48,7 +49,8 @@ describe('ESPAÑOL', () => {
 
     it('Registro correcto', () => {
       cy.get('.Nombre > .q-field__inner > .q-field__control').type('Ivan')
-      cy.get('.Usuario > .q-field__inner > .q-field__control').type('ivanbor')
+      cy.get('.Usuario > .q-field__inner > .q-field__control').type('alu0100880755')
+      cy.get('.Genero > .q-field__inner > .q-field__control').click().get('.q-virtual-scroll__content > :nth-child(1)').click()
       cy.get('.Fecha > .q-field__inner > .q-field__control').type('1996/07/01')
       cy.get('.Email > .q-field__inner > .q-field__control').type('alu0100880755@ull.edu.es')
       cy.get('.Contrasena > .q-field__inner > .q-field__control').type('123123')
@@ -76,7 +78,8 @@ describe('ESPAÑOL', () => {
 
     it('Registro correcto', () => {
       cy.get('.Nombre > .q-field__inner > .q-field__control').type('Ivan')
-      cy.get('.Usuario > .q-field__inner > .q-field__control').type('ivanbor')
+      cy.get('.Usuario > .q-field__inner > .q-field__control').type('alu0100880755')
+      cy.get('.Genero > .q-field__inner > .q-field__control').click().get('.q-virtual-scroll__content > :nth-child(1)').click()
       cy.get('.Fecha > .q-field__inner > .q-field__control').type('1996/07/01')
       cy.get('.Email > .q-field__inner > .q-field__control').type('alu0100880755@ull.edu.es')
       cy.get('.Contrasena > .q-field__inner > .q-field__control').type('123123')
@@ -84,11 +87,11 @@ describe('ESPAÑOL', () => {
       cy.get('.Terms').click()
     })
 
-    it('Al ingresar se indica todo correcto', () => {
+    it('Al ingresar se indica que ya existe el usuario', () => {
       cy.get('.Registro > .q-btn__wrapper').click()
         .then(() => {
-          cy.get('.q-notification').contains('Registro correcto')
-          // cy.contains('Registro correcto') // Forma mas global
+          // cy.get('.q-notification').contains('Se ha producido un error al registrar el usuario. El usuario ya existe')
+          cy.contains('Se ha producido un error al registrar el usuario. El usuario ya existe') // Forma mas global
         })
     })
 
@@ -122,7 +125,8 @@ describe('ENGLISH', () => {
   describe('Registration fails successfully', () => {
     it('Registration with bad data', () => {
       cy.get('.Nombre > .q-field__inner > .q-field__control').type('Ivan')
-      cy.get('.Usuario > .q-field__inner > .q-field__control').type('ivanbor')
+      cy.get('.Usuario > .q-field__inner > .q-field__control').type('alu0100880755')
+      cy.get('.Genero > .q-field__inner > .q-field__control').click().get('.q-virtual-scroll__content > :nth-child(1)').click()
       cy.get('.Fecha > .q-field__inner > .q-field__control').type('19960701')
       cy.get('.Email > .q-field__inner > .q-field__control').type('alu0100880755ull.edu.es')
       cy.get('.Contrasena > .q-field__inner > .q-field__control').type('123123')
@@ -156,7 +160,8 @@ describe('ENGLISH', () => {
 
     it('Registration correct', () => {
       cy.get('.Nombre > .q-field__inner > .q-field__control').type('Ivan')
-      cy.get('.Usuario > .q-field__inner > .q-field__control').type('ivanbor')
+      cy.get('.Usuario > .q-field__inner > .q-field__control').type('alu0100880755')
+      cy.get('.Genero > .q-field__inner > .q-field__control').click().get('.q-virtual-scroll__content > :nth-child(1)').click()
       cy.get('.Fecha > .q-field__inner > .q-field__control').type('1996/07/01')
       cy.get('.Email > .q-field__inner > .q-field__control').type('alu0100880755@ull.edu.es')
       cy.get('.Contrasena > .q-field__inner > .q-field__control').type('123123')
@@ -183,7 +188,8 @@ describe('ENGLISH', () => {
 
     it('Registration correct', () => {
       cy.get('.Nombre > .q-field__inner > .q-field__control').type('Ivan')
-      cy.get('.Usuario > .q-field__inner > .q-field__control').type('ivanbor')
+      cy.get('.Usuario > .q-field__inner > .q-field__control').type('alu0100880755')
+      cy.get('.Genero > .q-field__inner > .q-field__control').click().get('.q-virtual-scroll__content > :nth-child(1)').click()
       cy.get('.Fecha > .q-field__inner > .q-field__control').type('1996/07/01')
       cy.get('.Email > .q-field__inner > .q-field__control').type('alu0100880755@ull.edu.es')
       cy.get('.Contrasena > .q-field__inner > .q-field__control').type('123123')
@@ -191,10 +197,11 @@ describe('ENGLISH', () => {
       cy.get('.Terms').click()
     })
 
-    it('When entering everything is indicated correct', () => {
+    it('When entering everything is indicated the user exits', () => {
       cy.get('.Registro > .q-btn__wrapper').click()
         .then(() => {
-          cy.get('.q-notification').contains('Register successfully')
+          // cy.get('.q-notification').contains('An error occurred while registering the user. User already exists')
+          cy.contains('An error occurred while registering the user. User already exists')
         })
     })
 

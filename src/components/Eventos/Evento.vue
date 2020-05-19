@@ -17,7 +17,7 @@
                     flat
                     round
                     icon="thumb_down"
-                    @click="Restar"
+                    @click="Operacion('Restar')"
                   />
                   <q-btn
                     class="votos_evento"
@@ -30,7 +30,7 @@
                     flat
                     round
                     icon="thumb_up"
-                    @click="Sumar"
+                    @click="Operacion('Sumar')"
                   />
                 </div>
               </q-card-section>
@@ -98,7 +98,7 @@
 </template>
 
 <script>
-import { firebaseDb } from '../../boot/firebase'
+import axios from 'axios'
 
 export default {
   name: 'Evento',
@@ -153,23 +153,22 @@ export default {
     }
   },
   methods: {
-    Sumar () {
-      var votosactuales = 0
-      firebaseDb.collection('eventos').doc(this.id).get().then((querySnapshot) => {
-        votosactuales = querySnapshot.data().votos
-        firebaseDb.collection('eventos').doc(this.id).update({
-          votos: votosactuales + 1
-        })
+    Operacion (tipo) {
+      axios({
+        method: 'post',
+        url: 'https://canarygo.herokuapp.com/eventos',
+        data: {
+          tipo: tipo,
+          id: this.id,
+          token: this.$store.state.store.token
+        }
       })
-    },
-    Restar () {
-      var votosactuales = 0
-      firebaseDb.collection('eventos').doc(this.id).get().then((querySnapshot) => {
-        votosactuales = querySnapshot.data().votos
-        firebaseDb.collection('eventos').doc(this.id).update({
-          votos: votosactuales - 1
+        .then((response) => {
+          console.log('RESPUESTA DEL VOTO', response.data)
+          this.datos_evento = response.data
+        }, (error) => {
+          console.log('EL ERROR ES', error)
         })
-      })
     },
     Descripcion () {
       let ruta = unescape(this.nombre_evento)

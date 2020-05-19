@@ -286,7 +286,8 @@ export default {
             isla: this.isla,
             descuento: this.descuento,
             descripcion: this.descripcion,
-            foto_usuario: this.foto_usuario
+            foto_usuario: this.foto_usuario,
+            token: this.$store.state.store.token
           }
         })
           .then((response) => {

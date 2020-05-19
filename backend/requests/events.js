@@ -19,89 +19,94 @@ module.exports = function (app) {
     console.log('Funcionando', req.body)
     // console.log('Funcionando2', req.data)
 
-    if (req.body.tipo === 'Consultar') {
-      // Consultas
-      var eventos = firebaseDb.collection('eventos')
-      var destacados = eventos.orderBy('votos', 'desc')
-      var novedades = eventos.orderBy('fecha_creacion', 'desc')
-      var zona = eventos.orderBy('fecha_creacion', 'desc')
-      // var isla = eventos.where('isla', '==', 'Tenerife')
+    firebaseAuth.signInWithCustomToken(req.body.token).then(() => {
+      firebaseAuth.signOut()
+      // Subir informacion
 
-      // Gestión consultas
-      var consulta
-      if (req.body.tab === 'tab1') {
-        consulta = destacados
-      } else if (req.body.tab === 'tab2') {
-        consulta = novedades
-      } else if (req.body.tab === 'tab3') {
-        consulta = zona
-      }
+      if (req.body.tipo === 'Consultar') {
+        // Consultas
+        var eventos = firebaseDb.collection('eventos')
+        var destacados = eventos.orderBy('votos', 'desc')
+        var novedades = eventos.orderBy('fecha_creacion', 'desc')
+        var zona = eventos.orderBy('fecha_creacion', 'desc')
+        // var isla = eventos.where('isla', '==', 'Tenerife')
 
-      // Requerimos filtro por isla si es necesario
-      if (req.body.isla !== '') {
-        consulta = consulta.where('isla', '==', req.body.isla)
-      }
+        // Gestión consultas
+        var consulta
+        if (req.body.tab === 'tab1') {
+          consulta = destacados
+        } else if (req.body.tab === 'tab2') {
+          consulta = novedades
+        } else if (req.body.tab === 'tab3') {
+          consulta = zona
+        }
 
-      /// ///////////
-      // Leer bbdd
-      const datosevento = []
-      consulta.get()
-        .then((querySnapshot) => {
-          return querySnapshot.forEach((doc) => {
-            // Leemos los datos
-            const evento = {
-              foto: doc.data().foto,
-              nombre_evento: doc.data().nombre_evento,
-              localizacion: doc.data().localizacion,
-              precio: doc.data().precio,
-              fecha_inicio: doc.data().fecha_inicio,
-              votos: doc.data().votos,
-              comentarios: doc.data().comentarios,
-              usuario: doc.data().usuario,
-              isla: doc.data().isla,
-              id: doc.id,
-              foto_usuario: doc.data().foto_usuario
-            }
+        // Requerimos filtro por isla si es necesario
+        if (req.body.isla !== '') {
+          consulta = consulta.where('isla', '==', req.body.isla)
+        }
 
-            datosevento.push(evento)
-            // })
+        /// ///////////
+        // Leer bbdd
+        const datosevento = []
+        consulta.get()
+          .then((querySnapshot) => {
+            return querySnapshot.forEach((doc) => {
+              // Leemos los datos
+              const evento = {
+                foto: doc.data().foto,
+                nombre_evento: doc.data().nombre_evento,
+                localizacion: doc.data().localizacion,
+                precio: doc.data().precio,
+                fecha_inicio: doc.data().fecha_inicio,
+                votos: doc.data().votos,
+                comentarios: doc.data().comentarios,
+                usuario: doc.data().usuario,
+                isla: doc.data().isla,
+                id: doc.id,
+                foto_usuario: doc.data().foto_usuario
+              }
+
+              datosevento.push(evento)
+              // })
+            })
           })
-        })
-        .then(() => {
-          res.send(datosevento)
-        })
+          .then(() => {
+            res.send(datosevento)
+          })
 
-      // //
-    } else if (req.body.tipo === 'Crear') {
-      // Insertar db
-      console.log('Nuevo evento')
-      console.log('DATOS', req.body)
+        // //
+      } else if (req.body.tipo === 'Crear') {
+        // Insertar db
+        console.log('Nuevo evento')
+        console.log('DATOS', req.body)
 
-      firebaseDb.collection('eventos').add({
-        nombre_evento: req.body.nombre_evento,
-        localizacion: req.body.localizacion,
-        fecha_inicio: req.body.fecha_inicio,
-        fecha_fin: req.body.fecha_fin,
-        precio: req.body.precio,
-        descuento: req.body.descuento,
-        descripcion: req.body.descripcion,
-        votos: 0,
-        comentarios: 0,
-        usuario: req.body.usuario,
-        isla: req.body.isla,
-        fecha_creacion: new Date().getDay() + '/' + new Date().getMonth() + '/' + new Date().getFullYear() + ',' + new Date().getHours() + ':' + new Date().getMinutes() + new Date().getMilliseconds(),
-        foto_usuario: req.body.foto_usuario,
-        foto: ''
-      })
-        .then(function (docRef) {
-          res.send('Evento añadido:' + docRef.id)
-          console.log('Evento añadido')
+        firebaseDb.collection('eventos').add({
+          nombre_evento: req.body.nombre_evento,
+          localizacion: req.body.localizacion,
+          fecha_inicio: req.body.fecha_inicio,
+          fecha_fin: req.body.fecha_fin,
+          precio: req.body.precio,
+          descuento: req.body.descuento,
+          descripcion: req.body.descripcion,
+          votos: 0,
+          comentarios: 0,
+          usuario: req.body.usuario,
+          isla: req.body.isla,
+          fecha_creacion: new Date().getDay() + '/' + new Date().getMonth() + '/' + new Date().getFullYear() + ',' + new Date().getHours() + ':' + new Date().getMinutes() + new Date().getMilliseconds(),
+          foto_usuario: req.body.foto_usuario,
+          foto: ''
         })
-        .catch(function (error) {
-          console.error('Error añadiendo evento ', error)
-          res.send('Error al crear Evento')
-        })
-    }
+          .then(function (docRef) {
+            res.send('Evento añadido:' + docRef.id)
+            console.log('Evento añadido')
+          })
+          .catch(function (error) {
+            console.error('Error añadiendo evento ', error)
+            res.send('Error al crear Evento')
+          })
+      }
+    })
   })
 
   // Update
@@ -109,13 +114,17 @@ module.exports = function (app) {
     console.log('Actualizar evento')
     res.send('Actualizar evento')
 
-    if (req.body.operacion === 'Restar') {
-      Restar(req.body.id, res)
-    } else if (req.body.operacion === 'Restar') {
-      Sumar(req.body.id, res)
-    } else if (req.body.operacion === 'Evento') {
-      EstablecerFoto(req.body.foto, req.body.id, res)
-    }
+    firebaseAuth.signInWithCustomToken(req.body.token).then(() => {
+      firebaseAuth.signOut()
+
+      if (req.body.operacion === 'Restar') {
+        Restar(req.body.id, res)
+      } else if (req.body.operacion === 'Restar') {
+        Sumar(req.body.id, res)
+      } else if (req.body.operacion === 'Evento') {
+        EstablecerFoto(req.body.foto, req.body.id, res)
+      }
+    })
   })
 
   // Delete

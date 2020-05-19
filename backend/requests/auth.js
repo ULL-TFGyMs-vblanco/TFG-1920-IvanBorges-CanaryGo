@@ -107,8 +107,8 @@ module.exports = function (app) {
       ActualizarInfoDb(req.body.nombre, req.body.fecha, req.body.genero, req.body.correo)
       ActualizarCorreo(req.body.correo, req.body.token)
       user.updateProfile({
-        displayName: req.body.usuario
-        // photoURL: req.body.foto
+        displayName: req.body.usuario,
+        photoURL: req.body.foto
       }).then(function () {
         // Correcto
         console.log('Usuario actualizado')
