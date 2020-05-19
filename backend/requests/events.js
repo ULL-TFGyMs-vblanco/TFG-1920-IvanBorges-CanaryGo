@@ -106,6 +106,9 @@ module.exports = function (app) {
             res.send('Error al crear Evento')
           })
       }
+    }).catch(function (error) {
+      console.error('Error añadiendo evento final', error)
+      res.send('Error al crear Evento final')
     })
   })
 
@@ -124,6 +127,9 @@ module.exports = function (app) {
       } else if (req.body.operacion === 'Evento') {
         EstablecerFoto(req.body.foto, req.body.id, res)
       }
+    }).catch(function (error) {
+      console.error('Error actualizando evento final', error)
+      res.send('Error al actualizar Evento final')
     })
   })
 
