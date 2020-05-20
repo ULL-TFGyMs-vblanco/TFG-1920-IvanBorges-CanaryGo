@@ -304,9 +304,6 @@ module.exports = function (app) {
       await client.verifyIdToken({
         idToken: req.body.token,
         audience: req.body.id_client
-      }).then(function (decodedToken) {
-        console.log('EL UID', decodedToken.uid)
-        return decodedToken
       })
     }
     verify()
@@ -329,7 +326,7 @@ module.exports = function (app) {
           })
       })
       .catch(function (error) {
-        console.log(error)
+        console.log('Error al verificar', error)
         res.send('Usuario incorrecto')
       })
   }
