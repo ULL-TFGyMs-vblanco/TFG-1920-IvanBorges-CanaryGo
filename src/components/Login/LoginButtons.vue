@@ -50,6 +50,7 @@ export default {
         .then(function (result) {
           // Google Access Token
           const token = result.credential.idToken
+          console.log('EL ROLLO -> ', result.credential.idToken)
           return token
         })
         .then((token) => {
@@ -104,6 +105,7 @@ export default {
         .then(function (result) {
           // Facebook Access Token
           const token = result.credential.idToken
+          console.log('EL ROLLO -> ', result.credential)
           return token
         })
         .then((token) => {

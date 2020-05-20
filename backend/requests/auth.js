@@ -296,7 +296,7 @@ module.exports = function (app) {
       })
   }
 
-  function IniciarSesionOAuth (req, res, user) {
+  function IniciarSesionOAuth (req, res) {
     const client = new OAuth2Client(req.body.id_client)
 
     async function verify () {
@@ -311,9 +311,14 @@ module.exports = function (app) {
     }
     verify()
       .then(function (ticket) {
+        console.log('EL ticket ->', ticket)
+        const payload = ticket.getPayload()
+        const userid = payload.sub
+        console.log('La payload ->', payload)
+        console.log('EL userid ->', userid)
         // Creamos un token para el usuario si no hay problemas
         console.log('DATOS EN CLIENT-> ', client.uid)
-        admin.auth().createCustomToken(user.uid)
+        admin.auth().createCustomToken(userid)
           .then(function (customToken) {
             // Enviamos token al cliente
             res.send('Usuario correcto:' + customToken)
