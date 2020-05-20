@@ -304,12 +304,15 @@ module.exports = function (app) {
       await client.verifyIdToken({
         idToken: req.body.token,
         audience: req.body.id_client
+      }).then(function (decodedToken) {
+        console.log('EL UID', decodedToken.uid)
+        return decodedToken
       })
     }
     verify()
       .then(function (ticket) {
         // Creamos un token para el usuario si no hay problemas
-        console.log('DATOS EN CLIENT-> ', client)
+        console.log('DATOS EN CLIENT-> ', client.uid)
         admin.auth().createCustomToken(user.uid)
           .then(function (customToken) {
             // Enviamos token al cliente
