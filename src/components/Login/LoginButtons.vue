@@ -72,11 +72,12 @@ export default {
                 if (response.data.includes('Usuario correcto:')) {
                   const token = response.data.split(':')[1]
                   this.$store.dispatch('store/anadirUsuario', firebaseAuth.currentUser.providerData[0]).then(() => {
-                    setTimeout(() => {
-                      this.$store.dispatch('store/anadirToken', token)
-                      this.Success()
-                      this.$router.push('events')
-                    }, 500)
+                    this.$store.dispatch('store/anadirToken', token).then(() => {
+                      setTimeout(() => {
+                        this.Success()
+                        this.$router.push('events')
+                      }, 500)
+                    })
                   })
                 } else {
                   this.Fail(this.$t('error_google'))
