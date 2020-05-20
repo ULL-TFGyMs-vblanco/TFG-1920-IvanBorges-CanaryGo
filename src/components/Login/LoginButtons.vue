@@ -50,7 +50,6 @@ export default {
         .then(function (result) {
           // Google Access Token
           const token = result.credential.idToken
-          console.log('EL ROLLO -> ', result.credential.idToken)
           return token
         })
         .then((token) => {
@@ -70,8 +69,8 @@ export default {
               .then((response) => {
                 console.log('RESPUESTA DEL SERVER', response)
 
-                if (response.data === 'Usuario correcto') {
-                  // console.log('usuario google', firebaseAuth.currentUser)
+                if (response.data.includes('Usuario correcto:')) {
+                  const token = response.data.split(':')[1]
                   this.$store.dispatch('store/anadirUsuario', firebaseAuth.currentUser.providerData[0]).then(() => {
                     setTimeout(() => {
                       this.$store.dispatch('store/anadirToken', token)
