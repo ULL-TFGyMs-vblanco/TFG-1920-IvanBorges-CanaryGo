@@ -301,10 +301,11 @@ module.exports = function (app) {
 
     async function verify () {
       // Comprobar que la consulta se haga desde nuestra app y sea un usuario valido
-      await client.verifyIdToken({
+      const ticket = await client.verifyIdToken({
         idToken: req.body.token,
         audience: req.body.id_client
       })
+      return ticket
     }
     verify()
       .then(function (ticket) {
