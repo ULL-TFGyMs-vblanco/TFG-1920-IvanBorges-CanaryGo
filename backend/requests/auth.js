@@ -296,7 +296,7 @@ module.exports = function (app) {
       })
   }
 
-  function IniciarSesionOAuth (req, res) {
+  function IniciarSesionOAuth (req, res, user) {
     const client = new OAuth2Client(req.body.id_client)
 
     async function verify () {
@@ -308,8 +308,17 @@ module.exports = function (app) {
     }
     verify()
       .then(function (ticket) {
-        // Login si no hay errores
-        res.send('Usuario correcto')
+        // Creamos un token para el usuario si no hay problemas
+        console.log('DATOS EN CLIENT-> ', client)
+        admin.auth().createCustomToken(user.uid)
+          .then(function (customToken) {
+            // Enviamos token al cliente
+            res.send('Usuario correcto:' + customToken)
+          })
+          .catch(function (error) {
+            console.log('Error al crear token:', error)
+            res.send('Usuario incorrecto')
+          })
       })
       .catch(function (error) {
         console.log(error)

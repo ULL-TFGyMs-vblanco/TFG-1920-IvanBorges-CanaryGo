@@ -46,7 +46,7 @@ export default {
   },
   methods: {
     Mostrar () {
-      console.log('LEYENDO DOC', this.$store.state.store.token)
+      console.log('LEYENDO DOC', this.$store.state.store)
 
       axios({
         method: 'put',
@@ -55,7 +55,7 @@ export default {
           tipo: 'Consultar',
           tab: this.tab,
           isla: this.isla,
-          token: this.$store.state.store.token
+          token: String(this.$store.state.store.token)
         }
       })
         .then((response) => {

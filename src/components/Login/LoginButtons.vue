@@ -125,11 +125,13 @@ export default {
 
                 if (response.data === 'Usuario correcto') {
                   this.$store.dispatch('store/anadirUsuario', firebaseAuth.currentUser.providerData[0]).then(() => {
-                    setTimeout(() => {
-                      this.$store.dispatch('store/anadirToken', token)
-                      this.Success()
-                      this.$router.push('events')
-                    }, 500)
+                    this.$store.dispatch('store/anadirToken', firebaseAuth.currentUser.getIdToken()).then(() => {
+                      setTimeout(() => {
+                        this.$store.dispatch('store/anadirToken', token)
+                        this.Success()
+                        this.$router.push('events')
+                      }, 500)
+                    })
                   })
                 } else {
                   this.Fail(this.$t('error_facebook'))

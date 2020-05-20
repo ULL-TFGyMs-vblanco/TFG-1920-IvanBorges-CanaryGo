@@ -107,8 +107,8 @@ module.exports = function (app) {
           })
       }
     }).catch(function (error) {
-      console.error('Error añadiendo evento final', error)
-      res.send('Error al crear Evento final')
+      console.error('Error verificando usuario', error)
+      res.send('Error al verificar usuario en Evento')
     })
   })
 
