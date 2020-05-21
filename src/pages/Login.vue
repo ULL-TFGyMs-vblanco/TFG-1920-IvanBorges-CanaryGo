@@ -154,7 +154,7 @@ export default {
 
               firebaseAuth.signInWithCustomToken(token).then(() => {
                 // Guardamos datos persistentes en state
-                this.DatosExtraUsuario(token)
+                this.DatosExtraUsuario(token, firebaseAuth.currentUser.providerData[0].email)
                 const usuario = {
                   email: firebaseAuth.currentUser.providerData[0].email,
                   displayName: firebaseAuth.currentUser.providerData[0].displayName,
@@ -198,13 +198,14 @@ export default {
         progress: true
       })
     },
-    DatosExtraUsuario (token) {
+    DatosExtraUsuario (token, email) {
       axios({
         method: 'put',
         url: 'https://canarygo.herokuapp.com/autorizar',
         data: {
           tipo: 'Obtener Datos',
-          token: token
+          token: token,
+          email: email
         }
       })
         .then((response) => {
@@ -212,7 +213,10 @@ export default {
             console.log('Error')
           } else {
             this.$store.dispatch('store/anadirUsuario', response.data)
+            console.log('Datos extra: ', response.data)
           }
+        }, (error) => {
+          console.log('EL ERROR ES', error)
         })
     }
   }

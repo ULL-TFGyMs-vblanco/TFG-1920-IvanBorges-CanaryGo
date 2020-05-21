@@ -95,9 +95,9 @@ module.exports = function (app) {
         .then((querySnapshot) => {
           querySnapshot.forEach((doc) => {
             const usuario = {
-              fecha: document.fecha,
-              genero: document.genero,
-              nombre: document.nombre
+              fecha: doc.fecha,
+              genero: doc.genero,
+              nombre: doc.nombre
             }
             res.send(usuario)
           })
