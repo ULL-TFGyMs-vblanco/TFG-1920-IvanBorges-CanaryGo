@@ -110,9 +110,9 @@ module.exports = function (app) {
                 console.log('Error al buscar datos, no existe el doc')
               } else {
                 const usuario = {
-                  fecha: doc.data().fecha,
-                  nombre: doc.data().nombre,
-                  genero: doc.data().genero
+                  date: doc.data().fecha,
+                  name: doc.data().nombre,
+                  gender: doc.data().genero
                 }
                 res.send(usuario)
               }

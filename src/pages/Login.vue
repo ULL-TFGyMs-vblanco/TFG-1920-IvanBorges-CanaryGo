@@ -154,20 +154,20 @@ export default {
 
               firebaseAuth.signInWithCustomToken(token).then(() => {
                 // Guardamos datos persistentes en state
-                this.DatosExtraUsuario(token, firebaseAuth.currentUser.providerData[0].email)
-                const usuario = {
-                  email: firebaseAuth.currentUser.providerData[0].email,
-                  displayName: firebaseAuth.currentUser.providerData[0].displayName,
-                  photoURL: firebaseAuth.currentUser.providerData[0].photoURL
-                }
-                this.$store.dispatch('store/anadirUsuario', usuario).then(() => {
-                  this.$store.dispatch('store/anadirToken', token).then(() => {
-                    setTimeout(() => {
-                      this.Success()
-                      this.$router.push('events')
-                    }, 500)
-                  })
+                this.DatosExtraUsuario(token, firebaseAuth.currentUser.providerData[0])
+                // const usuario = {
+                //   email: firebaseAuth.currentUser.providerData[0].email,
+                //   displayName: firebaseAuth.currentUser.providerData[0].displayName,
+                //   photoURL: firebaseAuth.currentUser.providerData[0].photoURL
+                // }
+                // this.$store.dispatch('store/anadirUsuario', usuario).then(() => {
+                this.$store.dispatch('store/anadirToken', token).then(() => {
+                  setTimeout(() => {
+                    this.Success()
+                    this.$router.push('events')
+                  }, 500)
                 })
+                // })
               }).catch(function (error) {
                 console.log(error)
               })
@@ -198,21 +198,23 @@ export default {
         progress: true
       })
     },
-    DatosExtraUsuario (token, email) {
+    DatosExtraUsuario (token, user) {
       axios({
         method: 'put',
         url: 'https://canarygo.herokuapp.com/autorizar',
         data: {
           tipo: 'Obtener Datos',
           token: token,
-          correo: email
+          correo: user.email
         }
       })
         .then((response) => {
           if (response.data === 'Error') {
             console.log('Error')
           } else {
-            this.$store.dispatch('store/anadirUsuario', response.data)
+            const usuario = response.data
+            usuario.push(user)
+            this.$store.dispatch('store/anadirUsuario', usuario)
             console.log('Datos extra: ', response.data)
           }
         }, (error) => {
