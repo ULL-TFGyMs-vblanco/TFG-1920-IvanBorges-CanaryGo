@@ -147,28 +147,10 @@
           </template>
         </q-input>
 
-        <div class="text-center">
-          <q-checkbox
-            class="Terms"
-            name="sesion"
-            v-model="sesion"
-            :label="$t('terms')"
-          />
-          <br />
-          <!-- to="/terms" -->
-          <q-item
-            clickable
-            v-ripple
-          >
-            <q-item-section>
-              <q-item-label style="color: #ec9718">{{$t('terms2')}}</q-item-label>
-            </q-item-section>
-          </q-item>
-        </div>
         <div>
           <q-btn
-            class="Registro"
-            :label="$t('register')"
+            class="Actualizar"
+            :label="$t('update')"
             type="submit"
             color="primary"
           />
@@ -181,27 +163,6 @@
           />
         </div>
       </form>
-      <LoginButtons :key="$i18n.locale" />
-      <!-- VERIFICAR CORREO -->
-      <q-dialog v-model="alert">
-        <q-card>
-          <q-card-section>
-            <div class="text-h6">{{$t('alert')}}</div>
-          </q-card-section>
-
-          <q-card-section class="q-pt-none">{{$t('email_verification')}}</q-card-section>
-
-          <q-card-actions align="right">
-            <q-btn
-              flat
-              label="OK"
-              color="primary"
-              v-close-popup
-            />
-          </q-card-actions>
-        </q-card>
-      </q-dialog>
-      <!-- VERIFICAR CORREO -->
     </div>
   </div>
 </template>
@@ -210,25 +171,20 @@
 
 // eslint-disable-next-line no-unused-vars
 import { firebaseAuth, firebase, firebaseStg } from 'boot/firebase'
-import LoginButtons from 'components/Login/LoginButtons'
 import axios from 'axios'
 
 export default {
-  name: 'Signup',
+  name: 'ActualizarUsuario',
   components: {
-    LoginButtons
   },
   data () {
     return {
-      alert: false,
-      confirm: false,
-      prompt: false,
-      nombre: null,
-      usuario: null,
-      genero: null,
+      nombre: this.$store.state.store.datosUsuario.name,
+      usuario: this.$store.state.store.datosUsuario.displayName,
+      genero: this.$store.state.store.datosUsuario.gender,
       opciones_genero: [this.$t('male'), this.$t('female')],
-      email: null,
-      fecha: null,
+      email: this.$store.state.store.datosUsuario.email,
+      fecha: this.$store.state.store.datosUsuario.date,
       contrasena: null,
       contrasena2: null,
       isPwd: true,
@@ -283,13 +239,8 @@ export default {
         method: 'put',
         url: 'https://canarygo.herokuapp.com/autorizar',
         data: {
-          tipo: 'Registro',
-          correo: this.email,
-          contrasena2: this.contrasena2,
-          nombre: this.nombre,
-          genero: this.genero,
-          fecha: this.fecha,
-          usuario: this.usuario
+          tipo: 'Obtener datos',
+          correo: this.$store.state.store.datosUsuario.email
         }
       })
         .then((response) => {

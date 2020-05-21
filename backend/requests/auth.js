@@ -89,6 +89,22 @@ module.exports = function (app) {
             res.send('Usuario creado')
           }
         })
+    } else if (req.body.tipo === 'Obtener Datos') {
+      //  Obtenemos id de la db
+      firebaseDb.collection('usuarios').where('correo', '==', req.body.email).get()
+        .then((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+            const usuario = {
+              fecha: document.fecha,
+              genero: document.genero,
+              nombre: document.nombre
+            }
+            res.send(usuario)
+          })
+        }).catch(function (error) {
+          res.send('Error')
+          console.error('Error encontrando usuario en db', error)
+        })
     }
   })
 
@@ -137,7 +153,7 @@ module.exports = function (app) {
       console.log('El rollo', user.email)
 
       //  Obtenemos id de la db
-      firebaseDb.collection('usuarios').where('Correo', '==', user.email).get()
+      firebaseDb.collection('usuarios').where('correo', '==', user.email).get()
         .then((querySnapshot) => {
           querySnapshot.forEach((doc) => {
             documento = doc.id

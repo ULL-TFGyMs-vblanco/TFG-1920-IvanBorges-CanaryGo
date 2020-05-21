@@ -59,7 +59,7 @@
                       clickable
                       v-ripple
                     >
-                      <q-item-section>
+                      <q-item-section @click="$router.push('update')">
                         <q-item-label>
                           <q-icon
                             name="person"
