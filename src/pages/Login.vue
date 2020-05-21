@@ -205,7 +205,7 @@ export default {
         data: {
           tipo: 'Obtener Datos',
           token: token,
-          email: email
+          correo: email
         }
       })
         .then((response) => {

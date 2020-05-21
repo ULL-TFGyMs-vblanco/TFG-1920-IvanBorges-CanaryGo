@@ -90,20 +90,37 @@ module.exports = function (app) {
           }
         })
     } else if (req.body.tipo === 'Obtener Datos') {
+      let documento
+
       //  Obtenemos id de la db
-      firebaseDb.collection('usuarios').where('correo', '==', req.body.email).get()
+      firebaseDb.collection('usuarios').where('correo', '==', req.body.correo).get()
+        .catch(function (error) {
+          console.error('Error encontrando usuario en db', error)
+        })
         .then((querySnapshot) => {
           querySnapshot.forEach((doc) => {
-            const usuario = {
-              fecha: doc.fecha,
-              genero: doc.genero,
-              nombre: doc.nombre
-            }
-            res.send(usuario)
+            documento = doc.id
           })
-        }).catch(function (error) {
-          res.send('Error')
-          console.error('Error encontrando usuario en db', error)
+        })
+        .then(() => {
+          firebaseDb.collection('usuarios').doc(documento).get()
+            .then(doc => {
+              if (!doc.exists) {
+                res.send('Error al buscar datos')
+                console.log('Error al buscar datos, no existe el doc')
+              } else {
+                const usuario = {
+                  fecha: doc.data().fecha,
+                  nombre: doc.data().nombre,
+                  genero: doc.data().genero
+                }
+                res.send(usuario)
+              }
+            })
+            .catch(err => {
+              res.send('Error al buscar datos')
+              console.log('Error al buscar datos', err)
+            })
         })
     }
   })
@@ -150,8 +167,6 @@ module.exports = function (app) {
 
       let documento
 
-      console.log('El rollo', user.email)
-
       //  Obtenemos id de la db
       firebaseDb.collection('usuarios').where('correo', '==', user.email).get()
         .then((querySnapshot) => {
@@ -167,7 +182,7 @@ module.exports = function (app) {
             .then(function () {
               console.log('Usuario borrado de la db')
             }).catch(function (error) {
-              console.error('Erro al borrar el usuario de la db ', error)
+              console.error('Error al borrar el usuario de la db ', error)
             })
         }).catch(function (error) {
           console.error('Error borrando db', error)
