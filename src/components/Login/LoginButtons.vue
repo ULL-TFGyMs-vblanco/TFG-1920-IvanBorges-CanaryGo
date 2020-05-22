@@ -69,9 +69,20 @@ export default {
               .then((response) => {
                 console.log('RESPUESTA DEL SERVER', response)
 
+                console.log('EL USUARIO -> ', firebaseAuth.currentUser)
+
+                const usuario = {
+                  name: firebaseAuth.currentUser.name,
+                  date: firebaseAuth.currentUser.date,
+                  gender: firebaseAuth.currentUser.gender,
+                  photoURL: firebaseAuth.currentUser.providerData[0].photoURL,
+                  displayName: firebaseAuth.currentUser.providerData[0].displayName,
+                  email: firebaseAuth.currentUser.providerData[0].email
+                }
+
                 if (response.data.includes('Usuario correcto:')) {
                   const token = response.data.split(':')[1]
-                  this.$store.dispatch('store/anadirUsuario', firebaseAuth.currentUser.providerData[0]).then(() => {
+                  this.$store.dispatch('store/anadirUsuario', usuario).then(() => {
                     this.$store.dispatch('store/anadirToken', token).then(() => {
                       setTimeout(() => {
                         this.Success()
@@ -125,7 +136,8 @@ export default {
               .then((response) => {
                 console.log('RESPUESTA DEL SERVER', response)
 
-                if (response.data === 'Usuario correcto') {
+                if (response.data.includes('Usuario correcto:')) {
+                  const token = response.data.split(':')[1]
                   this.$store.dispatch('store/anadirUsuario', firebaseAuth.currentUser.providerData[0]).then(() => {
                     this.$store.dispatch('store/anadirToken', firebaseAuth.currentUser.getIdToken()).then(() => {
                       setTimeout(() => {

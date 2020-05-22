@@ -154,22 +154,27 @@ export default {
 
               firebaseAuth.signInWithCustomToken(token).then(() => {
                 // Guardamos datos persistentes en state
-                this.DatosExtraUsuario(token, firebaseAuth.currentUser.providerData[0])
-                // const usuario = {
-                //   email: firebaseAuth.currentUser.providerData[0].email,
-                //   displayName: firebaseAuth.currentUser.providerData[0].displayName,
-                //   photoURL: firebaseAuth.currentUser.providerData[0].photoURL
-                // }
-                // this.$store.dispatch('store/anadirUsuario', usuario).then(() => {
-                this.$store.dispatch('store/anadirToken', token).then(() => {
-                  setTimeout(() => {
-                    this.Success()
-                    this.$router.push('events')
-                  }, 500)
+                this.DatosExtraUsuario(token, firebaseAuth.currentUser.providerData[0]).then((response) => {
+                  const usuario = {
+                    name: response.data.name,
+                    date: response.data.date,
+                    gender: response.data.gender,
+                    photoURL: firebaseAuth.currentUser.providerData[0].photoURL,
+                    displayName: firebaseAuth.currentUser.providerData[0].displayName,
+                    email: firebaseAuth.currentUser.providerData[0].email
+                  }
+
+                  this.$store.dispatch('store/anadirUsuario', usuario).then(() => {
+                    this.$store.dispatch('store/anadirToken', token).then(() => {
+                      setTimeout(() => {
+                        this.Success()
+                        this.$router.push('events')
+                      }, 500)
+                    })
+                  })
+                }).catch(function (error) {
+                  console.log(error)
                 })
-                // })
-              }).catch(function (error) {
-                console.log(error)
               })
             } else {
               this.Fail(this.$t('login_fail_verify'))
@@ -199,7 +204,7 @@ export default {
       })
     },
     DatosExtraUsuario (token, user) {
-      axios({
+      return axios({
         method: 'put',
         url: 'https://canarygo.herokuapp.com/autorizar',
         data: {
@@ -208,18 +213,6 @@ export default {
           correo: user.email
         }
       })
-        .then((response) => {
-          if (response.data === 'Error') {
-            console.log('Error')
-          } else {
-            const usuario = response.data
-            usuario.push(user)
-            this.$store.dispatch('store/anadirUsuario', usuario)
-            console.log('Datos extra: ', response.data)
-          }
-        }, (error) => {
-          console.log('EL ERROR ES', error)
-        })
     }
   }
 }
