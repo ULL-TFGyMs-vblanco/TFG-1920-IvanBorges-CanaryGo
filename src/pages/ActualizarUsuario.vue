@@ -111,51 +111,6 @@
           :rules="[ val => val && val.length > 0 && val.indexOf('@') >= 0 || $t('email_fail')]"
         />
 
-        <q-input
-          ref="contrasena"
-          class="Contrasena"
-          filled
-          v-model="contrasena"
-          :type="isPwd ? 'password' : 'text'"
-          :label="$t('password')"
-          :hint="$t('password_hint')"
-          lazy-rules
-          :rules="[
-          val => val !== null && val !== '' || $t('password_fail'),
-        ]"
-        >
-          <template v-slot:append>
-            <q-icon
-              :name="isPwd ? 'visibility_off' : 'visibility'"
-              class="cursor-pointer"
-              @click="isPwd = !isPwd"
-            />
-          </template>
-        </q-input>
-
-        <q-input
-          ref="contrasena2"
-          class="Contrasena2"
-          filled
-          v-model="contrasena2"
-          :type="isPwd ? 'password' : 'text'"
-          :label="$t('password')"
-          :hint="$t('password_repeat')"
-          lazy-rules
-          :rules="[
-          val => val !== null && val !== '' || $t('password_repeat_fail'),
-          val => val === contrasena || $t('password_repeat_fail_2')
-        ]"
-        >
-          <template v-slot:append>
-            <q-icon
-              :name="isPwd ? 'visibility_off' : 'visibility'"
-              class="cursor-pointer"
-              @click="isPwd = !isPwd"
-            />
-          </template>
-        </q-input>
-
         <div>
           <q-btn
             class="Actualizar"
@@ -197,8 +152,6 @@ export default {
       opciones_genero: [this.$t('male'), this.$t('female')],
       email: this.$store.state.store.datosUsuario.email,
       fecha: this.$store.state.store.datosUsuario.date,
-      contrasena: null,
-      contrasena2: null,
       isPwd: true,
       sesion: false
     }
@@ -210,11 +163,9 @@ export default {
       this.$refs.usuario.validate()
       this.$refs.email.validate()
       this.$refs.fecha.validate()
-      this.$refs.contrasena.validate()
-      this.$refs.contrasena2.validate()
       this.$refs.genero.validate()
 
-      if (this.$refs.nombre.hasError || this.$refs.usuario.hasError || this.$refs.genero.hasError || this.$refs.email.hasError || this.$refs.fecha.hasError || this.$refs.contrasena.hasError || this.$refs.contrasena2.hasError) {
+      if (this.$refs.nombre.hasError || this.$refs.usuario.hasError || this.$refs.genero.hasError || this.$refs.email.hasError || this.$refs.fecha.hasError) {
         this.formHasError = true
       } else if (this.sesion !== true) {
         this.$q.notify({
@@ -234,16 +185,12 @@ export default {
       this.usuario = null
       this.fecha = null
       this.email = null
-      this.contrasena = null
-      this.contrasena2 = null
       this.genero = null
 
       this.$refs.nombre.resetValidation()
       this.$refs.usuario.resetValidation()
       this.$refs.fecha.resetValidation()
       this.$refs.email.resetValidation()
-      this.$refs.contrasena.resetValidation()
-      this.$refs.contrasena2.resetValidation()
       this.$refs.genero.resetValidation()
     },
     Registrar () {
@@ -291,7 +238,6 @@ export default {
   },
   mounted () {
     document.getElementsByClassName('picture-preview')[0].setAttribute('prefill', 'https://ichef.bbci.co.uk/news/976/cpsprodpb/F403/production/_109476426_jheison3.png')
-    document.getElementById('foto').setAttribute('prefill', 'https://ichef.bbci.co.uk/news/976/cpsprodpb/F403/production/_109476426_jheison3.png')
   }
 }
 </script>
