@@ -6,11 +6,11 @@
       :width="this.anchura"
       :height="this.altura"
       margin="16"
-      accept="image/jpeg, image/png"
+      accept="image/*"
       size="5"
       radius="5"
       button-class="primary"
-      prefill="https://firebasestorage.googleapis.com/v0/b/canarygo-f725d.appspot.com/o/avatares%2Fpredefinidos%2FAvatar_m.png?alt=media&token=f05ee5f6-ee21-4e32-b6e9-8812f282757f.jpg"
+      prefill="https://firebasestorage.googleapis.com/v0/b/canarygo-f725d.appspot.com/o/avatares%2Fpredefinidos%2FAvatar_m.png?alt=media&token=f05ee5f6-ee21-4e32-b6e9-8812f282757f"
       :key="$i18n.locale"
       :custom-strings="{
         upload: this.$t('done'),
