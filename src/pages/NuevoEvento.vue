@@ -23,6 +23,7 @@
             class="selectorarchivos"
             v-bind:anchura='550'
             v-bind:altura='550'
+            v-bind:url='null'
           />
           <br />
           <q-input

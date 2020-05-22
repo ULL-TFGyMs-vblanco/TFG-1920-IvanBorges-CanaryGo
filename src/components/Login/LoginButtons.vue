@@ -34,7 +34,10 @@ export default {
   methods: {
     IniciarSesionGoogle () {
       const provider = firebaseAuthGoogle
-      // provider.addScope('https://www.googleapis.com/auth/contacts.readonly')
+      provider.addScope('https://www.googleapis.com/auth/user.birthday.read')
+      provider.addScope('https://www.googleapis.com/auth/user.gender.read')
+      // provider.addScope('https://www.googleapis.com/auth/userinfo.profile')
+
       firebaseAuth.useDeviceLanguage()
       provider.setCustomParameters({
         login_hint: 'user@example.com'
@@ -50,6 +53,7 @@ export default {
         .then(function (result) {
           // Google Access Token
           const token = result.credential.idToken
+
           return token
         })
         .then((token) => {
@@ -68,8 +72,7 @@ export default {
             })
               .then((response) => {
                 console.log('RESPUESTA DEL SERVER', response)
-
-                console.log('EL USUARIO -> ', firebaseAuth.currentUser)
+                console.log('USUARIO GOOGLE', firebaseAuth.currentUser)
 
                 const usuario = {
                   name: firebaseAuth.currentUser.name,

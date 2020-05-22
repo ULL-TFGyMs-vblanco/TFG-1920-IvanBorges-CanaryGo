@@ -18,6 +18,15 @@
         class="q-gutter-md"
       >
 
+          <!-- Selector -->
+          <Selectorarchivos
+            class="selectorarchivos"
+            v-bind:anchura='500'
+            v-bind:altura='500'
+            v-bind:url="photoURL"
+          />
+          <br />
+
         <!-- <br />
         <br />-->
 
@@ -171,16 +180,19 @@
 
 // eslint-disable-next-line no-unused-vars
 import { firebaseAuth, firebase, firebaseStg } from 'boot/firebase'
+import Selectorarchivos from '../components/Eventos/Selectorarchivos'
 import axios from 'axios'
 
 export default {
   name: 'ActualizarUsuario',
   components: {
+    Selectorarchivos
   },
   data () {
     return {
       nombre: this.$store.state.store.datosUsuario.name,
       usuario: this.$store.state.store.datosUsuario.displayName,
+      photoURL: this.$store.state.store.datosUsuario.photoURL,
       genero: this.$store.state.store.datosUsuario.gender,
       opciones_genero: [this.$t('male'), this.$t('female')],
       email: this.$store.state.store.datosUsuario.email,
@@ -276,6 +288,10 @@ export default {
         progress: true
       })
     }
+  },
+  mounted () {
+    document.getElementsByClassName('picture-preview')[0].setAttribute('prefill', 'https://ichef.bbci.co.uk/news/976/cpsprodpb/F403/production/_109476426_jheison3.png')
+    document.getElementById('foto').setAttribute('prefill', 'https://ichef.bbci.co.uk/news/976/cpsprodpb/F403/production/_109476426_jheison3.png')
   }
 }
 </script>

@@ -10,6 +10,7 @@
       size="5"
       radius="5"
       button-class="primary"
+      :prefill="this.url"
       :key="$i18n.locale"
       :custom-strings="{
         upload: this.$t('done'),
@@ -40,7 +41,12 @@ export default {
     altura: {
       // type: Number,
       // required: true
+    },
+    url: {
+      // type: String,
+      // required: true
     }
+
   },
   components: {
     PictureInput
