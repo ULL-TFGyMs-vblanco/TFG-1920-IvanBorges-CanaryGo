@@ -192,7 +192,7 @@ export default {
     return {
       nombre: this.$store.state.store.datosUsuario.name,
       usuario: this.$store.state.store.datosUsuario.displayName,
-      photoURL: this.$store.state.store.datosUsuario.photoURL,
+      photoURL: String(this.$store.state.store.datosUsuario.photoURL),
       genero: this.$store.state.store.datosUsuario.gender,
       opciones_genero: [this.$t('male'), this.$t('female')],
       email: this.$store.state.store.datosUsuario.email,

@@ -6,11 +6,11 @@
       :width="this.anchura"
       :height="this.altura"
       margin="16"
-      accept="image/jpeg, image/png"
+
       size="5"
       radius="5"
       button-class="primary"
-      :prefill="this.url"
+      prefill='https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.iecisa.com%2Fes%2Fblog%2FPost%2FConfianza-como-imagen-de-marca%2F&psig=AOvVaw1RB28EHkz_Q_O06J7uboGR&ust=1590253718540000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCICDmvL6x-kCFQAAAAAdAAAAABAK'
       :key="$i18n.locale"
       :custom-strings="{
         upload: this.$t('done'),
