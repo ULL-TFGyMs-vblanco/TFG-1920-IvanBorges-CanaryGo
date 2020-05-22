@@ -6,11 +6,11 @@
       :width="this.anchura"
       :height="this.altura"
       margin="16"
-
+      accept="image/jpeg, image/png"
       size="5"
       radius="5"
       button-class="primary"
-      prefill='https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.iecisa.com%2Fes%2Fblog%2FPost%2FConfianza-como-imagen-de-marca%2F&psig=AOvVaw1RB28EHkz_Q_O06J7uboGR&ust=1590253718540000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCICDmvL6x-kCFQAAAAAdAAAAABAK'
+      prefill="https://firebasestorage.googleapis.com/v0/b/canarygo-f725d.appspot.com/o/avatares%2Fpredefinidos%2FAvatar_m.png?alt=media&token=f05ee5f6-ee21-4e32-b6e9-8812f282757f.jpg"
       :key="$i18n.locale"
       :custom-strings="{
         upload: this.$t('done'),
@@ -41,12 +41,7 @@ export default {
     altura: {
       // type: Number,
       // required: true
-    },
-    url: {
-      // type: String,
-      // required: true
     }
-
   },
   components: {
     PictureInput
