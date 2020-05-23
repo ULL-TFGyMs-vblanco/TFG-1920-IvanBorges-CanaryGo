@@ -18,14 +18,14 @@
         class="q-gutter-md"
       >
 
-          <!-- Selector -->
-          <Selectorarchivos
-            class="selectorarchivos"
-            v-bind:anchura='500'
-            v-bind:altura='500'
-            v-bind:url="photoURL"
-          />
-          <br />
+        <!-- Selector -->
+        <Selectorarchivos
+          class="selectorarchivos"
+          v-bind:anchura='400'
+          v-bind:altura='400'
+          v-bind:url="this.photoURL"
+        />
+        <br />
 
         <!-- <br />
         <br />-->
@@ -147,7 +147,8 @@ export default {
     return {
       nombre: this.$store.state.store.datosUsuario.name,
       usuario: this.$store.state.store.datosUsuario.displayName,
-      photoURL: String(this.$store.state.store.datosUsuario.photoURL),
+      photoURL: '',
+      // photoURL: String(this.$store.state.store.datosUsuario.photoURL),
       genero: this.$store.state.store.datosUsuario.gender,
       opciones_genero: [this.$t('male'), this.$t('female')],
       email: this.$store.state.store.datosUsuario.email,
@@ -234,10 +235,29 @@ export default {
         timeout: 2000,
         progress: true
       })
+    },
+    Imagen () {
+      axios({
+        url: 'https://firebasestorage.googleapis.com/v0/b/canarygo-f725d.appspot.com/o/eventos%2FHEkt8lSEVZfXCyYmVvkh%2Ffoto?alt=media&token=149fd53d-9db5-4cd2-b4ac-a0d50efe6db1',
+        method: 'GET',
+        responseType: 'blob'
+      }).then((response) => {
+        // var fileURL = window.URL.createObjectURL(new Blob([response.data]))
+        var fileLink = document.createElement('a')
+
+        // fileLink.href = fileURL
+        // fileLink.setAttribute('download', 'file.png')
+        // document.body.appendChild(fileLink)
+
+        this.photoURL = response.data
+
+        fileLink.click()
+      })
     }
   },
   mounted () {
     document.getElementsByClassName('picture-preview')[0].setAttribute('prefill', 'https://ichef.bbci.co.uk/news/976/cpsprodpb/F403/production/_109476426_jheison3.png')
+    this.Imagen()
   }
 }
 </script>
