@@ -180,6 +180,10 @@ module.exports = function (app) {
           // Borramos de la db
           firebaseDb.collection('usuarios').doc(documento).delete()
             .then(function () {
+              // Borramos img
+              const storageRef = firebaseStg.ref('avatares/usuarios/' + user.email)
+              storageRef.delete()
+              // Hecho
               console.log('Usuario borrado de la db')
             }).catch(function (error) {
               console.error('Error al borrar el usuario de la db ', error)

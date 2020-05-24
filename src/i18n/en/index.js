@@ -123,6 +123,7 @@ export default {
   email_verification: 'To complete the registration verify your email',
   delete_verification: 'Are you sure you want to do this?',
   updated: 'User updated',
+  update_error: 'User cannot be updated now',
   alert: 'Attention',
   location: 'Island',
   featured: 'Most featured',

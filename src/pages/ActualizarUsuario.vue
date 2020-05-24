@@ -303,22 +303,25 @@ export default {
       })
     },
     subirImagen () {
-      const image = document.getElementById('foto').files[0]
+      const file = document.getElementById('foto').files[0]
 
-      if (image === undefined) {
+      if (file === undefined) {
         this.new_url = this.photoURL
+        console.log('Caso no se sube foto')
         this.actualizarUsuario()
       } else {
-        const storageRef = firebaseStg.ref('avatares/usuarios' + this.email)
+        console.log('Caso se sube foto')
+        const storageRef = firebaseStg.ref('avatares/usuarios/' + this.email)
         const thisRef = storageRef.child('foto')
 
-        thisRef.put(image)
+        const that = this
+        thisRef.put(file)
           .then(function (snapshot) {
             console.log('actualizando foto')
-            thisRef.getDownloadURL().then(function (url) {
-              this.new_url = url
+            thisRef.getDownloadURL().then((url) => {
+              that.new_url = url
+              that.actualizarUsuario()
             })
-            this.actualizarUsuario()
           })
           .catch(function (error) {
             console.log(error)
@@ -345,11 +348,12 @@ export default {
           // console.log('RESPUESTA DEL SERVER', response.data)
           if (response.data.includes('Usuario actualizado')) {
             this.Success()
+            console.log('actualizando datos')
             this.actualizarLocal()
           } else {
             this.$q.notify({
               color: 'negative',
-              message: this.$t('event_fail2'),
+              message: this.$t('update_error'),
               position: 'bottom',
               timeout: 2000,
               progress: true
@@ -361,9 +365,9 @@ export default {
     },
     actualizarLocal () {
       const usuario = {
-        name: this.name,
-        date: this.date,
-        gender: this.gender,
+        name: this.nombre,
+        date: this.fecha,
+        gender: this.genero,
         photoURL: this.new_url,
         displayName: this.usuario,
         email: this.email,
@@ -373,6 +377,7 @@ export default {
       this.$store.dispatch('store/anadirUsuario', usuario).then(() => {
         setTimeout(() => {
           // this.Success()
+          console.log('actualizando datos local')
           this.$router.push('events')
         }, 500)
       })
@@ -385,6 +390,14 @@ export default {
         firebaseAuth.signOut()
         this.$store.dispatch('store/borrarUsuario')
         this.$router.push('home')
+        // Borramos de la bbdd
+        axios({
+          method: 'delete',
+          url: 'https://canarygo.herokuapp.com/autorizar',
+          data: {
+            token: this.$store.state.store.token
+          }
+        })
       }
     },
     confirmar () {

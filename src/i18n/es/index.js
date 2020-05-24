@@ -77,6 +77,7 @@ export default {
   event_fail2: 'Error al crear el evento inténtalo de nuevo',
   updated: 'Usuario actualizado',
   update: 'Actualizar',
+  update_error: 'El usuario no puede ser actualizado ahora',
   male: 'Masculino',
   female: 'Femenino',
   event_fail_3: 'Inserta una foto',
