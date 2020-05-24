@@ -182,7 +182,7 @@ module.exports = function (app) {
           firebaseDb.collection('usuarios').doc(documento).delete()
             .then(function () {
               // Borramos img
-              const storageRef = firebaseStg.ref('avatares/usuarios/' + user.email)
+              const storageRef = firebaseStg.ref('avatares/usuarios/' + user.email + 'foto')
               storageRef.delete().then(function () {
                 console.log('Imagen del usuario borrada totalmente de la db')
               }).catch(function (error) {
