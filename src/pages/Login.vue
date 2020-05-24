@@ -161,7 +161,8 @@ export default {
                     gender: response.data.gender,
                     photoURL: firebaseAuth.currentUser.providerData[0].photoURL,
                     displayName: firebaseAuth.currentUser.providerData[0].displayName,
-                    email: firebaseAuth.currentUser.providerData[0].email
+                    email: firebaseAuth.currentUser.providerData[0].email,
+                    provider: firebaseAuth.currentUser.providerData[0].providerId
                   }
 
                   this.$store.dispatch('store/anadirUsuario', usuario).then(() => {

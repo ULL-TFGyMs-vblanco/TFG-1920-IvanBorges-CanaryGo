@@ -134,6 +134,28 @@
           :rules="[ val => val && val.length > 0 && val.indexOf('@') >= 0 || $t('email_fail')]"
         />
 
+        <q-input
+          ref="contrasena"
+          class="Contrasena"
+          filled
+          v-model="contrasena"
+          :type="isPwd ? 'password' : 'text'"
+          :label="$t('password')"
+          :hint="$t('password_hint')"
+          lazy-rules
+          :rules="[
+          val => val !== null && val !== '' || $t('password_fail'),
+        ]"
+        >
+          <template v-slot:append>
+            <q-icon
+              :name="isPwd ? 'visibility_off' : 'visibility'"
+              class="cursor-pointer"
+              @click="isPwd = !isPwd"
+            />
+          </template>
+        </q-input>
+
         <div>
           <q-btn
             class="Actualizar"
@@ -223,7 +245,9 @@ export default {
       fecha: this.$store.state.store.datosUsuario.date,
       isPwd: true,
       sesion: false,
-      url: ''
+      url: '',
+      contrasena: '',
+      provider: this.$store.state.store.datosUsuario.provider
     }
   },
 
@@ -369,6 +393,12 @@ export default {
   },
   updated () {
     this.borrar()
+  },
+  mounted () {
+    if (this.provider !== 'password') {
+      document.getElementsByClassName('Contrasena')[0].setAttribute('style', 'display:none')
+      document.getElementsByClassName('Email')[0].setAttribute('style', 'display:none')
+    }
   }
 }
 </script>

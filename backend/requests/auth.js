@@ -136,9 +136,9 @@ module.exports = function (app) {
       firebaseAuth.signOut()
       // Subir informacion
 
-      // ActualizarContrasena(req.body.contrasena, user)
+      ActualizarContrasena(req.body.contrasena, user)
       ActualizarInfoDb(req.body.nombre, req.body.fecha, req.body.genero, req.body.correo)
-      // ActualizarCorreo(req.body.correo, req.body.token)
+      ActualizarCorreo(req.body.correo, req.body.token)
       user.updateProfile({
         displayName: req.body.usuario
         // photoURL: req.body.foto
@@ -237,7 +237,7 @@ module.exports = function (app) {
     // const usuarioactivo = UsuarioLogueado()
     let documento
 
-    firebaseDb.collection('usuarios').where('Correo', '==', correo).get()
+    firebaseDb.collection('usuarios').where('correo', '==', correo).get()
       .then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
           documento = doc.id
@@ -247,9 +247,9 @@ module.exports = function (app) {
       })
       .then(function () {
         usuarios.doc(String(documento)).update({
-          Nombre: nombre,
-          Fecha: fecha,
-          Genero: genero
+          nombre: nombre,
+          fecha: fecha,
+          genero: genero
         }).then(function (docRef) {
           // Subir imagenes
           console.log('Info en db actualizada')

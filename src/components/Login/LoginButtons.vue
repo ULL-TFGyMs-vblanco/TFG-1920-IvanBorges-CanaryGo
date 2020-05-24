@@ -80,7 +80,8 @@ export default {
                   gender: firebaseAuth.currentUser.gender,
                   photoURL: firebaseAuth.currentUser.providerData[0].photoURL,
                   displayName: firebaseAuth.currentUser.providerData[0].displayName,
-                  email: firebaseAuth.currentUser.providerData[0].email
+                  email: firebaseAuth.currentUser.providerData[0].email,
+                  provider: firebaseAuth.currentUser.providerData[0].providerId
                 }
 
                 if (response.data.includes('Usuario correcto:')) {
