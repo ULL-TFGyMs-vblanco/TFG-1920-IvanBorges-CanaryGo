@@ -122,6 +122,7 @@ export default {
   error_facebook: 'Error logging in with Facebook',
   email_verification: 'To complete the registration verify your email',
   delete_verification: 'Are you sure you want to do this?',
+  updated: 'User updated',
   alert: 'Attention',
   location: 'Island',
   featured: 'Most featured',

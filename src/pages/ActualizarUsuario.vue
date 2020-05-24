@@ -237,16 +237,8 @@ export default {
 
       if (this.$refs.nombre.hasError || this.$refs.usuario.hasError || this.$refs.genero.hasError || this.$refs.email.hasError || this.$refs.fecha.hasError) {
         this.formHasError = true
-      } else if (this.sesion !== true) {
-        this.$q.notify({
-          color: 'negative',
-          message: this.$t('register_fail'),
-          position: 'bottom',
-          timeout: 2000,
-          progress: true
-        })
       } else {
-        this.Registrar()
+        this.actualizarUsuario()
       }
     },
 
@@ -298,14 +290,14 @@ export default {
       // }
       axios({
         method: 'post',
-        url: 'https://canarygo.herokuapp.com/usuarios',
+        url: 'https://canarygo.herokuapp.com/autorizar',
         data: {
           tipo: 'Actualizar perfil',
           nombre: this.nombre,
           usuario: this.usuario,
           genero: this.genero,
           fecha: this.fecha,
-          email: this.email,
+          correo: this.email,
           token: this.$store.state.store.token
         }
       })

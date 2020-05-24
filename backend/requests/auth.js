@@ -129,7 +129,7 @@ module.exports = function (app) {
   app.post('/autorizar', function (req, res) {
     console.log('Actualizar perfil')
     // res.send('Actualizar perfil')
-    // console.log('Funcionando', req.body)
+    console.log('Funcionando', req.body)
 
     firebaseAuth.signInWithCustomToken(req.body.token).then(() => {
       const user = firebaseAuth.currentUser
@@ -141,7 +141,7 @@ module.exports = function (app) {
       // ActualizarCorreo(req.body.correo, req.body.token)
       user.updateProfile({
         displayName: req.body.usuario,
-        photoURL: req.body.foto
+        // photoURL: req.body.foto
       }).then(function () {
         // Correcto
         console.log('Usuario actualizado')
