@@ -112,7 +112,8 @@ module.exports = function (app) {
                 const usuario = {
                   date: doc.data().fecha,
                   name: doc.data().nombre,
-                  gender: doc.data().genero
+                  gender: doc.data().genero,
+                  foto: doc.data().foto
                 }
                 res.send(usuario)
               }
@@ -182,7 +183,11 @@ module.exports = function (app) {
             .then(function () {
               // Borramos img
               const storageRef = firebaseStg.ref('avatares/usuarios/' + user.email)
-              storageRef.delete()
+              storageRef.delete().then(function () {
+                console.log('Imagen del usuario borrada totalmente de la db')
+              }).catch(function (error) {
+                console.error('Error al borrar imagen de la db ', error)
+              })
               // Hecho
               console.log('Usuario borrado de la db')
             }).catch(function (error) {
