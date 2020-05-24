@@ -13,7 +13,10 @@
               <q-card-section class="votos">
                 <div class="votos_box">
                   <q-btn
+                    class="Restar"
                     size="70%"
+                    :color="this.color_negativo"
+                    :disable="this.estado_disable"
                     flat
                     round
                     icon="thumb_down"
@@ -24,8 +27,11 @@
                     size="100%"
                     flat
                     style="pointer-events: none;"
-                  >{{votos}}</q-btn>
+                  >{{votos_evento}}</q-btn>
                   <q-btn
+                    class="Sumar"
+                    :color="this.color_positivo"
+                    :disable="this.estado_disable"
                     size="70%"
                     flat
                     round
@@ -98,13 +104,16 @@
 </template>
 
 <script>
-import axios from 'axios'
+// import axios from 'axios'
 
 export default {
   name: 'Evento',
   data () {
     return {
-
+      color_positivo: '',
+      color_negativo: '',
+      estado_disable: false,
+      votos_evento: this.votos
     }
   },
   props: {
@@ -154,21 +163,33 @@ export default {
   },
   methods: {
     Operacion (tipo) {
-      axios({
-        method: 'post',
-        url: 'https://canarygo.herokuapp.com/eventos',
-        data: {
-          tipo: tipo,
-          id: this.id,
-          token: this.$store.state.store.token
-        }
-      })
-        .then((response) => {
-          console.log('RESPUESTA DEL VOTO', response.data)
-          this.datos_evento = response.data
-        }, (error) => {
-          console.log('EL ERROR ES', error)
-        })
+      // axios({
+      //   method: 'post',
+      //   url: 'https://canarygo.herokuapp.com/eventos',
+      //   data: {
+      //     tipo: tipo,
+      //     id: this.id,
+      //     token: this.$store.state.store.token
+      //   }
+      // })
+      //   .then((response) => {
+      //     console.log('RESPUESTA DEL VOTO', response.data)
+      //     this.datos_evento = response.data
+      //   }, (error) => {
+      //     console.log('EL ERROR ES', error)
+      //   })
+
+      // Voto positivo
+      if (tipo === 'Sumar') {
+        this.estado_disable = true
+        this.color_positivo = 'blue'
+        this.votos_evento += 1
+      } else {
+        // Voto negativo
+        this.estado_disable = true
+        this.color_negativo = 'red'
+        this.votos_evento -= 1
+      }
     },
     Descripcion () {
       let ruta = unescape(this.nombre_evento)

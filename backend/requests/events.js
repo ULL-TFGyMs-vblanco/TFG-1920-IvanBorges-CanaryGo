@@ -118,6 +118,7 @@ module.exports = function (app) {
     res.send('Actualizar evento')
 
     firebaseAuth.signInWithCustomToken(req.body.token).then(() => {
+      const user = firebaseAuth.currentUser
       firebaseAuth.signOut()
 
       if (req.body.operacion === 'Restar') {
@@ -127,6 +128,7 @@ module.exports = function (app) {
       } else if (req.body.operacion === 'Evento') {
         EstablecerFoto(req.body.foto, req.body.id, res)
       }
+      EstablecerVoto(user.email, req.body.id, res)
     }).catch(function (error) {
       console.error('Error actualizando evento final', error)
       res.send('Error al actualizar Evento final')
@@ -168,6 +170,15 @@ module.exports = function (app) {
   function EstablecerFoto (url, id, res) {
     firebaseDb.collection('eventos').doc(id).update({
       foto: url
+    })
+  }
+
+  function EstablecerVoto (email, id, res) {
+    // firebaseDb.collection('eventos').doc(id).update({
+    //   foto: url
+    // })
+    firebaseDb.collection('eventos/' + id + '/votantes').add({
+      emails: email
     })
   }
 }
