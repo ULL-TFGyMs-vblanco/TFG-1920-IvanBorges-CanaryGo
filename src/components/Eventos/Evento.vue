@@ -104,7 +104,7 @@
 </template>
 
 <script>
-// import axios from 'axios'
+import axios from 'axios'
 
 export default {
   name: 'Evento',
@@ -163,21 +163,21 @@ export default {
   },
   methods: {
     Operacion (tipo) {
-      // axios({
-      //   method: 'post',
-      //   url: 'https://canarygo.herokuapp.com/eventos',
-      //   data: {
-      //     tipo: tipo,
-      //     id: this.id,
-      //     token: this.$store.state.store.token
-      //   }
-      // })
-      //   .then((response) => {
-      //     console.log('RESPUESTA DEL VOTO', response.data)
-      //     this.datos_evento = response.data
-      //   }, (error) => {
-      //     console.log('EL ERROR ES', error)
-      //   })
+      axios({
+        method: 'post',
+        url: 'https://canarygo.herokuapp.com/eventos',
+        data: {
+          tipo: tipo,
+          id: this.id,
+          token: this.$store.state.store.token
+        }
+      })
+        .then((response) => {
+          console.log('RESPUESTA DEL VOTO', response.data)
+          this.datos_evento = response.data
+        }, (error) => {
+          console.log('EL ERROR ES', error)
+        })
 
       // Voto positivo
       if (tipo === 'Sumar') {

@@ -3,7 +3,9 @@ module.exports = function (app) {
   global.XMLHttpRequest = require('xhr2')
   global.xhr = new XMLHttpRequest()
   // eslint-disable-next-line no-unused-vars
-  const { firebaseDb, firebaseStg, firebaseAuth } = require('../config/firebase')
+  const { firebaseAuth, firebaseDb, firebaseStg } = require('../config/firebase')
+  // const { admin } = require('../config/firebaseadmin')
+  // const { OAuth2Client } = require('google-auth-library')
 
   // /////////////////// EVENTOS ///////////////////////
   // Get
@@ -114,21 +116,22 @@ module.exports = function (app) {
 
   // Update
   app.post('/eventos', function (req, res) {
-    console.log('Actualizar evento')
-    res.send('Actualizar evento')
+    console.log('Actualizar evento', req.body)
+    // res.send('Actualizar evento')
 
     firebaseAuth.signInWithCustomToken(req.body.token).then(() => {
       const user = firebaseAuth.currentUser
       firebaseAuth.signOut()
 
       if (req.body.operacion === 'Restar') {
-        Restar(req.body.id, res)
-      } else if (req.body.operacion === 'Restar') {
+        EstablecerVoto(user.email, req.body.id, res)
+        // Restar(req.body.id, res)
+      } else if (req.body.operacion === 'Sumar') {
+        EstablecerVoto(user.email, req.body.id)
         Sumar(req.body.id, res)
       } else if (req.body.operacion === 'Evento') {
-        EstablecerFoto(req.body.foto, req.body.id, res)
+        EstablecerFoto(req.body.foto, req.body.id)
       }
-      EstablecerVoto(user.email, req.body.id, res)
     }).catch(function (error) {
       console.error('Error actualizando evento final', error)
       res.send('Error al actualizar Evento final')
@@ -150,7 +153,7 @@ module.exports = function (app) {
       firebaseDb.collection('eventos').doc(id).update({
         votos: votosactuales + 1
       }).then(function () {
-        res.send('Votos actualizados')
+        // res.send('Votos actualizados')
       })
     })
   }
@@ -162,21 +165,40 @@ module.exports = function (app) {
       firebaseDb.collection('eventos').doc(id).update({
         votos: votosactuales - 1
       }).then(function () {
-        res.send('Votos actualizados')
+        // res.send('Votos actualizados')
       })
     })
   }
 
-  function EstablecerFoto (url, id, res) {
+  function EstablecerFoto (url, id) {
     firebaseDb.collection('eventos').doc(id).update({
       foto: url
     })
   }
 
   function EstablecerVoto (email, id, res) {
-    // firebaseDb.collection('eventos').doc(id).update({
-    //   foto: url
+    console.log('Registrando voto', id)
+    // firebaseDb.collection('eventos').doc(String(id)).update({
+    //   emails: email,
+    //   votos: 0
+    // }).then(() => {
+    //   console.log('hecho')
+    //   res.send('LOL')
+    // }).catch((error) => {
+    //   console.log(error)
     // })
+    // firebaseDb.collection('eventos/' + id + '/votantes').add({
+    //   emails: email
+    // })
+
+    firebaseDb.collection('prueba').add({
+      emails: email
+    }).then(() => {
+      console.log('hecho')
+      res.send('LOL')
+    }).catch((error) => {
+      console.log(error)
+    })
     firebaseDb.collection('eventos/' + id + '/votantes').add({
       emails: email
     })
