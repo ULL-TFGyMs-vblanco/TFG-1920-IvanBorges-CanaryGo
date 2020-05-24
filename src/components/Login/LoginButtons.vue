@@ -34,9 +34,6 @@ export default {
   methods: {
     IniciarSesionGoogle () {
       const provider = firebaseAuthGoogle
-      provider.addScope('https://www.googleapis.com/auth/user.birthday.read')
-      provider.addScope('https://www.googleapis.com/auth/user.gender.read')
-      // provider.addScope('https://www.googleapis.com/auth/userinfo.profile')
 
       firebaseAuth.useDeviceLanguage()
       provider.setCustomParameters({
@@ -119,15 +116,16 @@ export default {
       })
 
       let errorcode = false
+
       firebaseAuth.signInWithPopup(provider)
         .catch(function (error) {
           console.log(error)
           errorcode = true
         })
         .then(function (result) {
-          // Facebook Access Token
+          // Google Access Token
           const token = result.credential.idToken
-          console.log('EL ROLLO -> ', result.credential)
+
           return token
         })
         .then((token) => {
@@ -146,23 +144,40 @@ export default {
             })
               .then((response) => {
                 console.log('RESPUESTA DEL SERVER', response)
+                console.log('USUARIO FACEBOOK', firebaseAuth.currentUser)
+
+                let foto
+                if (response.data.foto === undefined) {
+                  foto = firebaseAuth.currentUser.providerData[0].photoURL
+                } else {
+                  foto = response.data.foto
+                }
+
+                const usuario = {
+                  name: firebaseAuth.currentUser.name,
+                  date: firebaseAuth.currentUser.date,
+                  gender: firebaseAuth.currentUser.gender,
+                  photoURL: foto,
+                  displayName: firebaseAuth.currentUser.providerData[0].displayName,
+                  email: firebaseAuth.currentUser.providerData[0].email,
+                  provider: firebaseAuth.currentUser.providerData[0].providerId
+                }
 
                 if (response.data.includes('Usuario correcto:')) {
                   const token = response.data.split(':')[1]
-                  this.$store.dispatch('store/anadirUsuario', firebaseAuth.currentUser.providerData[0]).then(() => {
-                    this.$store.dispatch('store/anadirToken', firebaseAuth.currentUser.getIdToken()).then(() => {
+                  this.$store.dispatch('store/anadirUsuario', usuario).then(() => {
+                    this.$store.dispatch('store/anadirToken', token).then(() => {
                       setTimeout(() => {
-                        this.$store.dispatch('store/anadirToken', token)
                         this.Success()
                         this.$router.push('events')
                       }, 500)
                     })
                   })
                 } else {
-                  this.Fail(this.$t('error_facebook'))
+                  this.Fail(this.$t('error_google'))
                 }
               }, (error) => {
-                console.log(error)
+                console.log('EL ERROR ES', error)
               })
           }
         })
