@@ -137,7 +137,7 @@ module.exports = function (app) {
       // Subir informacion
 
       ActualizarContrasena(req.body.contrasena, user)
-      ActualizarInfoDb(req.body.nombre, req.body.fecha, req.body.genero, req.body.correo)
+      ActualizarInfoDb(req.body.nombre, req.body.fecha, req.body.genero, req.body.correo, req.body.foto)
       ActualizarCorreo(req.body.correo, req.body.token)
       user.updateProfile({
         displayName: req.body.usuario
@@ -232,7 +232,7 @@ module.exports = function (app) {
     })
   }
 
-  function ActualizarInfoDb (nombre, fecha, genero, correo) {
+  function ActualizarInfoDb (nombre, fecha, genero, correo, foto) {
     const usuarios = firebaseDb.collection('usuarios')
     // const usuarioactivo = UsuarioLogueado()
     let documento
@@ -249,7 +249,8 @@ module.exports = function (app) {
         usuarios.doc(String(documento)).update({
           nombre: nombre,
           fecha: fecha,
-          genero: genero
+          genero: genero,
+          foto: foto
         }).then(function (docRef) {
           // Subir imagenes
           console.log('Info en db actualizada')

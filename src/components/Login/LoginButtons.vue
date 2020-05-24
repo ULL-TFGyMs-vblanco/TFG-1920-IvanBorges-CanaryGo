@@ -74,11 +74,18 @@ export default {
                 console.log('RESPUESTA DEL SERVER', response)
                 console.log('USUARIO GOOGLE', firebaseAuth.currentUser)
 
+                let foto
+                if (response.data.foto === undefined) {
+                  foto = firebaseAuth.currentUser.providerData[0].photoURL
+                } else {
+                  foto = response.data.foto
+                }
+
                 const usuario = {
                   name: firebaseAuth.currentUser.name,
                   date: firebaseAuth.currentUser.date,
                   gender: firebaseAuth.currentUser.gender,
-                  photoURL: firebaseAuth.currentUser.providerData[0].photoURL,
+                  photoURL: foto,
                   displayName: firebaseAuth.currentUser.providerData[0].displayName,
                   email: firebaseAuth.currentUser.providerData[0].email,
                   provider: firebaseAuth.currentUser.providerData[0].providerId

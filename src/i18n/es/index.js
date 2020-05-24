@@ -75,6 +75,7 @@ export default {
   event_sucess: 'Evento agregado correctamente',
   event_fail: 'Debe confirmar la veracidad de la información',
   event_fail2: 'Error al crear el evento inténtalo de nuevo',
+  updated: 'Usuario actualizado',
   update: 'Actualizar',
   male: 'Masculino',
   female: 'Femenino',

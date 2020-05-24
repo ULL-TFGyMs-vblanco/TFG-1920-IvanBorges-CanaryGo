@@ -246,6 +246,7 @@ export default {
       isPwd: true,
       sesion: false,
       url: '',
+      new_url: '',
       contrasena: '',
       provider: this.$store.state.store.datosUsuario.provider
     }
@@ -258,11 +259,12 @@ export default {
       this.$refs.email.validate()
       this.$refs.fecha.validate()
       this.$refs.genero.validate()
+      this.$refs.contrasena.validate()
 
-      if (this.$refs.nombre.hasError || this.$refs.usuario.hasError || this.$refs.genero.hasError || this.$refs.email.hasError || this.$refs.fecha.hasError) {
+      if (this.$refs.nombre.hasError || this.$refs.usuario.hasError || this.$refs.genero.hasError || this.$refs.email.hasError || this.$refs.fecha.hasError | this.$refs.contrasena.hasError) {
         this.formHasError = true
       } else {
-        this.actualizarUsuario()
+        this.subirImagen()
       }
     },
 
@@ -278,13 +280,14 @@ export default {
       this.$refs.fecha.resetValidation()
       this.$refs.email.resetValidation()
       this.$refs.genero.resetValidation()
+      this.$refs.contrasena.resetValidation()
     },
 
     Success () {
       this.$q.notify({
         icon: 'done',
         color: 'positive',
-        message: this.$t('register_sucess'),
+        message: this.$t('updated'),
         position: 'bottom',
         timeout: 1000,
         progress: true
@@ -299,19 +302,30 @@ export default {
         progress: true
       })
     },
-    actualizarUsuario () {
-      // Subir informacion
-      // const file = document.getElementById('foto').files[0]
+    subirImagen () {
+      const image = document.getElementById('foto').files[0]
 
-      // if (file === undefined) {
-      //   this.$q.notify({
-      //     color: 'negative',
-      //     message: this.$t('event_fail_3'),
-      //     position: 'bottom',
-      //     timeout: 2000,
-      //     progress: true
-      //   })
-      // }
+      if (image === undefined) {
+        this.new_url = this.photoURL
+        this.actualizarUsuario()
+      } else {
+        const storageRef = firebaseStg.ref('avatares/usuarios' + this.email)
+        const thisRef = storageRef.child('foto')
+
+        thisRef.put(image)
+          .then(function (snapshot) {
+            console.log('actualizando foto')
+            thisRef.getDownloadURL().then(function (url) {
+              this.new_url = url
+            })
+            this.actualizarUsuario()
+          })
+          .catch(function (error) {
+            console.log(error)
+          })
+      }
+    },
+    actualizarUsuario () {
       axios({
         method: 'post',
         url: 'https://canarygo.herokuapp.com/autorizar',
@@ -322,24 +336,16 @@ export default {
           genero: this.genero,
           fecha: this.fecha,
           correo: this.email,
+          contrasena: this.contrasena,
+          foto: this.new_url,
           token: this.$store.state.store.token
         }
       })
         .then((response) => {
           // console.log('RESPUESTA DEL SERVER', response.data)
           if (response.data.includes('Usuario actualizado')) {
-            this.$q.notify({
-              icon: 'done',
-              color: 'positive',
-              message: this.$t('event_sucess'),
-              position: 'bottom',
-              timeout: 1000,
-              progress: true
-            })
-            // var id = response.data.split(':')
-            this.$router.push('events')
-            // this.subirImagen(id[1], file)
-            // this.$router.push('events')
+            this.Success()
+            this.actualizarLocal()
           } else {
             this.$q.notify({
               color: 'negative',
@@ -353,29 +359,23 @@ export default {
           console.log('EL ERROR ES', error)
         })
     },
-    subirImagen (id, image) {
-      const storageRef = firebaseStg.ref('eventos/' + id)
-      const thisRef = storageRef.child('foto')
+    actualizarLocal () {
+      const usuario = {
+        name: this.name,
+        date: this.date,
+        gender: this.gender,
+        photoURL: this.new_url,
+        displayName: this.usuario,
+        email: this.email,
+        provider: this.$store.state.store.datosUsuario.provider
+      }
 
-      thisRef.put(image)
-        .then(function (snapshot) {
-          console.log('actualizando foto')
-          thisRef.getDownloadURL().then(function (url) {
-            // console.log('Datos fotito', id + ': ', url)
-            axios({
-              method: 'post',
-              url: 'https://canarygo.herokuapp.com/eventos',
-              data: {
-                operacion: 'Evento',
-                foto: url,
-                id: id
-              }
-            })
-          })
-        })
-        .catch(function (error) {
-          console.log(error)
-        })
+      this.$store.dispatch('store/anadirUsuario', usuario).then(() => {
+        setTimeout(() => {
+          // this.Success()
+          this.$router.push('events')
+        }, 500)
+      })
     },
     borrarUsuario () {
       this.alert = true
@@ -393,6 +393,9 @@ export default {
   },
   updated () {
     this.borrar()
+    if (document.getElementById('foto').files[0] !== undefined) {
+      document.getElementsByClassName('q-pa-md q-gutter-md imagen_default')[0].setAttribute('style', 'display: none;')
+    }
   },
   mounted () {
     if (this.provider !== 'password') {

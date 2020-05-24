@@ -155,11 +155,18 @@ export default {
               firebaseAuth.signInWithCustomToken(token).then(() => {
                 // Guardamos datos persistentes en state
                 this.DatosExtraUsuario(token, firebaseAuth.currentUser.providerData[0]).then((response) => {
+                  let foto
+                  if (response.data.foto === undefined) {
+                    foto = firebaseAuth.currentUser.providerData[0].photoURL
+                  } else {
+                    foto = response.data.foto
+                  }
+
                   const usuario = {
                     name: response.data.name,
                     date: response.data.date,
                     gender: response.data.gender,
-                    photoURL: firebaseAuth.currentUser.providerData[0].photoURL,
+                    photoURL: foto,
                     displayName: firebaseAuth.currentUser.providerData[0].displayName,
                     email: firebaseAuth.currentUser.providerData[0].email,
                     provider: firebaseAuth.currentUser.providerData[0].providerId
