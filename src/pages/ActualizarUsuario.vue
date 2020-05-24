@@ -18,14 +18,37 @@
         class="q-gutter-md"
       >
 
-        <!-- Selector -->
-        <Selectorarchivos
-          class="selectorarchivos"
-          v-bind:anchura='400'
-          v-bind:altura='400'
-          v-bind:url="this.photoURL"
-        />
-        <br />
+        <div class="q-pa-md q-gutter-md imagen_default">
+          <q-chip
+            outline
+            size="20px"
+            color="primary"
+            text-color="white"
+            icon-right="person"
+          >
+            {{$t('edit_profile')}}
+          </q-chip>
+
+          <q-space />
+          <q-space />
+          <!-- using v-if so you can see the effect -->
+          <q-img
+            v-if="url !== null"
+            :src="this.photoURL"
+            :ratio="1"
+            class="q-mt-md"
+            style="width: 350px"
+            placeholder-src=""
+          />
+        </div>
+
+        <div class="Selector">
+          <Selectorarchivos
+            class="selectorarchivos"
+            v-bind:anchura='400'
+            v-bind:altura='400'
+          />
+        </div>
 
         <!-- <br />
         <br />-->
@@ -127,6 +150,50 @@
           />
         </div>
       </form>
+      <div class="borrarperfil">
+        <br />
+        <br />
+        <q-chip
+          outline
+          clickable
+          size="20px"
+          color="red"
+          text-color="white"
+          icon-right="person"
+          @click="borrarUsuario"
+        >
+          {{$t('delete_user')}}
+        </q-chip>
+
+        <!-- CONFIRMACION-->
+        <q-dialog v-model="alert">
+          <q-card>
+            <q-card-section>
+              <div class="text-h6">{{$t('alert')}}</div>
+            </q-card-section>
+
+            <q-card-section class="q-pt-none">{{$t('delete_verification')}}</q-card-section>
+
+            <q-card-actions align="right">
+              <q-btn
+                flat
+                label="NO"
+                color="primary"
+                v-close-popup
+              />
+              <q-btn
+                flat
+                label="OK"
+                color="primary"
+                v-close-popup
+                @click="confirmar"
+              />
+            </q-card-actions>
+          </q-card>
+        </q-dialog>
+        <!-- CONFIRMACION -->
+
+      </div>
     </div>
   </div>
 </template>
@@ -145,16 +212,18 @@ export default {
   },
   data () {
     return {
+      alert: false,
+      confirm: false,
       nombre: this.$store.state.store.datosUsuario.name,
       usuario: this.$store.state.store.datosUsuario.displayName,
-      photoURL: '',
-      // photoURL: String(this.$store.state.store.datosUsuario.photoURL),
+      photoURL: String(this.$store.state.store.datosUsuario.photoURL),
       genero: this.$store.state.store.datosUsuario.gender,
       opciones_genero: [this.$t('male'), this.$t('female')],
       email: this.$store.state.store.datosUsuario.email,
       fecha: this.$store.state.store.datosUsuario.date,
       isPwd: true,
-      sesion: false
+      sesion: false,
+      url: ''
     }
   },
 
@@ -194,28 +263,6 @@ export default {
       this.$refs.email.resetValidation()
       this.$refs.genero.resetValidation()
     },
-    Registrar () {
-      axios({
-        method: 'put',
-        url: 'https://canarygo.herokuapp.com/autorizar',
-        data: {
-          tipo: 'Obtener datos',
-          correo: this.$store.state.store.datosUsuario.email
-        }
-      })
-        .then((response) => {
-          console.log('RESPUESTA DEL SERVER', response)
-
-          if (response.data === 'Error al crear usuario') {
-            this.Fail(this.$t('register_fail_2'))
-          } else if (response.data.includes('Usuario creado')) {
-            this.Success()
-            this.alert = true
-          }
-        }, (error) => {
-          console.log('EL ERROR ES', error)
-        })
-    },
 
     Success () {
       this.$q.notify({
@@ -236,28 +283,100 @@ export default {
         progress: true
       })
     },
-    Imagen () {
+    actualizarUsuario () {
+      // Subir informacion
+      // const file = document.getElementById('foto').files[0]
+
+      // if (file === undefined) {
+      //   this.$q.notify({
+      //     color: 'negative',
+      //     message: this.$t('event_fail_3'),
+      //     position: 'bottom',
+      //     timeout: 2000,
+      //     progress: true
+      //   })
+      // }
       axios({
-        url: 'https://firebasestorage.googleapis.com/v0/b/canarygo-f725d.appspot.com/o/eventos%2FHEkt8lSEVZfXCyYmVvkh%2Ffoto?alt=media&token=149fd53d-9db5-4cd2-b4ac-a0d50efe6db1',
-        method: 'GET',
-        responseType: 'blob'
-      }).then((response) => {
-        // var fileURL = window.URL.createObjectURL(new Blob([response.data]))
-        var fileLink = document.createElement('a')
-
-        // fileLink.href = fileURL
-        // fileLink.setAttribute('download', 'file.png')
-        // document.body.appendChild(fileLink)
-
-        this.photoURL = response.data
-
-        fileLink.click()
+        method: 'post',
+        url: 'https://canarygo.herokuapp.com/usuarios',
+        data: {
+          tipo: 'Actualizar perfil',
+          nombre: this.nombre,
+          usuario: this.usuario,
+          genero: this.genero,
+          fecha: this.fecha,
+          email: this.email,
+          token: this.$store.state.store.token
+        }
       })
+        .then((response) => {
+          // console.log('RESPUESTA DEL SERVER', response.data)
+          if (response.data.includes('Usuario actualizado')) {
+            this.$q.notify({
+              icon: 'done',
+              color: 'positive',
+              message: this.$t('event_sucess'),
+              position: 'bottom',
+              timeout: 1000,
+              progress: true
+            })
+            // var id = response.data.split(':')
+            this.$router.push('events')
+            // this.subirImagen(id[1], file)
+            // this.$router.push('events')
+          } else {
+            this.$q.notify({
+              color: 'negative',
+              message: this.$t('event_fail2'),
+              position: 'bottom',
+              timeout: 2000,
+              progress: true
+            })
+          }
+        }, (error) => {
+          console.log('EL ERROR ES', error)
+        })
+    },
+    subirImagen (id, image) {
+      const storageRef = firebaseStg.ref('eventos/' + id)
+      const thisRef = storageRef.child('foto')
+
+      thisRef.put(image)
+        .then(function (snapshot) {
+          console.log('actualizando foto')
+          thisRef.getDownloadURL().then(function (url) {
+            // console.log('Datos fotito', id + ': ', url)
+            axios({
+              method: 'post',
+              url: 'https://canarygo.herokuapp.com/eventos',
+              data: {
+                operacion: 'Evento',
+                foto: url,
+                id: id
+              }
+            })
+          })
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
+    },
+    borrarUsuario () {
+      this.alert = true
+    },
+    borrar () {
+      if (this.confirm) {
+        firebaseAuth.signOut()
+        this.$store.dispatch('store/borrarUsuario')
+        this.$router.push('home')
+      }
+    },
+    confirmar () {
+      this.confirm = true
     }
   },
-  mounted () {
-    document.getElementsByClassName('picture-preview')[0].setAttribute('prefill', 'https://ichef.bbci.co.uk/news/976/cpsprodpb/F403/production/_109476426_jheison3.png')
-    this.Imagen()
+  updated () {
+    this.borrar()
   }
 }
 </script>

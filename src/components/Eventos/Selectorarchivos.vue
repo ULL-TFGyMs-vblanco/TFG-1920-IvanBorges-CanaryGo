@@ -3,6 +3,7 @@
     <picture-input
       ref="foto"
       id="foto"
+      :crop="false"
       :width="this.anchura"
       :height="this.altura"
       margin="16"
@@ -10,7 +11,7 @@
       size="5"
       radius="5"
       button-class="primary"
-      :prefill="this.url"
+      :zIndex="this.index"
       :key="$i18n.locale"
       :custom-strings="{
         upload: this.$t('done'),
@@ -30,7 +31,8 @@ export default {
   name: 'Selectorarchivos',
   data () {
     return {
-      info1: this.$t('select')
+      info1: this.$t('select'),
+      index: 1
     }
   },
   props: {
@@ -41,10 +43,6 @@ export default {
     altura: {
       // type: Number,
       // required: true
-    },
-    url: {
-      // type: Number,
-      // required: true
     }
   },
   components: {
@@ -52,7 +50,6 @@ export default {
   },
   methods: {
     onChange (image) {
-      document.getElementsByClassName('picture-preview')[0].setAttribute('style', 'height: 578px; z-index: 0; background: none;')
       console.log('Nuevo archivo')
       if (image) {
         console.log('Archivo leído.')
