@@ -256,10 +256,13 @@ export default {
     onSubmit () {
       this.$refs.nombre.validate()
       this.$refs.usuario.validate()
-      this.$refs.email.validate()
-      this.$refs.fecha.validate()
       this.$refs.genero.validate()
-      this.$refs.contrasena.validate()
+      this.$refs.fecha.validate()
+
+      if (this.provider === 'password') {
+        this.$refs.email.validate()
+        this.$refs.contrasena.validate()
+      }
 
       if (this.$refs.nombre.hasError || this.$refs.usuario.hasError || this.$refs.genero.hasError || this.$refs.email.hasError || this.$refs.fecha.hasError | this.$refs.contrasena.hasError) {
         this.formHasError = true
@@ -278,9 +281,12 @@ export default {
       this.$refs.nombre.resetValidation()
       this.$refs.usuario.resetValidation()
       this.$refs.fecha.resetValidation()
-      this.$refs.email.resetValidation()
       this.$refs.genero.resetValidation()
-      this.$refs.contrasena.resetValidation()
+
+      if (this.provider === 'password') {
+        this.$refs.contrasena.resetValidation()
+        this.$refs.email.resetValidation()
+      }
     },
 
     Success () {
