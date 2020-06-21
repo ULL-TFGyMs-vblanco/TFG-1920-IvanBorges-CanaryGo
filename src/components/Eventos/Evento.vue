@@ -196,7 +196,13 @@ export default {
       ruta = ruta.replace(/ /g, '-')
       ruta = ruta.toLowerCase()
       ruta = ruta.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
-      this.$router.push('events/' + ruta)
+      this.$router.push(ruta)
+      // this.$router.push({
+      //   name: 'evento_detallado',
+      //   params: { foto: this.foto, nombre_evento: this.nombre_evento, localizacion: this.localizacion, precio: this.precio, fecha_inicio: this.fecha_inicio, votos: this.votos, comentarios: this.comentarios, usuario: this.usuario, foto_usuario: this.foto_usuario, isla: this.isla, id: this.id }
+      // })
+
+      // this.$router.push('ruta')
     }
 
   }

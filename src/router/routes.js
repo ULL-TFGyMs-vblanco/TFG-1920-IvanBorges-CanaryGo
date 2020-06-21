@@ -9,10 +9,16 @@ const routes = [
       { path: '/home', component: () => import('pages/Index.vue') },
       { path: '/login', component: () => import('pages/Login.vue') },
       { path: '/signup', component: () => import('pages/SignUp.vue') },
-      { path: '/events', component: () => import('pages/Eventos.vue') },
       { path: '/new', component: () => import('pages/NuevoEvento.vue') },
       { path: '/update', component: () => import('pages/ActualizarUsuario.vue') },
-      { path: '/individual', component: () => import('components/Eventos/Descripcionevento.vue') }
+      {
+        path: '/events',
+        component: () => import('pages/Eventos.vue'),
+        children: [
+          { path: ':id', component: () => import('components/Eventos/Descripcionevento.vue') }
+        ]
+      },
+      { path: ':id', name: 'evento_detallado', component: () => import('components/Eventos/Descripcionevento.vue'), prop: true }
 
     ]
   }
