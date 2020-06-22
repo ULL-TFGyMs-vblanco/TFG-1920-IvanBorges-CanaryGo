@@ -158,5 +158,6 @@ export default {
   places: 'Viaje y lugares',
   objects: 'Objetos',
   symbols: 'Símbolos',
-  flags: 'Banderas'
+  flags: 'Banderas',
+  no_comments: 'No hay ningun comentario publicado aún.'
 }

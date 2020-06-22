@@ -107,6 +107,42 @@ module.exports = function (app) {
             console.error('Error añadiendo evento ', error)
             res.send('Error al crear Evento')
           })
+        // OBTENER EVENTO
+      } else if (req.body.tipo === 'Buscar') {
+        // Filtro para buscar por nombre
+        var bbdd = firebaseDb.collection('eventos')
+        consulta = bbdd.where('nombre_evento', '==', req.body.nombre)
+
+        /// ///////////
+        // Leer bbdd
+        const datosevento = []
+        consulta.get()
+          .then((querySnapshot) => {
+            return querySnapshot.forEach((doc) => {
+              // Leemos los datos
+              const evento = {
+                foto: doc.data().foto,
+                nombre_evento: doc.data().nombre_evento,
+                localizacion: doc.data().localizacion,
+                precio: doc.data().precio,
+                fecha_inicio: doc.data().fecha_inicio,
+                votos: doc.data().votos,
+                comentarios: doc.data().comentarios,
+                usuario: doc.data().usuario,
+                isla: doc.data().isla,
+                id: doc.id,
+                foto_usuario: doc.data().foto_usuario
+              }
+
+              datosevento.push(evento)
+              // })
+            })
+          })
+          .then(() => {
+            res.send(datosevento)
+          })
+
+        // //
       }
     }).catch(function (error) {
       console.error('Error verificando usuario', error)

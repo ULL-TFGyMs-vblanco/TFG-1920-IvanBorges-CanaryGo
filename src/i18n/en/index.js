@@ -158,5 +158,6 @@ export default {
   objects: 'Objects',
   symbols: 'Symbols',
   flags: 'Flags',
-  comment_sucess: 'Comment added successfully'
+  comment_sucess: 'Comment added successfully',
+  no_comments: 'There are no comments posted yet.'
 }

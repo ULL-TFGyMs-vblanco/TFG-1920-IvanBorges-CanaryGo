@@ -1,11 +1,11 @@
 <template>
   <div>
     <q-card class="my-card">
-      <q-card-section class="fecha text-right">{{ $route.params.fecha_inicio }}</q-card-section>
+      <q-card-section class="fecha text-right">{{ this.datos_evento.fecha_inicio }}</q-card-section>
       <q-card-section horizontal>
         <q-img
           class="col-5"
-          :src="$route.params.foto"
+          :src="this.datos_evento.foto"
         />
         <q-card-section vertical>
           <q-card-section horizontal>
@@ -24,7 +24,7 @@
                     size="100%"
                     flat
                     style="pointer-events: none;"
-                  >{{$route.params.votos}}</q-btn>
+                  >{{this.datos_evento.votos}}</q-btn>
                   <q-btn
                     size="70%"
                     flat
@@ -36,9 +36,9 @@
               </q-card-section>
             </div>
           </q-card-section>
-          <q-card-section class="titulo text-justify">{{ $route.params.nombre_evento }}</q-card-section>
-          <q-card-section class="ubicacion text-justify">{{ $route.params.isla }}</q-card-section>
-          <q-card-section class="precio text-justify">{{ $route.params.precio }} €</q-card-section>
+          <q-card-section class="titulo text-justify">{{ this.datos_evento.nombre_evento }}</q-card-section>
+          <q-card-section class="ubicacion text-justify">{{ this.datos_evento.isla }}</q-card-section>
+          <q-card-section class="precio text-justify">{{ this.datos_evento.precio }} €</q-card-section>
         </q-card-section>
         <!-- <div class="comentarios_box">
           {{comentarios}}
@@ -55,12 +55,12 @@
               round
             >
               <q-avatar size="200%">
-                <img :src="$route.params.foto_usuario" />
+                <img :src="this.datos_evento.foto_usuario" />
               </q-avatar>
               <q-btn
                 size="70%"
                 flat
-              >{{$route.params.usuario}}</q-btn>
+              >{{this.datos_evento.usuario}}</q-btn>
             </q-btn>
           </div>
           <div class="col-3 col-sm-3 text-center calendario">
@@ -81,7 +81,7 @@
               <q-btn
                 size="70%"
                 flat
-              >{{$route.params.comentarios}}</q-btn>
+              >{{this.datos_evento.comentarios}}</q-btn>
             </q-btn>
           </div>
           <div class="col-3 col-sm-3 text-center evento">
@@ -128,29 +128,19 @@
             <!--  -->
           </div>
           <!-- // Fin Sección añadir comentarios -->
-          <q-chat-message label="Domingo, 14" />
 
           <q-chat-message
-            name="me"
-            avatar="https://cdn.quasar.dev/img/avatar4.jpg"
-            :text="['Eso ya depende de cada uno y lo que quiera invertir, aunque con esas tareas no lo vas a notar demasiado 😁, por cierto, no entiendo mucho de apple (el ultimo mio fue mbp mid 2011) pero verifica que son compatibles... ']"
-            stamp="7 minutes ago"
-            text-color="black"
-            bg-color="amber"
-          />
-          <q-chat-message
-            name="Jane"
-            avatar="https://cdn.quasar.dev/img/avatar3.jpg"
-            :text="['vale la pena pagar esos 30€ de mas para un usuario medio, que solo utiliza un macbook pro 13 early 2015 para Ofimatica, ver videos, y hacer retoques en photoshop?, tengo pensado cambiarle el ssd que trae de 128gb por uno de mayor capacidad']"
-            stamp="4 minutes ago"
+            :label="$t('no_comments')"
+            v-show="this.sin_comentarios"
           />
 
-          <q-chat-message
-            name="Mark"
-            avatar="https://cdn.quasar.dev/img/avatar1.jpg"
-            :text="['Esos 30€ quizas a la larga te van a hacer ahorrar bastante tiempo y creo que lo agradecerias. No es mucho dinero sinceramente.']"
-            stamp="3 minutes ago"
-            sent
+          <!-- <q-chat-message label="Domingo, 14" /> -->
+
+          <Comentario
+            class="comentarios"
+            v-for="comentario in comentarios"
+            :key="comentario.nombre"
+            v-bind="comentario"
           />
 
         </div>
@@ -162,24 +152,44 @@
 <script>
 import axios from 'axios'
 import EditorTexto from '../Eventos/EditorTexto'
+import Comentario from '../Eventos/Comentario'
 
 export default {
   name: 'Descripcionevento',
-  components: { EditorTexto },
+  components: { EditorTexto, Comentario },
   data () {
     return {
-      // foto: '',
-      // nombre_evento: '',
-      // localizacion: '',
-      // precio: '',
-      // fecha_inicio: '',
-      // votos: '',
-      // comentarios: '',
-      // usuario: '',
-      // foto_usuario: '',
-      // isla: '',
-      // id: ''
+      comentarios: [
+        {
+          nombre: 'Mark',
+          avatar: 'https://image.freepik.com/vector-gratis/perfil-empresario-dibujos-animados_18591-58479.jpg',
+          texto: 'Hola, buenas',
+          hora: '12:33'
+        },
+        {
+          nombre: 'IvanGamerCode',
+          avatar: 'https://image.freepik.com/vector-gratis/perfil-empresario-dibujos-animados_18591-58479.jpg',
+          texto: 'Hola que tal?',
+          hora: '12:34'
+        }
+      ],
+      sin_comentarios: false,
+      datos_evento: [],
+      foto: '',
+      nombre_evento: '',
+      localizacion: '',
+      precio: '',
+      fecha_inicio: '',
+      votos: '',
+      usuario: '',
+      foto_usuario: '',
+      isla: '',
+      id: ''
     }
+  },
+  mounted () {
+    console.log('MOUNTED LEIDO')
+    this.Mostrar()
   },
   methods: {
     CambiarEmoji () {
@@ -188,6 +198,7 @@ export default {
     CopiarEmoji (emoji) {
       this.editor = emoji
     },
+    // Votos
     Operacion (tipo) {
       axios({
         method: 'post',
@@ -216,6 +227,25 @@ export default {
         this.color_negativo = 'red'
         this.votos_evento -= 1
       }
+    },
+    // Cargar datos
+    Mostrar () {
+      console.log('CARGANDO EVENTO')
+      axios({
+        method: 'put',
+        url: 'https://canarygo.herokuapp.com/eventos',
+        data: {
+          tipo: 'Buscar',
+          nombre: 'Actividades acuáticas en las Teresitas Post-Cuarentena',
+          token: String(this.$store.state.store.token)
+        }
+      })
+        .then((response) => {
+          console.log('RESPUESTA DEL SERVER EVENTOS', response.data)
+          this.datos_evento = response.data
+        }, (error) => {
+          console.log('EL ERROR ES', error)
+        })
     }
   }
 }
