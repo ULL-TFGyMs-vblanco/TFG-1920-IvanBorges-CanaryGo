@@ -242,7 +242,8 @@ module.exports = function (app) {
         votos: votosactuales + cantidad
       }).then(function () {
         admin.firestore().collection('eventos/' + id + '/votantes').add({
-          email: email
+          email: email,
+          tipo: cantidad
         }).then(function () {
           console.log('Votos actualizados')
           res.send('Votos actualizados')
