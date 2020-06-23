@@ -143,6 +143,7 @@ module.exports = function (app) {
                 foto_usuario: doc.data().foto_usuario,
                 navegador: doc.data().navegador,
                 descripcion: doc.data().descripcion,
+                descuento: doc.data().descuento,
                 comentarios_texto: '',
                 votantes: ''
               }

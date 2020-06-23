@@ -55,7 +55,10 @@
       <q-card-section class="titulo text-justify">{{ $t('description') }}</q-card-section>
       <q-card-section class="descripcion text-justify">{{ descripcion }}</q-card-section>
       <q-card-section class="titulo text-justify">{{ $t('price_discount') }}</q-card-section>
-      <q-card-section class="descripcion text-justify">{{ $t('not_applicable') }}</q-card-section>
+      <q-card-section
+        v-show="this.mostrar_codigo"
+        class="descripcion text-justify"
+      >{{ $t('not_applicable') }}</q-card-section>
       <q-card-section class="titulo text-justify">{{ $t('duration') }}</q-card-section>
       <q-card-section class="descripcion text-justify">{{ this.fecha_inicio + ' - ' + this.fecha_fin }}</q-card-section>
       <!--  -->
@@ -209,6 +212,8 @@ export default {
       id: '',
       navegador: '',
       descripcion: '',
+      descuento: '',
+      mostrar_codigo: false,
       votantes: [],
       // Votos
       votar: false,
@@ -296,6 +301,13 @@ export default {
           this.votantes = datos.votantes
           this.descripcion = datos.descripcion
           this.fecha_fin = datos.fecha_fin
+          this.descuento = datos.descuento
+
+          // Codigo descuento
+          if (datos.descuento === '') {
+            this.mostrar_codigo = true
+          }
+
           this.ComprobarVotos()
           this.CargarMapa()
         }, (error) => {
