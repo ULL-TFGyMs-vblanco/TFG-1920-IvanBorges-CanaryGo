@@ -4,7 +4,7 @@ module.exports = function (app) {
   global.xhr = new XMLHttpRequest()
   // eslint-disable-next-line no-unused-vars
   const { firebaseAuth, firebaseDb, firebaseStg } = require('../config/firebase')
-  // const { admin } = require('../config/firebaseadmin')
+  const { admin } = require('../config/firebaseadmin')
   // const { OAuth2Client } = require('google-auth-library')
 
   // /////////////////// EVENTOS ///////////////////////
@@ -102,6 +102,7 @@ module.exports = function (app) {
           foto: ''
         })
           .then(function (docRef) {
+            admin.firestore().collection('eventos/' + docRef.id + '/votantes').add({})
             res.send('Evento añadido:' + docRef.id)
             console.log('Evento añadido')
           })
@@ -117,6 +118,7 @@ module.exports = function (app) {
 
         // Datos fijos
         let evento = []
+        const votantes = []
         const comentarios_ = []
         const datosevento = []
         /// ///////////
@@ -139,7 +141,8 @@ module.exports = function (app) {
                 id: doc.id,
                 foto_usuario: doc.data().foto_usuario,
                 navegador: doc.data().navegador,
-                comentarios_texto: ''
+                comentarios_texto: '',
+                votantes: ''
               }
 
               // datosevento.push(evento)
@@ -160,9 +163,26 @@ module.exports = function (app) {
                 })
               })
               .then(() => {
-                evento.comentarios_texto = comentarios_
-                datosevento.push(evento)
-                res.send(datosevento)
+                // ////////////////////////////////////
+                // Filtro para buscar emails
+                var bbdd3 = firebaseDb.collection('eventos/' + evento.id + '/votantes')
+                console.log('Buscando emails')
+
+                bbdd3.get()
+                  .then((querySnapshot) => {
+                    return querySnapshot.forEach((doc) => {
+                      // Leemos los datos
+                      votantes.push(doc.data())
+                      //
+                    })
+                  })
+                  .then(() => {
+                    evento.comentarios_texto = comentarios_
+                    evento.votantes = votantes
+                    datosevento.push(evento)
+                    res.send(datosevento)
+                  })
+                // ///////////////////////////////////
               })
           })
 
@@ -182,13 +202,14 @@ module.exports = function (app) {
     firebaseAuth.signInWithCustomToken(req.body.token).then(() => {
       const user = firebaseAuth.currentUser
       firebaseAuth.signOut()
+      console.log('EL USER->', user.email)
 
       if (req.body.operacion === 'Restar') {
-        EstablecerVoto(user.email, req.body.id, res)
-        // Restar(req.body.id, res)
+        EstablecerVoto(req.body.email, req.body.id, res, -1)
+        //
       } else if (req.body.operacion === 'Sumar') {
-        EstablecerVoto(user.email, req.body.id)
-        Sumar(req.body.id, res)
+        EstablecerVoto(req.body.email, req.body.id, res, 1)
+        //
       } else if (req.body.operacion === 'Evento') {
         EstablecerFoto(req.body.foto, req.body.id)
       }
@@ -206,61 +227,28 @@ module.exports = function (app) {
 
   /// ///////////// UTILIDADES /////////////////
 
-  function Sumar (id, res) {
-    var votosactuales = 0
-    firebaseDb.collection('eventos').doc(id).get().then((querySnapshot) => {
-      votosactuales = querySnapshot.data().votos
-      firebaseDb.collection('eventos').doc(id).update({
-        votos: votosactuales + 1
-      }).then(function () {
-        // res.send('Votos actualizados')
-      })
-    })
-  }
-
-  function Restar (id, res) {
-    var votosactuales = 0
-    firebaseDb.collection('eventos').doc(id).get().then((querySnapshot) => {
-      votosactuales = querySnapshot.data().votos
-      firebaseDb.collection('eventos').doc(id).update({
-        votos: votosactuales - 1
-      }).then(function () {
-        // res.send('Votos actualizados')
-      })
-    })
-  }
-
   function EstablecerFoto (url, id) {
     firebaseDb.collection('eventos').doc(id).update({
       foto: url
     })
   }
 
-  function EstablecerVoto (email, id, res) {
-    console.log('Registrando voto', id)
-    // firebaseDb.collection('eventos').doc(String(id)).update({
-    //   emails: email,
-    //   votos: 0
-    // }).then(() => {
-    //   console.log('hecho')
-    //   res.send('LOL')
-    // }).catch((error) => {
-    //   console.log(error)
-    // })
-    // firebaseDb.collection('eventos/' + id + '/votantes').add({
-    //   emails: email
-    // })
-
-    firebaseDb.collection('prueba').add({
-      emails: email
-    }).then(() => {
-      console.log('hecho')
-      res.send('LOL')
-    }).catch((error) => {
-      console.log(error)
+  function EstablecerVoto (email, id, res, cantidad) {
+    //
+    var votosactuales = 0
+    firebaseDb.collection('eventos').doc(id).get().then((querySnapshot) => {
+      votosactuales = querySnapshot.data().votos
+      firebaseDb.collection('eventos').doc(id).update({
+        votos: votosactuales + cantidad
+      }).then(function () {
+        admin.firestore().collection('eventos/' + id + '/votantes').add({
+          email: email
+        }).then(function () {
+          console.log('Votos actualizados')
+          res.send('Votos actualizados')
+        })
+      })
     })
-    firebaseDb.collection('eventos/' + id + '/votantes').add({
-      emails: email
-    })
+    //
   }
 }

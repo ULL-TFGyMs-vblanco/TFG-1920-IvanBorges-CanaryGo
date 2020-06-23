@@ -196,11 +196,7 @@ export default {
       }
     },
     Descripcion () {
-      // let ruta = unescape(this.nombre_evento)
-      // ruta = ruta.replace(/ /g, '-')
-      // ruta = ruta.toLowerCase()
-      // ruta = ruta.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
-      // this.$router.push(ruta)
+      // Redirigir
       this.$router.push(this.navegador)
     }
 

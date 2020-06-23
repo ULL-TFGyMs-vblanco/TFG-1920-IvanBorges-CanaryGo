@@ -159,20 +159,7 @@ export default {
   components: { EditorTexto, Comentario },
   data () {
     return {
-      comentarios_texto: [
-        // {
-        //   nombre: 'Mark',
-        //   avatar: 'https://image.freepik.com/vector-gratis/perfil-empresario-dibujos-animados_18591-58479.jpg',
-        //   texto: 'Hola, buenas',
-        //   hora: '12:33'
-        // },
-        // {
-        //   nombre: 'IvanGamerCode',
-        //   avatar: 'https://image.freepik.com/vector-gratis/perfil-empresario-dibujos-animados_18591-58479.jpg',
-        //   texto: 'Hola que tal?',
-        //   hora: '12:34'
-        // }
-      ],
+      comentarios_texto: [],
       sin_comentarios: false,
       comentarios: '',
       foto: '',
@@ -185,7 +172,8 @@ export default {
       foto_usuario: '',
       isla: '',
       id: '',
-      navegador: ''
+      navegador: '',
+      votantes: []
     }
   },
   mounted () {
@@ -205,6 +193,7 @@ export default {
         url: 'https://canarygo.herokuapp.com/eventos',
         data: {
           tipo: tipo,
+          email: this.$store.state.store.datosUsuario.email,
           id: this.id,
           token: this.$store.state.store.token
         }
@@ -236,7 +225,7 @@ export default {
         url: 'https://canarygo.herokuapp.com/eventos',
         data: {
           tipo: 'Buscar',
-          navegador: this.navegador,
+          navegador: this.$route.params.id,
           tipo_busqueda: 'navegador',
           token: String(this.$store.state.store.token)
         }
@@ -257,16 +246,26 @@ export default {
           this.foto_usuario = datos.foto_usuario
           this.navegador = datos.navegador
           this.comentarios_texto = datos.comentarios_texto
-
-          // Cargar comentarios
-          this.MostrarComentarios()
+          this.votantes = datos.votantes
+          this.ComprobarVotos()
         }, (error) => {
           console.log('EL ERROR ES', error)
         })
     },
-    // Cargar comentarios
-    MostrarComentarios () {
-
+    ComprobarVotos () {
+      const votar = this.votantes.includes(this.$store.state.store.datosUsuario.email)
+      if (votar) {
+        // if (tipo === 'Sumar') {
+        this.estado_disable = true
+        this.color_positivo = 'blue'
+        this.votos_evento += 1
+        // } else {
+        // Voto negativo
+        this.estado_disable = true
+        this.color_negativo = 'red'
+        this.votos_evento -= 1
+        // }
+      }
     }
   }
 }
