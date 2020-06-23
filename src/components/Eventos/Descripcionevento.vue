@@ -49,6 +49,15 @@
         </div> -->
       </q-card-section>
 
+      <!-- Mapa -->
+      <q-separator />
+      <MapaSimple
+        :key="$i18n.locale"
+        v-bind:center="this.ubicacion"
+        v-bind:markerLatLng="this.ubicacion2"
+      />
+      <!--  -->
+
       <q-separator />
       <div class="opciones">
         <q-card-actions>
@@ -67,13 +76,18 @@
               >{{this.usuario}}</q-btn>
             </q-btn>
           </div>
-          <div class="col-3 col-sm-3 text-center calendario">
+          <div class="col-3 col-sm-3 text-center maps">
+            <!-- // Maps -->
             <q-btn
+              id="Maps"
               size="70%"
-              flat
+              outline
               round
-              icon="save"
+              color="primary"
+              icon="navigation"
+              @click="EnviarMaps"
             />
+            <!--  -->
           </div>
           <div class="col-3 col-sm-3 text-center comentarios">
             <q-btn
@@ -127,9 +141,11 @@
 
           <!-- // Sección añadir comentarios -->
           <div class="q-pa-md q-gutter-sm">
+
             <!-- Editor de texto -->
-            <EditorTexto />
+            <EditorTexto :key="$i18n.locale" />
             <!--  -->
+
           </div>
           <!-- // Fin Sección añadir comentarios -->
 
@@ -157,10 +173,12 @@
 import axios from 'axios'
 import EditorTexto from '../Eventos/EditorTexto'
 import Comentario from '../Eventos/Comentario'
+import MapaSimple from '../Eventos/MapaSimple'
+import L from 'leaflet'
 
 export default {
   name: 'Descripcionevento',
-  components: { EditorTexto, Comentario },
+  components: { EditorTexto, Comentario, MapaSimple },
   data () {
     return {
       comentarios_texto: [],
@@ -183,7 +201,12 @@ export default {
       color_positivo: '',
       color_negativo: '',
       estado_disable: false,
-      votos_evento: this.votos
+      votos_evento: this.votos,
+      // Mapa
+      ubicacion: [0, 0],
+      ubicacion2: [28.4682400, -16.2546200],
+      x: 0,
+      y: 0
     }
   },
   mounted () {
@@ -258,6 +281,7 @@ export default {
           this.comentarios_texto = datos.comentarios_texto
           this.votantes = datos.votantes
           this.ComprobarVotos()
+          this.CargarMapa()
         }, (error) => {
           console.log('EL ERROR ES', error)
         })
@@ -284,6 +308,18 @@ export default {
           this.color_negativo = 'red'
         }
       }
+    },
+    CargarMapa () {
+      // Establecemos el mapa
+      this.x = this.localizacion.split(',')[0] * 1
+      this.y = this.localizacion.split(',')[1] * 1
+      this.ubicacion = [this.x, this.y]
+
+      this.ubicacion2 = L.latLng(this.x, this.y)
+    },
+    EnviarMaps () {
+      // window.open('https://www.google.es/maps/@' + this.x + ',' + this.y + ',16z')
+      window.open('https://www.google.es/maps/search/' + this.x + ',' + this.y)
     }
   }
 }

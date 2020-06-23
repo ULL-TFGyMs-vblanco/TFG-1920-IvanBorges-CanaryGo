@@ -66,13 +66,18 @@
               >{{usuario}}</q-btn>
             </q-btn>
           </div>
-          <div class="col-3 col-sm-3 text-center calendario">
+          <div class="col-3 col-sm-3 text-center maps">
+            <!-- // Maps -->
             <q-btn
+              id="Maps"
               size="70%"
-              flat
+              outline
               round
-              icon="save"
+              color="primary"
+              icon="navigation"
+              @click="EnviarMaps"
             />
+            <!--  -->
           </div>
           <div class="col-3 col-sm-3 text-center comentarios">
             <q-btn
@@ -93,7 +98,7 @@
               unelevated
               rounded
               color="primary"
-              @click="Descripcion"
+              :to="this.navegador"
             >{{$t('event')}}</q-btn>
           </div>
         </q-card-actions>
@@ -170,7 +175,7 @@ export default {
   methods: {
     Operacion (tipo) {
       if (!this.votar) {
-        console.log(tipo, this.$store.state.store.datosUsuario.email, this.id, this.$store.state.store.token)
+        // console.log(tipo, this.$store.state.store.datosUsuario.email, this.id, this.$store.state.store.token)
         axios({
           method: 'post',
           url: 'https://canarygo.herokuapp.com/eventos',
@@ -250,6 +255,13 @@ export default {
         }, (error) => {
           console.log('EL ERROR ES', error)
         })
+    },
+    EnviarMaps () {
+      // Establecemos el mapa
+      const x = this.localizacion.split(',')[0] * 1
+      const y = this.localizacion.split(',')[1] * 1
+
+      window.open('https://www.google.es/maps/search/' + x + ',' + y)
     }
 
   },
@@ -304,7 +316,7 @@ export default {
   text-align: center;
 } */
 
-/* .calendario {
+/* .maps {
   padding-left: 20%;
 } */
 

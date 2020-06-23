@@ -159,5 +159,7 @@ export default {
   objects: 'Objetos',
   symbols: 'Símbolos',
   flags: 'Banderas',
-  no_comments: 'No hay ningun comentario publicado aún.'
+  no_comments: 'No hay ningun comentario publicado aún.',
+  zoom_in: 'Acercar',
+  zoom_out: 'Alejar'
 }
