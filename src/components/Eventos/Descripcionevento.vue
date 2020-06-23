@@ -237,6 +237,7 @@ export default {
         data: {
           tipo: 'Buscar',
           navegador: this.navegador,
+          tipo_busqueda: 'navegador',
           token: String(this.$store.state.store.token)
         }
       })

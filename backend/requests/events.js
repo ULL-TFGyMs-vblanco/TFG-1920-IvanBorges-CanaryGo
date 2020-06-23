@@ -113,7 +113,7 @@ module.exports = function (app) {
       } else if (req.body.tipo === 'Buscar') {
         // Filtro para buscar por nombre
         var bbdd = firebaseDb.collection('eventos')
-        consulta = bbdd.where('nombre_evento', '==', req.body.navegador)
+        consulta = bbdd.where(req.body.tipo_busqueda, '==', req.body.navegador)
 
         // Datos fijos
         let evento = []
