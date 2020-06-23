@@ -139,7 +139,21 @@ module.exports = function (app) {
             })
           })
           .then(() => {
-            res.send(datosevento)
+            // Filtro para buscar comentarios
+            var bbdd2 = firebaseDb.collection('eventos/' + datosevento.id + '/comentarios')
+
+            bbdd2.get()
+              .then((querySnapshot) => {
+                return querySnapshot.forEach((doc) => {
+                  // Leemos los datos
+                  const comentariostexto = doc.data()
+                  datosevento.push(comentariostexto)
+                  //
+                })
+              })
+              .then(() => {
+                res.send(datosevento)
+              })
           })
 
         // //
