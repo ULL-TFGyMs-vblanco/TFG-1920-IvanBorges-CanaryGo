@@ -188,6 +188,7 @@ export default {
     },
     // Votos
     Operacion (tipo) {
+      console.log('VOTANDO')
       axios({
         method: 'post',
         url: 'https://canarygo.herokuapp.com/eventos',
@@ -255,6 +256,9 @@ export default {
     ComprobarVotos () {
       const votar = this.votantes.includes(this.$store.state.store.datosUsuario.email)
       if (votar) {
+        // Buscamos el tipo de voto
+        const resultado = this.votantes.find(this.$store.state.store.datosUsuario.email)
+        console.log('voto de tipo ->', resultado)
         // if (tipo === 'Sumar') {
         this.estado_disable = true
         this.color_positivo = 'blue'

@@ -172,6 +172,7 @@ export default {
         url: 'https://canarygo.herokuapp.com/eventos',
         data: {
           tipo: tipo,
+          email: this.$store.state.store.datosUsuario.email,
           id: this.id,
           token: this.$store.state.store.token
         }
