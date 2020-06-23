@@ -141,6 +141,7 @@ module.exports = function (app) {
                 id: doc.id,
                 foto_usuario: doc.data().foto_usuario,
                 navegador: doc.data().navegador,
+                descripcion: doc.data().descripcion,
                 comentarios_texto: '',
                 votantes: ''
               }

@@ -49,6 +49,12 @@
         </div> -->
       </q-card-section>
 
+      <!-- Descripcion -->
+      <q-card-section class="titulo text-justify">{{ $t('description') }}</q-card-section>
+      <q-card-section class="titulo text-justify">{{ this.descripcion }}</q-card-section>
+
+      <!--  -->
+
       <!-- Mapa -->
       <q-separator />
       <MapaSimple
@@ -280,6 +286,7 @@ export default {
           this.navegador = datos.navegador
           this.comentarios_texto = datos.comentarios_texto
           this.votantes = datos.votantes
+          this.descripcion = datos.descripcion
           this.ComprobarVotos()
           this.CargarMapa()
         }, (error) => {
