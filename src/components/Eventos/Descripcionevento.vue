@@ -57,7 +57,7 @@
       <q-card-section class="titulo text-justify">{{ $t('price_discount') }}</q-card-section>
       <q-card-section class="descripcion text-justify">{{ $t('not_applicable') }}</q-card-section>
       <q-card-section class="titulo text-justify">{{ $t('duration') }}</q-card-section>
-      <q-card-section class="descripcion text-justify">{{ this.fecha_inicio + ' - ' + this.fecha }}</q-card-section>
+      <q-card-section class="descripcion text-justify">{{ this.fecha_inicio + ' - ' + this.fecha_fin }}</q-card-section>
       <!--  -->
 
       <!-- Mapa -->
