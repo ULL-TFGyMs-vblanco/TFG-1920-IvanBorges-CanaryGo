@@ -13,6 +13,8 @@
               <q-card-section class="votos">
                 <div class="votos_box">
                   <q-btn
+                    :color="this.color_negativo"
+                    :disable="this.estado_disable"
                     size="70%"
                     flat
                     round
@@ -26,6 +28,8 @@
                     style="pointer-events: none;"
                   >{{this.votos}}</q-btn>
                   <q-btn
+                    :color="this.color_positivo"
+                    :disable="this.estado_disable"
                     size="70%"
                     flat
                     round
@@ -173,7 +177,13 @@ export default {
       isla: '',
       id: '',
       navegador: '',
-      votantes: []
+      votantes: [],
+      // Votos
+      votar: false,
+      color_positivo: '',
+      color_negativo: '',
+      estado_disable: false,
+      votos_evento: this.votos
     }
   },
   mounted () {
@@ -188,12 +198,11 @@ export default {
     },
     // Votos
     Operacion (tipo) {
-      console.log('VOTANDO')
       axios({
         method: 'post',
         url: 'https://canarygo.herokuapp.com/eventos',
         data: {
-          tipo: tipo,
+          operacion: tipo,
           email: this.$store.state.store.datosUsuario.email,
           id: this.id,
           token: this.$store.state.store.token
@@ -201,7 +210,7 @@ export default {
       })
         .then((response) => {
           console.log('RESPUESTA DEL VOTO', response.data)
-          this.foto = response.data
+          // Nuevos datos
         }, (error) => {
           console.log('EL ERROR ES', error)
         })
@@ -210,12 +219,12 @@ export default {
       if (tipo === 'Sumar') {
         this.estado_disable = true
         this.color_positivo = 'blue'
-        this.votos_evento += 1
+        this.votos += 1
       } else {
         // Voto negativo
         this.estado_disable = true
         this.color_negativo = 'red'
-        this.votos_evento -= 1
+        this.votos -= 1
       }
     },
     // Cargar datos
@@ -254,21 +263,26 @@ export default {
         })
     },
     ComprobarVotos () {
-      const votar = this.votantes.includes(this.$store.state.store.datosUsuario.email)
-      if (votar) {
-        // Buscamos el tipo de voto
-        const resultado = this.votantes.find(this.$store.state.store.datosUsuario.email)
-        console.log('voto de tipo ->', resultado)
-        // if (tipo === 'Sumar') {
-        this.estado_disable = true
-        this.color_positivo = 'blue'
-        this.votos_evento += 1
-        // } else {
-        // Voto negativo
-        this.estado_disable = true
-        this.color_negativo = 'red'
-        this.votos_evento -= 1
-        // }
+      let tipo
+
+      for (let i = 0; i < this.votantes.length; i++) {
+        if (this.votantes[i].email === this.$store.state.store.datosUsuario.email) {
+          this.votar = true
+          tipo = this.votantes[i].tipo
+          i = this.votantes.length
+        }
+      }
+      // Bloqueamos si ya ha votado y marcamos el voto
+      if (this.votar) {
+        // Voto positivo
+        if (tipo === 1) {
+          this.estado_disable = true
+          this.color_positivo = 'blue'
+        } else {
+          // Voto negativo
+          this.estado_disable = true
+          this.color_negativo = 'red'
+        }
       }
     }
   }

@@ -110,10 +110,12 @@ export default {
   name: 'Evento',
   data () {
     return {
+      votar: false,
       color_positivo: '',
       color_negativo: '',
       estado_disable: false,
-      votos_evento: this.votos
+      votos_evento: this.votos,
+      votantes: []
     }
   },
   props: {
@@ -167,41 +169,93 @@ export default {
   },
   methods: {
     Operacion (tipo) {
-      console.log(tipo, this.$store.state.store.datosUsuario.email, this.id, this.$store.state.store.token)
-      axios({
-        method: 'post',
-        url: 'https://canarygo.herokuapp.com/eventos',
-        data: {
-          tipo: tipo,
-          email: this.$store.state.store.datosUsuario.email,
-          id: this.id,
-          token: this.$store.state.store.token
-        }
-      })
-        .then((response) => {
-          console.log('RESPUESTA DEL VOTO', response.data)
-          this.datos_evento = response.data
-        }, (error) => {
-          console.log('EL ERROR ES', error)
+      if (!this.votar) {
+        console.log(tipo, this.$store.state.store.datosUsuario.email, this.id, this.$store.state.store.token)
+        axios({
+          method: 'post',
+          url: 'https://canarygo.herokuapp.com/eventos',
+          data: {
+            operacion: tipo,
+            email: this.$store.state.store.datosUsuario.email,
+            id: this.id,
+            token: this.$store.state.store.token
+          }
         })
+          .then((response) => {
+            console.log('RESPUESTA DEL VOTO', response.data)
+            this.datos_evento = response.data
+          }, (error) => {
+            console.log('EL ERROR ES', error)
+          })
 
-      // Voto positivo
-      if (tipo === 'Sumar') {
-        this.estado_disable = true
-        this.color_positivo = 'blue'
-        this.votos_evento += 1
-      } else {
-        // Voto negativo
-        this.estado_disable = true
-        this.color_negativo = 'red'
-        this.votos_evento -= 1
+        // Voto positivo
+        if (tipo === 'Sumar') {
+          this.estado_disable = true
+          this.color_positivo = 'blue'
+          this.votos_evento += 1
+        } else {
+          // Voto negativo
+          this.estado_disable = true
+          this.color_negativo = 'red'
+          this.votos_evento -= 1
+        }
       }
     },
     Descripcion () {
       // Redirigir
       this.$router.push(this.navegador)
+    },
+    ComprobarVotos () {
+      let tipo
+
+      for (let i = 0; i < this.votantes.length; i++) {
+        if (this.votantes[i].email === this.$store.state.store.datosUsuario.email) {
+          this.votar = true
+          tipo = this.votantes[i].tipo
+          i = this.votantes.length
+        }
+      }
+      // Bloqueamos si ya ha votado y marcamos el voto
+      if (this.votar) {
+        // Voto positivo
+        if (tipo === 1) {
+          this.estado_disable = true
+          this.color_positivo = 'blue'
+        } else {
+          // Voto negativo
+          this.estado_disable = true
+          this.color_negativo = 'red'
+        }
+      }
+    },
+    // Cargar datos
+    Mostrar () {
+      axios({
+        method: 'put',
+        url: 'https://canarygo.herokuapp.com/eventos',
+        data: {
+          tipo: 'Buscar',
+          navegador: this.nombre_evento.replace(/ /g, '-').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, ''),
+          tipo_busqueda: 'navegador',
+          token: String(this.$store.state.store.token)
+        }
+      })
+        .then((response) => {
+          console.log('RESPUESTA DEL SERVER EVENTOS', response.data)
+          const datos = response.data[0]
+          this.votantes = datos.votantes
+
+          // Comprobamos votos
+          this.ComprobarVotos()
+        }, (error) => {
+          console.log('EL ERROR ES', error)
+        })
     }
 
+  },
+  mounted () {
+    this.Mostrar()
+    // this.ComprobarVotos()
   }
 }
 </script>
