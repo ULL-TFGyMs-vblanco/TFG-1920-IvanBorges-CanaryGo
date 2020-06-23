@@ -66,7 +66,8 @@ module.exports = function (app) {
                 usuario: doc.data().usuario,
                 isla: doc.data().isla,
                 id: doc.id,
-                foto_usuario: doc.data().foto_usuario
+                foto_usuario: doc.data().foto_usuario,
+                navegador: doc.data().navegador
               }
 
               datosevento.push(evento)
@@ -97,6 +98,7 @@ module.exports = function (app) {
           isla: req.body.isla,
           fecha_creacion: new Date().getDay() + '/' + new Date().getMonth() + '/' + new Date().getFullYear() + ',' + new Date().getHours() + ':' + new Date().getMinutes() + new Date().getMilliseconds(),
           foto_usuario: req.body.foto_usuario,
+          navegador: req.body.nombre_evento.replace(/ /g, '-').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, ''),
           foto: ''
         })
           .then(function (docRef) {
@@ -111,7 +113,7 @@ module.exports = function (app) {
       } else if (req.body.tipo === 'Buscar') {
         // Filtro para buscar por nombre
         var bbdd = firebaseDb.collection('eventos')
-        consulta = bbdd.where('nombre_evento', '==', req.body.nombre)
+        consulta = bbdd.where('nombre_evento', '==', req.body.navegador)
 
         // Datos fijos
         let evento = []
@@ -136,6 +138,7 @@ module.exports = function (app) {
                 isla: doc.data().isla,
                 id: doc.id,
                 foto_usuario: doc.data().foto_usuario,
+                navegador: doc.data().navegador,
                 comentarios_texto: ''
               }
 

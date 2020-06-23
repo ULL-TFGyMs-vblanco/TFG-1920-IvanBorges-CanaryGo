@@ -184,7 +184,8 @@ export default {
       usuario: '',
       foto_usuario: '',
       isla: '',
-      id: ''
+      id: '',
+      navegador: ''
     }
   },
   mounted () {
@@ -235,7 +236,7 @@ export default {
         url: 'https://canarygo.herokuapp.com/eventos',
         data: {
           tipo: 'Buscar',
-          nombre: 'Actividades acuáticas en las Teresitas Post-Cuarentena',
+          navegador: this.navegador,
           token: String(this.$store.state.store.token)
         }
       })
@@ -253,6 +254,8 @@ export default {
           this.isla = datos.isla
           this.id = datos.id
           this.foto_usuario = datos.foto_usuario
+          this.navegador = datos.navegador
+          this.comentarios_texto = datos.comentarios_texto
 
           // Cargar comentarios
           this.MostrarComentarios()
