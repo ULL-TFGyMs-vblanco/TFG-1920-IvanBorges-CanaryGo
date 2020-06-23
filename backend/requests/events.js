@@ -140,7 +140,8 @@ module.exports = function (app) {
           })
           .then(() => {
             // Filtro para buscar comentarios
-            var bbdd2 = firebaseDb.collection('eventos/' + datosevento.id + '/comentarios')
+            var bbdd2 = firebaseDb.collection('eventos/' + datosevento[0].id + '/comentarios')
+            console.log('Buscando comentarios')
 
             bbdd2.get()
               .then((querySnapshot) => {
