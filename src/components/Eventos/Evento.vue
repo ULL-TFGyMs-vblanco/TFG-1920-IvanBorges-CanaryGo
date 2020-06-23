@@ -167,6 +167,7 @@ export default {
   },
   methods: {
     Operacion (tipo) {
+      console.log(tipo, this.$store.state.store.datosUsuario.email, this.id, this.$store.state.store.token)
       axios({
         method: 'post',
         url: 'https://canarygo.herokuapp.com/eventos',

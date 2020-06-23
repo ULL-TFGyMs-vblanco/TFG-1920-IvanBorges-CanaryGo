@@ -200,9 +200,8 @@ module.exports = function (app) {
     // res.send('Actualizar evento')
 
     firebaseAuth.signInWithCustomToken(req.body.token).then(() => {
-      const user = firebaseAuth.currentUser
       firebaseAuth.signOut()
-      console.log('EL USER->', user.email)
+      console.log('EL USER->', req.body.email)
 
       if (req.body.operacion === 'Restar') {
         EstablecerVoto(req.body.email, req.body.id, res, -1)
@@ -241,11 +240,12 @@ module.exports = function (app) {
       firebaseDb.collection('eventos').doc(id).update({
         votos: votosactuales + cantidad
       }).then(function () {
+        console.log('Votos actualizados')
         admin.firestore().collection('eventos/' + id + '/votantes').add({
           email: email,
           tipo: cantidad
         }).then(function () {
-          console.log('Votos actualizados')
+          console.log('Usuario votante registrado')
           res.send('Votos actualizados')
         })
       })
