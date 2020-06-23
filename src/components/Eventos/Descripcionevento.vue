@@ -50,13 +50,19 @@
       </q-card-section>
 
       <!-- Descripcion -->
+      <br>
+      <q-separator />
       <q-card-section class="titulo text-justify">{{ $t('description') }}</q-card-section>
-      <q-card-section class="titulo text-justify">{{ this.descripcion }}</q-card-section>
-
+      <q-card-section class="descripcion text-justify">{{ descripcion }}</q-card-section>
+      <q-card-section class="titulo text-justify">{{ $t('price_discount') }}</q-card-section>
+      <q-card-section class="descripcion text-justify">{{ $t('not_applicable') }}</q-card-section>
+      <q-card-section class="titulo text-justify">{{ $t('duration') }}</q-card-section>
+      <q-card-section class="descripcion text-justify">{{ this.fecha_inicio + ' - ' + this.fecha }}</q-card-section>
       <!--  -->
 
       <!-- Mapa -->
-      <q-separator />
+      <q-separator /> <br>
+      <q-card-section class="titulo text-justify">{{ $t('event_location') }}</q-card-section>
       <MapaSimple
         :key="$i18n.locale"
         v-bind:center="this.ubicacion"
@@ -195,12 +201,14 @@ export default {
       localizacion: '',
       precio: '',
       fecha_inicio: '',
+      fecha_fin: '',
       votos: '',
       usuario: '',
       foto_usuario: '',
       isla: '',
       id: '',
       navegador: '',
+      descripcion: '',
       votantes: [],
       // Votos
       votar: false,
@@ -287,6 +295,7 @@ export default {
           this.comentarios_texto = datos.comentarios_texto
           this.votantes = datos.votantes
           this.descripcion = datos.descripcion
+          this.fecha_fin = datos.fecha_fin
           this.ComprobarVotos()
           this.CargarMapa()
         }, (error) => {

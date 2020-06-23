@@ -161,5 +161,7 @@ export default {
   comment_sucess: 'Comment added successfully',
   no_comments: 'There are no comments posted yet.',
   zoom_in: 'Zoom In',
-  zoom_out: 'Zoom Out'
+  zoom_out: 'Zoom Out',
+  not_applicable: 'Not applicable',
+  duration: 'Duration of the event'
 }

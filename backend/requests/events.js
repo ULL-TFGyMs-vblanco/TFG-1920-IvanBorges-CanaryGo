@@ -134,6 +134,7 @@ module.exports = function (app) {
                 localizacion: doc.data().localizacion,
                 precio: doc.data().precio,
                 fecha_inicio: doc.data().fecha_inicio,
+                fecha_fin: doc.data().fecha_fin,
                 votos: doc.data().votos,
                 comentarios: doc.data().comentarios,
                 usuario: doc.data().usuario,

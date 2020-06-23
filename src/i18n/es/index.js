@@ -161,5 +161,7 @@ export default {
   flags: 'Banderas',
   no_comments: 'No hay ningun comentario publicado aún.',
   zoom_in: 'Acercar',
-  zoom_out: 'Alejar'
+  zoom_out: 'Alejar',
+  not_applicable: 'No aplicable',
+  duration: 'Duración del evento'
 }
