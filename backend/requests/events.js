@@ -113,14 +113,18 @@ module.exports = function (app) {
         var bbdd = firebaseDb.collection('eventos')
         consulta = bbdd.where('nombre_evento', '==', req.body.nombre)
 
+        // Datos fijos
+        let evento = []
+        const comentarios_ = []
+        const datosevento = []
         /// ///////////
         // Leer bbdd
-        const datosevento = []
+
         consulta.get()
           .then((querySnapshot) => {
             return querySnapshot.forEach((doc) => {
               // Leemos los datos
-              const evento = {
+              evento = {
                 foto: doc.data().foto,
                 nombre_evento: doc.data().nombre_evento,
                 localizacion: doc.data().localizacion,
@@ -131,28 +135,30 @@ module.exports = function (app) {
                 usuario: doc.data().usuario,
                 isla: doc.data().isla,
                 id: doc.id,
-                foto_usuario: doc.data().foto_usuario
+                foto_usuario: doc.data().foto_usuario,
+                comentarios_texto: ''
               }
 
-              datosevento.push(evento)
+              // datosevento.push(evento)
               // })
             })
           })
           .then(() => {
             // Filtro para buscar comentarios
-            var bbdd2 = firebaseDb.collection('eventos/' + datosevento[0].id + '/comentarios')
+            var bbdd2 = firebaseDb.collection('eventos/' + evento.id + '/comentarios')
             console.log('Buscando comentarios')
 
             bbdd2.get()
               .then((querySnapshot) => {
                 return querySnapshot.forEach((doc) => {
                   // Leemos los datos
-                  const comentariostexto = doc.data()
-                  datosevento.push(comentariostexto)
+                  comentarios_.push(doc.data())
                   //
                 })
               })
               .then(() => {
+                evento.comentarios_texto = comentarios_
+                datosevento.push(evento)
                 res.send(datosevento)
               })
           })

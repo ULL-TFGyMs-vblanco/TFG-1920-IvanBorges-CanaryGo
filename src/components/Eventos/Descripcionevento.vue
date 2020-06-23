@@ -160,18 +160,18 @@ export default {
   data () {
     return {
       comentarios_texto: [
-        {
-          nombre: 'Mark',
-          avatar: 'https://image.freepik.com/vector-gratis/perfil-empresario-dibujos-animados_18591-58479.jpg',
-          texto: 'Hola, buenas',
-          hora: '12:33'
-        },
-        {
-          nombre: 'IvanGamerCode',
-          avatar: 'https://image.freepik.com/vector-gratis/perfil-empresario-dibujos-animados_18591-58479.jpg',
-          texto: 'Hola que tal?',
-          hora: '12:34'
-        }
+        // {
+        //   nombre: 'Mark',
+        //   avatar: 'https://image.freepik.com/vector-gratis/perfil-empresario-dibujos-animados_18591-58479.jpg',
+        //   texto: 'Hola, buenas',
+        //   hora: '12:33'
+        // },
+        // {
+        //   nombre: 'IvanGamerCode',
+        //   avatar: 'https://image.freepik.com/vector-gratis/perfil-empresario-dibujos-animados_18591-58479.jpg',
+        //   texto: 'Hola que tal?',
+        //   hora: '12:34'
+        // }
       ],
       sin_comentarios: false,
       comentarios: '',
