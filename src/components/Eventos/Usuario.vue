@@ -122,7 +122,7 @@ export default {
       this.$store.dispatch('store/borrarUsuario')
       this.saludo = ''
       this.img = ''
-      this.$router.push('home')
+      this.$router.push('login')
     }
   },
   mounted () {

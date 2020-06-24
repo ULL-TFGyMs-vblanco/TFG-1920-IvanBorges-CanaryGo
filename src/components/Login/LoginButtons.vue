@@ -71,32 +71,39 @@ export default {
                 console.log('RESPUESTA DEL SERVER', response)
                 console.log('USUARIO GOOGLE', firebaseAuth.currentUser)
 
-                let foto
-                if (response.data.foto === undefined) {
-                  foto = firebaseAuth.currentUser.providerData[0].photoURL
-                } else {
-                  foto = response.data.foto
-                }
-
-                const usuario = {
-                  name: firebaseAuth.currentUser.name,
-                  date: firebaseAuth.currentUser.date,
-                  gender: firebaseAuth.currentUser.gender,
-                  photoURL: foto,
-                  displayName: firebaseAuth.currentUser.providerData[0].displayName,
-                  email: firebaseAuth.currentUser.providerData[0].email,
-                  provider: firebaseAuth.currentUser.providerData[0].providerId
-                }
-
                 if (response.data.includes('Usuario correcto:')) {
+                  // Obtenemos el token
                   const token = response.data.split(':')[1]
-                  this.$store.dispatch('store/anadirUsuario', usuario).then(() => {
-                    this.$store.dispatch('store/anadirToken', token).then(() => {
-                      setTimeout(() => {
-                        this.Success()
-                        this.$router.push('events')
-                      }, 500)
+
+                  // Obtenermos perfil
+                  this.DatosExtraUsuario(token, firebaseAuth.currentUser.providerData[0]).then((response) => {
+                    let foto
+                    if (response.data.foto === undefined) {
+                      foto = firebaseAuth.currentUser.providerData[0].photoURL
+                    } else {
+                      foto = response.data.foto
+                    }
+
+                    const usuario = {
+                      name: response.data.name,
+                      date: response.data.date,
+                      gender: response.data.gender,
+                      photoURL: foto,
+                      displayName: firebaseAuth.currentUser.providerData[0].displayName,
+                      email: firebaseAuth.currentUser.providerData[0].email,
+                      provider: firebaseAuth.currentUser.providerData[0].providerId
+                    }
+
+                    this.$store.dispatch('store/anadirUsuario', usuario).then(() => {
+                      this.$store.dispatch('store/anadirToken', token).then(() => {
+                        setTimeout(() => {
+                          this.Success()
+                          this.$router.push('events')
+                        }, 500)
+                      })
                     })
+                  }).catch(function (error) {
+                    console.log(error)
                   })
                 } else {
                   this.Fail(this.$t('error_google'))
@@ -199,6 +206,17 @@ export default {
         position: 'bottom',
         timeout: 2000,
         progress: true
+      })
+    },
+    DatosExtraUsuario (token, user) {
+      return axios({
+        method: 'put',
+        url: 'https://canarygo.herokuapp.com/autorizar',
+        data: {
+          tipo: 'Obtener Datos',
+          token: token,
+          correo: user.email
+        }
       })
     }
   }

@@ -60,7 +60,16 @@ export default {
       })
         .then((response) => {
           console.log('RESPUESTA DEL SERVER EVENTOS', response.data)
-          this.datos_evento = response.data
+          if (response.data === 'Error al verificar usuario en Evento') {
+            // Borramos credenciales
+            this.$store.dispatch('store/borrarUsuario')
+            this.saludo = ''
+            this.img = ''
+            console.clear()
+            this.$router.push('login')
+          } else {
+            this.datos_evento = response.data
+          }
         }, (error) => {
           console.log('EL ERROR ES', error)
         })

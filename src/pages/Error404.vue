@@ -7,13 +7,13 @@
       >
     </p>
     <p class="text-faded">
-      Ups, solo aire por aquí...<strong>(404)</strong>
+      {{$t('error_page')}}<strong>(404)</strong>
     </p>
     <q-btn
       color="primary"
       style="width:200px;"
-      to="/"
-      label="Vuelve atrás"
+      to="/events"
+      :label="$t('back')"
     />
   </div>
 </template>

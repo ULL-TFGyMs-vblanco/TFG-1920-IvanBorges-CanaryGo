@@ -172,5 +172,7 @@ export default {
   must_login_register: 'You must register or log in to access the content',
   signoff_caption: 'Disconnect user',
   user_caption: 'Introduce yourself to others',
-  update_user: 'Update user'
+  update_user: 'Update user',
+  back: 'Go back',
+  error_page: 'Oops, nothing around here ...'
 }

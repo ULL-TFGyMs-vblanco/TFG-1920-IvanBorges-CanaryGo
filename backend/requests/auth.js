@@ -179,7 +179,7 @@ module.exports = function (app) {
         })
         .then(function () {
           // Borramos de la db
-          firebaseDb.collection('usuarios').doc(documento).delete()
+          admin.firestore().collection('usuarios').doc(documento).delete()
             .then(function () {
               // Borramos img de el stg
               const storageRef = firebaseStg.ref('avatares/usuarios/' + user.email + '/foto')

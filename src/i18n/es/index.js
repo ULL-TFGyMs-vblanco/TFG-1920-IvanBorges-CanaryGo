@@ -172,6 +172,8 @@ export default {
   must_login_register: 'Debes registrarte o iniciar sesión para acceder al contenido',
   signoff_caption: 'Desconectar usuario',
   user_caption: 'Preséntate a los demás',
-  update_user: 'Actualizar usuario'
+  update_user: 'Actualizar usuario',
+  back: 'Vuelve atrás',
+  error_page: 'Ups, nada por aquí...'
 
 }

@@ -142,7 +142,7 @@ export default {
       }
     },
     Redirigir () {
-      console.log('Main layout', this.$store.state.store.datosUsuario, this.$route.fullPath)
+      // console.log('Main layout', this.$store.state.store.datosUsuario, this.$route.fullPath)
       if (this.$store.state.store.datosUsuario.length === 0) {
         if ((this.$route.fullPath !== '/login') && (this.$route.fullPath !== '/signup') && (this.$route.fullPath !== '/home')) {
           this.$router.push('/login')

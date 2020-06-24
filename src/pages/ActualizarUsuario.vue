@@ -408,6 +408,18 @@ export default {
     },
     confirmar () {
       this.confirm = true
+    },
+    ComprobarLogin () {
+      // console.log('COMPROBANDO USUARIO')
+      firebaseAuth.signInWithCustomToken(this.$store.state.store.token).then(() => {
+        // console.log('AUTORIZADO', this.$store.state.store.token)
+      }).catch(function () {
+        this.$store.dispatch('store/borrarUsuario')
+        this.saludo = ''
+        this.img = ''
+        console.clear()
+        this.$router.push('login')
+      })
     }
   },
   updated () {
@@ -417,6 +429,10 @@ export default {
     }
   },
   mounted () {
+    // Verificamos si esta logueado
+    this.ComprobarLogin()
+
+    // Comprobamos tipo de usuario
     if (this.provider !== 'password') {
       document.getElementsByClassName('Contrasena')[0].setAttribute('style', 'display:none')
       document.getElementsByClassName('Email')[0].setAttribute('style', 'display:none')

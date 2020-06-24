@@ -398,6 +398,12 @@ export default {
             this.ComprobarVotos()
             this.CargarMapa()
             this.cargando = false
+          } else {
+            // this.$router.push('/error')
+            this.$store.dispatch('store/borrarUsuario')
+            this.saludo = ''
+            this.img = ''
+            this.$router.push('login')
           }
         }, (error) => {
           console.log('EL ERROR ES', error)

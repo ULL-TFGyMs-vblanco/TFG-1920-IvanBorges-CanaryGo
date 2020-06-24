@@ -144,9 +144,7 @@
             type="name"
           />
 
-          <q-item
-            class="text-left"
-          >
+          <q-item class="text-left">
             <q-item-section>
               <q-item-label>
                 <q-avatar
@@ -209,7 +207,7 @@
 import Selectorarchivos from '../components/Eventos/Selectorarchivos'
 import Mapa from '../components/Eventos/Mapa'
 import axios from 'axios'
-import { firebaseStg } from 'boot/firebase'
+import { firebaseStg, firebaseAuth } from 'boot/firebase'
 
 export default {
   name: 'NuevoEvento',
@@ -364,7 +362,23 @@ export default {
         .catch(function (error) {
           console.log(error)
         })
+    },
+    ComprobarLogin () {
+      firebaseAuth.signInWithCustomToken(this.$store.state.store.token).then(() => {
+
+      }).catch(function () {
+        this.$store.dispatch('store/borrarUsuario')
+        this.saludo = ''
+        this.img = ''
+        console.log('BORRRRANDDOOOO')
+        // console.clear()
+        this.$router.push('login')
+      })
     }
+  },
+  mounted () {
+    // Verificamos si esta logueado
+    this.ComprobarLogin()
   }
 }
 </script>

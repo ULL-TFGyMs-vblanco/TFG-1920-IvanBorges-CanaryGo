@@ -18,8 +18,8 @@ const routes = [
           { path: ':id', component: () => import('components/Eventos/Descripcionevento.vue') }
         ]
       },
+      { path: '/error', component: () => import('pages/Error404.vue') },
       { path: ':id', name: 'evento_detallado', component: () => import('components/Eventos/Descripcionevento.vue'), prop: true }
-
     ]
   }
 ]
