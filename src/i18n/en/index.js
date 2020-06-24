@@ -164,5 +164,9 @@ export default {
   zoom_out: 'Zoom Out',
   not_applicable: 'Not applicable',
   duration: 'Duration of the event',
-  comment_error: 'An error occurred while trying to post your comment. Try again later'
+  comment_error: 'An error occurred while trying to post your comment. Try again later',
+  event_section: 'Events',
+  event_caption: 'The best events',
+  event_add: 'Add event',
+  event_add_caption: 'Share your knowledge'
 }

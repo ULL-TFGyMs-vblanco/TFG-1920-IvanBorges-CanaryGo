@@ -1,7 +1,10 @@
 <template>
   <div>
     <q-layout view="lHh Lpr lFf">
-      <q-header elevated class="header">
+      <q-header
+        elevated
+        class="header"
+      >
         <q-toolbar>
           <q-btn
             flat
@@ -11,21 +14,44 @@
             aria-label="Menu"
             @click="leftDrawerOpen = !leftDrawerOpen"
           />
-          <q-toolbar-title class="header-text" style="color: white; font-size: 17px">Canary Go</q-toolbar-title>
+          <q-toolbar-title
+            class="header-text"
+            style="color: white; font-size: 17px"
+          >Canary Go</q-toolbar-title>
           <LanguageSelector />
         </q-toolbar>
       </q-header>
 
-      <q-drawer v-model="leftDrawerOpen" toggle bordered>
+      <q-drawer
+        v-model="leftDrawerOpen"
+        toggle
+        bordered
+      >
         <q-list>
-          <q-item-label header class="text-grey-8">Menu</q-item-label>
-          <EssentialLink v-for="link in essentialLinks" :key="link.title" v-bind="link" />
+          <q-item-label
+            header
+            class="text-grey-8"
+          >Menu</q-item-label>
+          <EssentialLink
+            v-for="link in essentialLinks"
+            :key="link.title"
+            v-bind="link"
+          />
         </q-list>
 
         <!-- /Modo oscuro/ -->
-        <q-item clickable tag="a" @click="modooscuro()">
+        <q-item
+          clickable
+          tag="a"
+          @click="modooscuro()"
+        >
           <q-item-section avatar>
-            <q-toggle color="#ec9718" size="28px" v-model="dark" @input="modooscuro()" />
+            <q-toggle
+              color="#ec9718"
+              size="28px"
+              v-model="dark"
+              @input="modooscuro()"
+            />
           </q-item-section>
 
           <q-item-section>
@@ -80,6 +106,18 @@ export default {
           caption: 'adventure',
           icon: 'person_add_disabled',
           link: './signup'
+        },
+        {
+          title: 'event_section',
+          caption: 'event_caption',
+          icon: 'event_available',
+          link: './events'
+        },
+        {
+          title: 'event_add',
+          caption: 'event_add_caption',
+          icon: 'event_note',
+          link: './new'
         }
 
       ]
@@ -98,6 +136,9 @@ export default {
         this.dark = false
       }
     }
+
+  },
+  mounted () {
 
   }
 }

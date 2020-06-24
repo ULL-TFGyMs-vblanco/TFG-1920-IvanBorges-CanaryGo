@@ -164,5 +164,9 @@ export default {
   zoom_out: 'Alejar',
   not_applicable: 'No aplicable',
   duration: 'Duración del evento',
-  comment_error: 'Se produjo un error al intentar publicar tu comentario. Inténtalo más tarde'
+  comment_error: 'Se produjo un error al intentar publicar tu comentario. Inténtalo más tarde',
+  event_section: 'Eventos',
+  event_caption: 'Los mejores eventos',
+  event_add: 'Añadir evento',
+  event_add_caption: 'Comparte tu conocimiento'
 }
