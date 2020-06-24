@@ -234,6 +234,7 @@
             <!-- Editor de texto -->
             <EditorTexto
               :key="$i18n.locale"
+              v-bind:id='this.id'
               @clicked="onClickChild"
             />
             <!--  -->

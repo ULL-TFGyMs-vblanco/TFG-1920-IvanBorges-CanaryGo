@@ -134,6 +134,12 @@ export default {
       calcularcurso: true
     }
   },
+  props: {
+    id: {
+      // type: String,
+      // required: true
+    }
+  },
   updated () {
     // console.log('El comentario:', this.comentario)
   },
@@ -313,11 +319,12 @@ export default {
     },
     // Publicar comentarios
     PublicarComentario () {
+      // console.log('DATOS', this.id)
       axios({
-        method: 'post',
+        method: 'put',
         url: 'https://canarygo.herokuapp.com/eventos',
         data: {
-          operacion: 'Comentario',
+          tipo: 'Comentario',
           nombre: this.$store.state.store.datosUsuario.displayName,
           avatar: this.$store.state.store.datosUsuario.photoURL,
           hora: new Date().getHours() + ':' + new Date().getMinutes(),

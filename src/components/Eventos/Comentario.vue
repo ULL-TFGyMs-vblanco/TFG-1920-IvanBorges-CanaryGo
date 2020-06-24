@@ -37,6 +37,10 @@ export default {
     hora: {
       // type: String,
       // required: true
+    },
+    dia: {
+      // type: String,
+      // required: true
     }
   },
   mounted () {

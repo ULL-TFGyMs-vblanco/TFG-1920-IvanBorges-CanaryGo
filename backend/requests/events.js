@@ -154,7 +154,7 @@ module.exports = function (app) {
           })
           .then(() => {
             // Filtro para buscar comentarios
-            var bbdd2 = firebaseDb.collection('eventos/' + evento.id + '/comentarios')
+            var bbdd2 = firebaseDb.collection('eventos/' + evento.id + '/comentarios').orderBy('dia', 'asc')
             console.log('Buscando comentarios')
 
             bbdd2.get()
