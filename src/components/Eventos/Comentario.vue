@@ -1,11 +1,12 @@
 <template>
   <div>
+
     <q-chat-message
       class="comentario"
       :name="this.nombre"
       :avatar="this.avatar"
       :text="[this.texto]"
-      :stamp="this.hora"
+      :stamp="this.fecha"
       text-color="black"
       bg-color="grey-4"
       :sent="this.tipo_mensaje"
@@ -18,7 +19,8 @@ export default {
   name: 'Comentario',
   data () {
     return {
-      tipo_mensaje: false
+      tipo_mensaje: false,
+      fecha: this.dia + ' ' + this.hora
     }
   },
   props: {

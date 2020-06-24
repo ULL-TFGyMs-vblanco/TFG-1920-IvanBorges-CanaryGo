@@ -320,6 +320,7 @@ export default {
     // Publicar comentarios
     PublicarComentario () {
       // console.log('DATOS', this.id)
+
       axios({
         method: 'put',
         url: 'https://canarygo.herokuapp.com/eventos',
@@ -327,8 +328,8 @@ export default {
           tipo: 'Comentario',
           nombre: this.$store.state.store.datosUsuario.displayName,
           avatar: this.$store.state.store.datosUsuario.photoURL,
-          hora: new Date().getHours() + ':' + new Date().getMinutes(),
-          dia: new Date().getDay() + '/' + new Date().getMonth() + '/' + new Date().getFullYear(),
+          hora: new Date().getHours() + ':' + String(new Date().getMinutes()).padStart(2, '0'),
+          dia: new Date().getDate() + '/' + (new Date().getMonth() + 1) + '/' + new Date().getFullYear(),
           texto: this.comentario,
           id: this.id,
           token: this.$store.state.store.token

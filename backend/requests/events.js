@@ -96,7 +96,7 @@ module.exports = function (app) {
           comentarios: 0,
           usuario: req.body.usuario,
           isla: req.body.isla,
-          fecha_creacion: new Date().getDay() + '/' + new Date().getMonth() + '/' + new Date().getFullYear() + ',' + new Date().getHours() + ':' + new Date().getMinutes() + new Date().getMilliseconds(),
+          fecha_creacion: new Date().getDate() + '/' + (new Date().getMonth() + 1) + '/' + new Date().getFullYear() + ',' + new Date().getHours() + ':' + String(new Date().getMinutes()).padStart(2, '0') + new Date().getMilliseconds(),
           foto_usuario: req.body.foto_usuario,
           navegador: req.body.nombre_evento.replace(/ /g, '-').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, ''),
           foto: ''
@@ -154,7 +154,7 @@ module.exports = function (app) {
           })
           .then(() => {
             // Filtro para buscar comentarios
-            var bbdd2 = firebaseDb.collection('eventos/' + evento.id + '/comentarios').orderBy('dia', 'asc')
+            var bbdd2 = firebaseDb.collection('eventos/' + evento.id + '/comentarios').orderBy('orden', 'asc')
             console.log('Buscando comentarios')
 
             bbdd2.get()
@@ -208,6 +208,7 @@ module.exports = function (app) {
               avatar: req.body.avatar,
               hora: req.body.hora,
               dia: req.body.dia,
+              orden: comentariosactuales,
               texto: req.body.texto
             }).then(function () {
               console.log('Comentario añadido')

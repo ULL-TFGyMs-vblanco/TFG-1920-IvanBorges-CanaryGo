@@ -247,8 +247,6 @@
             v-show="this.sin_comentarios"
           />
 
-          <!-- <q-chat-message label="Domingo, 14" /> -->
-
           <Comentario
             class="comentarios"
             v-for="comentario in comentarios_texto"
