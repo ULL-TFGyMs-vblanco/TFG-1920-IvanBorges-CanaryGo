@@ -168,5 +168,10 @@ export default {
   event_section: 'Eventos',
   event_caption: 'Los mejores eventos',
   event_add: 'Añadir evento',
-  event_add_caption: 'Comparte tu conocimiento'
+  event_add_caption: 'Comparte tu conocimiento',
+  must_login_register: 'Debes registrarte o iniciar sesión para acceder al contenido',
+  signoff_caption: 'Desconectar usuario',
+  user_caption: 'Preséntate a los demás',
+  update_user: 'Actualizar usuario'
+
 }

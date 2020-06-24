@@ -389,8 +389,10 @@ export default {
             }
 
             // Sin comentarios
-            if (datos.comentarios_texto.length === 0) {
+            if (datos.comentarios === 0) {
               this.sin_comentarios = true
+            } else {
+              this.sin_comentarios = false
             }
 
             this.ComprobarVotos()

@@ -168,5 +168,9 @@ export default {
   event_section: 'Events',
   event_caption: 'The best events',
   event_add: 'Add event',
-  event_add_caption: 'Share your knowledge'
+  event_add_caption: 'Share your knowledge',
+  must_login_register: 'You must register or log in to access the content',
+  signoff_caption: 'Disconnect user',
+  user_caption: 'Introduce yourself to others',
+  update_user: 'Update user'
 }

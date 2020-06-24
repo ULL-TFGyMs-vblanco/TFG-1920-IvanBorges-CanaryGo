@@ -5,20 +5,32 @@
     <footer>
       <div class="row">
         <div class="col-6 col-sm-3">
-          <div class="q-pa-md" align="center">
+          <div
+            class="q-pa-md"
+            align="center"
+          >
             <q-list class="compania">
               <q-item>
                 <q-item-section class="negrita">{{$t('company')}}</q-item-section>
               </q-item>
-              <q-separator inset style="max-width: 200px " />
+              <q-separator
+                inset
+                style="max-width: 200px "
+              />
 
-              <q-item clickable v-ripple>
+              <q-item
+                clickable
+                v-ripple
+              >
                 <q-item-section>
                   <q-item-label>{{$t('us')}}</q-item-label>
                 </q-item-section>
               </q-item>
 
-              <q-item clickable v-ripple>
+              <q-item
+                clickable
+                v-ripple
+              >
                 <q-item-section>
                   <q-item-label>{{$t('contact')}}</q-item-label>
                 </q-item-section>
@@ -28,14 +40,23 @@
         </div>
 
         <div class="col-6 col-sm-3">
-          <div class="q-pa-md" align="center">
+          <div
+            class="q-pa-md"
+            align="center"
+          >
             <q-list class="comunidad">
               <q-item>
                 <q-item-section class="negrita">{{$t('community')}}</q-item-section>
               </q-item>
-              <q-separator inset style="max-width: 200px " />
+              <q-separator
+                inset
+                style="max-width: 200px "
+              />
 
-              <q-item clickable v-ripple>
+              <q-item
+                clickable
+                v-ripple
+              >
                 <q-item-section>
                   <q-item-label>{{$t('works')}}</q-item-label>
                 </q-item-section>
@@ -45,48 +66,71 @@
         </div>
 
         <div class="col-6 col-sm-3">
-          <div class="q-pa-md" align="center">
+          <div
+            class="q-pa-md"
+            align="center"
+          >
             <q-list class="asistencia">
               <q-item>
                 <q-item-section class="negrita">{{$t('assistance')}}</q-item-section>
               </q-item>
-              <q-separator inset style="max-width: 200px " />
+              <q-separator
+                inset
+                style="max-width: 200px "
+              />
 
-              <q-item clickable v-ripple>
+              <q-item
+                clickable
+                v-ripple
+              >
                 <q-item-section>
                   <q-item-label>{{$t('help')}}</q-item-label>
                 </q-item-section>
               </q-item>
 
-              <q-item clickable v-ripple>
+              <!-- <q-item clickable v-ripple>
                 <q-item-section>
                   <q-item-label>{{$t('chat')}}</q-item-label>
                 </q-item-section>
-              </q-item>
+              </q-item> -->
             </q-list>
           </div>
         </div>
 
         <div class="col-6 col-sm-3">
-          <div class="q-pa-md" align="center">
+          <div
+            class="q-pa-md"
+            align="center"
+          >
             <q-list class="asistencia">
               <q-item>
                 <q-item-section class="negrita">{{$t('app')}}</q-item-section>
               </q-item>
-              <q-separator inset style="max-width: 200px " />
+              <q-separator
+                inset
+                style="max-width: 200px "
+              />
 
-              <q-item clickable v-ripple>
+              <q-item
+                clickable
+                v-ripple
+              >
                 <q-item-section>
                   <img
+                    class="absolute-center"
                     src="../assets/images/CanaryGo/android-app.svg"
                     style="max-width: 100px; width: 100%; height: auto; min-width: 60px;"
                   />
                 </q-item-section>
               </q-item>
 
-              <q-item clickable v-ripple>
+              <q-item
+                clickable
+                v-ripple
+              >
                 <q-item-section>
                   <img
+                    class="absolute-center"
                     src="../assets/images/CanaryGo/app-store.svg"
                     style="max-width: 100px; width: 100%; height: auto; min-width: 60px;"
                   />
