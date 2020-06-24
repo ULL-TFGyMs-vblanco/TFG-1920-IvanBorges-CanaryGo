@@ -1,12 +1,21 @@
 <template>
   <div>
     <q-card class="my-card">
-      <q-card-section class="fecha text-right">{{ this.fecha_inicio }}</q-card-section>
+      <q-card-section class="fecha text-right">{{ this.fecha_inicio }} </q-card-section>
       <q-card-section horizontal>
         <q-img
           class="col-5"
           :src="this.foto"
-        />
+        >
+          <!-- // Animacion carga -->
+          <q-inner-loading :showing="cargando">
+            <q-spinner
+              size="50px"
+              color="grey-3"
+            />
+          </q-inner-loading>
+          <!--  -->
+        </q-img>
         <q-card-section vertical>
           <q-card-section horizontal>
             <div class="votos_">
@@ -25,6 +34,7 @@
                     class="votos_evento"
                     size="100%"
                     flat
+                    :loading="this.cargando"
                     style="pointer-events: none;"
                   >{{this.votos}}</q-btn>
                   <q-btn
@@ -40,9 +50,36 @@
               </q-card-section>
             </div>
           </q-card-section>
-          <q-card-section class="titulo text-justify">{{ this.nombre_evento }}</q-card-section>
-          <q-card-section class="ubicacion text-justify">{{ this.isla }}</q-card-section>
-          <q-card-section class="precio text-justify">{{ this.precio }} €</q-card-section>
+          <q-card-section class="titulo text-justify">{{ this.nombre_evento }}
+            <!-- // Animacion carga -->
+            <q-inner-loading :showing="cargando">
+              <q-spinner-dots
+                size="40px"
+                color="primary"
+              />
+            </q-inner-loading>
+            <!--  -->
+          </q-card-section>
+          <q-card-section class="ubicacion text-justify">{{ this.isla }}
+            <!-- // Animacion carga -->
+            <q-inner-loading :showing="cargando">
+              <q-spinner-dots
+                size="30px"
+                color="primary"
+              />
+            </q-inner-loading>
+            <!--  -->
+          </q-card-section>
+          <q-card-section class="precio text-justify">{{ this.precio }} €
+            <!-- // Animacion carga -->
+            <q-inner-loading :showing="cargando">
+              <q-spinner-dots
+                size="30px"
+                color="primary"
+              />
+            </q-inner-loading>
+            <!--  -->
+          </q-card-section>
         </q-card-section>
         <!-- <div class="comentarios_box">
           {{comentarios}}
@@ -52,16 +89,56 @@
       <!-- Descripcion -->
       <br>
       <q-separator />
-      <q-card-section class="titulo text-justify">{{ $t('description') }}</q-card-section>
-      <q-card-section class="descripcion text-justify">{{ descripcion }}</q-card-section>
-      <q-card-section class="titulo text-justify">{{ $t('price_discount') }}</q-card-section>
+      <q-card-section class="titulo text-justify">{{ $t('description') }}
+        <!-- // Animacion carga -->
+        <q-inner-loading :showing="cargando">
+          <q-spinner-bars
+            size="25px"
+            color="primary"
+          />
+        </q-inner-loading>
+        <!--  -->
+      </q-card-section>
+      <q-card-section class="descripcion text-justify">{{ descripcion }}
+
+      </q-card-section>
+
+      <!-- Descuento -->
+      <q-card-section class="titulo text-justify">{{ $t('price_discount') }}
+        <!-- // Animacion carga -->
+        <q-inner-loading :showing="cargando">
+          <q-spinner-bars
+            size="25px"
+            color="primary"
+          />
+        </q-inner-loading>
+        <!--  -->
+      </q-card-section>
+
       <q-card-section
         v-show="this.mostrar_codigo"
         class="descripcion text-justify"
-      >{{ $t('not_applicable') }}</q-card-section>
-      <q-card-section class="titulo text-justify">{{ $t('duration') }}</q-card-section>
-      <q-card-section class="descripcion text-justify">{{ this.fecha_inicio + ' - ' + this.fecha_fin }}</q-card-section>
-      <!--  -->
+      >{{ $t('not_applicable') }}
+      </q-card-section>
+      <q-card-section
+        v-show="!this.mostrar_codigo"
+        class="descripcion text-justify"
+      >{{ descuento }}</q-card-section>
+
+      <!-- Duracion -->
+      <q-card-section class="titulo text-justify">{{ $t('duration') }}
+        <!-- // Animacion carga -->
+        <q-inner-loading :showing="cargando">
+          <q-spinner-bars
+            size="25px"
+            color="primary"
+          />
+        </q-inner-loading>
+        <!--  -->
+      </q-card-section>
+      <q-card-section class="descripcion text-justify">{{ fecha_inicio + ' - ' + fecha_fin }}
+
+      </q-card-section>
 
       <!-- Mapa -->
       <q-separator /> <br>
@@ -148,17 +225,17 @@
       </div>
 
       <div class="q-pa-md row justify-center">
-        <div
-          class="comentarios"
-          style="width: 100%; max-width: 80%"
-        >
+        <div style="width: 100%; max-width: 80%">
           {{$t('comment_post')}}
 
           <!-- // Sección añadir comentarios -->
           <div class="q-pa-md q-gutter-sm">
 
             <!-- Editor de texto -->
-            <EditorTexto :key="$i18n.locale" />
+            <EditorTexto
+              :key="$i18n.locale"
+              @clicked="onClickChild"
+            />
             <!--  -->
 
           </div>
@@ -215,6 +292,7 @@ export default {
       descuento: '',
       mostrar_codigo: false,
       votantes: [],
+      cargando: true,
       // Votos
       votar: false,
       color_positivo: '',
@@ -285,31 +363,41 @@ export default {
         .then((response) => {
           console.log('RESPUESTA DEL SERVER EVENTOS', response.data)
           const datos = response.data[0]
-          this.foto = datos.foto
-          this.nombre_evento = datos.nombre_evento
-          this.localizacion = datos.localizacion
-          this.precio = datos.precio
-          this.fecha_inicio = datos.fecha_inicio
-          this.votos = datos.votos
-          this.comentarios = datos.comentarios
-          this.usuario = datos.usuario
-          this.isla = datos.isla
-          this.id = datos.id
-          this.foto_usuario = datos.foto_usuario
-          this.navegador = datos.navegador
-          this.comentarios_texto = datos.comentarios_texto
-          this.votantes = datos.votantes
-          this.descripcion = datos.descripcion
-          this.fecha_fin = datos.fecha_fin
-          this.descuento = datos.descuento
 
-          // Codigo descuento
-          if (datos.descuento === '') {
-            this.mostrar_codigo = true
+          // Efecto cargando
+          if (datos.nombre_evento !== undefined) {
+            this.foto = datos.foto
+            this.nombre_evento = datos.nombre_evento
+            this.localizacion = datos.localizacion
+            this.precio = datos.precio
+            this.fecha_inicio = datos.fecha_inicio
+            this.votos = datos.votos
+            this.comentarios = datos.comentarios
+            this.usuario = datos.usuario
+            this.isla = datos.isla
+            this.id = datos.id
+            this.foto_usuario = datos.foto_usuario
+            this.navegador = datos.navegador
+            this.comentarios_texto = datos.comentarios_texto
+            this.votantes = datos.votantes
+            this.descripcion = datos.descripcion
+            this.fecha_fin = datos.fecha_fin
+            this.descuento = datos.descuento
+
+            // Codigo descuento
+            if (datos.descuento === '') {
+              this.mostrar_codigo = true
+            }
+
+            // Sin comentarios
+            if (datos.comentarios_texto.length === 0) {
+              this.sin_comentarios = true
+            }
+
+            this.ComprobarVotos()
+            this.CargarMapa()
+            this.cargando = false
           }
-
-          this.ComprobarVotos()
-          this.CargarMapa()
         }, (error) => {
           console.log('EL ERROR ES', error)
         })
@@ -348,6 +436,9 @@ export default {
     EnviarMaps () {
       // window.open('https://www.google.es/maps/@' + this.x + ',' + this.y + ',16z')
       window.open('https://www.google.es/maps/search/' + this.x + ',' + this.y)
+    },
+    onClickChild () {
+      this.Mostrar()
     }
   }
 }

@@ -158,10 +158,11 @@ export default {
   objects: 'Objects',
   symbols: 'Symbols',
   flags: 'Flags',
-  comment_sucess: 'Comment added successfully',
+  comment_success: 'Comment added successfully',
   no_comments: 'There are no comments posted yet.',
   zoom_in: 'Zoom In',
   zoom_out: 'Zoom Out',
   not_applicable: 'Not applicable',
-  duration: 'Duration of the event'
+  duration: 'Duration of the event',
+  comment_error: 'An error occurred while trying to post your comment. Try again later'
 }

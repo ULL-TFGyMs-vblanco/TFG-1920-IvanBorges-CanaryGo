@@ -145,7 +145,7 @@ export default {
   right: 'Alinear a la derecha',
   justify: 'Justificar',
   emoji_text: 'Elige un emoji',
-  comment_sucess: 'Comentario agregado correctamente',
+  comment_success: 'Comentario agregado correctamente',
   title: 'Elige tu emoji y un color',
   search: 'Buscar',
   notfound: 'No se encontró el emoji',
@@ -163,5 +163,6 @@ export default {
   zoom_in: 'Acercar',
   zoom_out: 'Alejar',
   not_applicable: 'No aplicable',
-  duration: 'Duración del evento'
+  duration: 'Duración del evento',
+  comment_error: 'Se produjo un error al intentar publicar tu comentario. Inténtalo más tarde'
 }

@@ -84,7 +84,7 @@ module.exports = function (app) {
         console.log('Nuevo evento')
         console.log('DATOS', req.body)
 
-        firebaseDb.collection('eventos').add({
+        admin.firestore().collection('eventos').add({
           nombre_evento: req.body.nombre_evento,
           localizacion: req.body.localizacion,
           fecha_inicio: req.body.fecha_inicio,
@@ -190,6 +190,31 @@ module.exports = function (app) {
           })
 
         // //
+      } else if (req.body.tipo === 'Comentario') {
+        // Insertar comentario
+        console.log('Nuevo comentario')
+        console.log('DATOS', req.body)
+
+        var comentariosactuales = 0
+
+        firebaseDb.collection('eventos').doc(req.body.id).get().then((querySnapshot) => {
+          comentariosactuales = querySnapshot.data().comentarios
+          firebaseDb.collection('eventos').doc(req.body.id).update({
+            comentarios: comentariosactuales + 1
+          }).then(function () {
+            console.log('Cantidad actualizada')
+            admin.firestore().collection('eventos/' + req.body.id + '/comentarios').add({
+              nombre: req.body.nombre,
+              avatar: req.body.avatar,
+              hora: req.body.hora,
+              dia: req.body.dia,
+              texto: req.body.texto
+            }).then(function () {
+              console.log('Comentario añadido')
+              res.send('Comentario añadido')
+            })
+          })
+        })
       }
     }).catch(function (error) {
       console.error('Error verificando usuario', error)

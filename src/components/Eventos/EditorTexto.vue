@@ -44,7 +44,7 @@
           tip: this.upload_text,
           icon: 'cloud_upload',
           label: this.upload_label,
-          handler: uploadIt
+          handler: PublicarComentario
         }
       }"
         :toolbar="[
@@ -91,6 +91,7 @@
 
 <script>
 import { Picker } from 'emoji-mart-vue'
+import axios from 'axios'
 
 export default {
   name: 'EditorTexto',
@@ -160,15 +161,6 @@ export default {
         this.calcularcurso = false
       }
     },
-    uploadIt () {
-      this.$q.notify({
-        message: this.$t(''),
-        color: 'green-5',
-        textColor: 'white',
-        icon: 'cloud_done'
-      })
-    },
-
     // /////////////////////////////////
     // Emojis
     html2text (html) {
@@ -318,6 +310,44 @@ export default {
       //   textarea.selectionEnd = cursorPosition + emoji.native.length
       // })
       // console.log(cursorPosition)
+    },
+    // Publicar comentarios
+    PublicarComentario () {
+      axios({
+        method: 'post',
+        url: 'https://canarygo.herokuapp.com/eventos',
+        data: {
+          operacion: 'Comentario',
+          nombre: this.$store.state.store.datosUsuario.displayName,
+          avatar: this.$store.state.store.datosUsuario.photoURL,
+          hora: new Date().getHours() + ':' + new Date().getMinutes(),
+          dia: new Date().getDay() + '/' + new Date().getMonth() + '/' + new Date().getFullYear(),
+          texto: this.comentario,
+          id: this.id,
+          token: this.$store.state.store.token
+        }
+      })
+        .then((response) => {
+          console.log('RESPUESTA DEL VOTO', response.data)
+          // Nuevos datos
+          this.$q.notify({
+            message: this.$t('comment_success'),
+            color: 'green-5',
+            textColor: 'white',
+            icon: 'cloud_done'
+          })
+          // Reseteamos y recargamos
+          this.comentario = ''
+          this.$emit('clicked')
+        }, (error) => {
+          console.log('EL ERROR ES', error)
+          this.$q.notify({
+            message: this.$t('comment_error'),
+            color: 'red',
+            textColor: 'white',
+            icon: 'error'
+          })
+        })
     }
   }
 }

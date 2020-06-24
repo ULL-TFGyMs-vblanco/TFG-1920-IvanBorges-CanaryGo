@@ -70,7 +70,7 @@
                       </q-item-section>
                     </q-item>
 
-                    <q-item
+                    <!-- <q-item
                       clickable
                       v-ripple
                     >
@@ -83,7 +83,7 @@
                           {{$t('alerts')}}
                         </q-item-label>
                       </q-item-section>
-                    </q-item>
+                    </q-item> -->
                   </q-list>
                 </div>
                 <q-btn
