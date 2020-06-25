@@ -16,6 +16,7 @@
       :custom-strings="{
         upload: this.$t('done'),
         drag: this.$t('select'),
+        tap: this.$t('select'),
         change: this.$t('change'),
       }"
       @change="onChange"
@@ -58,6 +59,9 @@ export default {
         console.log('FileReader no soportado')
       }
     }
+  },
+  updated () {
+    // document.getElementsByClassName('picture-inner-text')[0].setAttribute)()
   }
 }
 </script>
