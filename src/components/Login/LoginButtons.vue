@@ -74,6 +74,8 @@ export default {
                 if (response.data.includes('Usuario correcto:')) {
                   // Obtenemos el token
                   const token = response.data.split(':')[1]
+                  console.log('LA COSAA ->', firebaseAuth.currentUser.providerData[0])
+                  console.log('EL TOKEN ->', token)
 
                   // Obtenermos perfil
                   this.DatosExtraUsuario(token, firebaseAuth.currentUser.providerData[0]).then((response) => {

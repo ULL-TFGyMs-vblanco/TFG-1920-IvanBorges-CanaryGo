@@ -103,12 +103,31 @@ module.exports = function (app) {
           })
         })
         .then(() => {
-          firebaseDb.collection('usuarios').doc(documento).get()
-            .then(doc => {
-              if (!doc.exists) {
-                res.send('Error al buscar datos')
-                console.log('Error al buscar datos, no existe el doc')
-              } else {
+          // Se pude dar el caso de que sea indefinido porque es el primer login con OAuth y no esté registrado
+          if (documento === undefined) {
+            // El usuario no se ha registrado y lo registramos
+            firebaseAuth.signInWithCustomToken(req.body.token).then(() => {
+              const user = firebaseAuth.currentUser
+              // console.log('LA COSA->', user)
+              firebaseAuth.signOut()
+
+              // Lo guardamos en la DB
+              ActualizarInfo('', '', '', user.displayName, req.body.correo, user)
+
+              // Devolvemos los datos
+              const usuario = {
+                date: '',
+                name: user.displayName,
+                gender: '',
+                foto: ''
+              }
+              res.send(usuario)
+            })
+            //
+          } else {
+            firebaseDb.collection('usuarios').doc(documento).get()
+              .then(doc => {
+                // Datos
                 const usuario = {
                   date: doc.data().fecha,
                   name: doc.data().nombre,
@@ -116,12 +135,12 @@ module.exports = function (app) {
                   foto: doc.data().foto
                 }
                 res.send(usuario)
-              }
-            })
-            .catch(err => {
-              res.send('Error al buscar datos')
-              console.log('Error al buscar datos', err)
-            })
+              })
+              .catch(err => {
+                res.send('Error al buscar datos')
+                console.log('Error al buscar datos', err)
+              })
+          }
         })
     }
   })
