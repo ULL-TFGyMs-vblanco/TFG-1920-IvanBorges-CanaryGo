@@ -6,10 +6,12 @@
         <q-img
           class="col-5"
           :src="foto"
+          :ratio="16/9"
         />
         <q-card-section vertical>
           <q-card-section horizontal>
-            <div class="votos_">
+            <div class="
+          votos_">
               <q-card-section class="votos">
                 <div class="votos_box">
                   <q-btn
@@ -72,11 +74,10 @@
               id="Maps"
               size="70%"
               outline
-              round
               color="primary"
               icon="navigation"
               @click="EnviarMaps"
-            />
+            >MAPS</q-btn>
             <!--  -->
           </div>
           <div class="col-3 col-sm-3 text-center comentarios">
@@ -187,7 +188,7 @@ export default {
           }
         })
           .then((response) => {
-            console.log('RESPUESTA DEL VOTO', response.data)
+            // console.log('RESPUESTA DEL VOTO', response.data)
             this.datos_evento = response.data
           }, (error) => {
             console.log('EL ERROR ES', error)
@@ -246,7 +247,7 @@ export default {
         }
       })
         .then((response) => {
-          console.log('RESPUESTA DEL SERVER EVENTOS', response.data)
+          // console.log('RESPUESTA DEL SERVER EVENTOS', response.data)
           const datos = response.data[0]
           this.votantes = datos.votantes
 
@@ -275,10 +276,10 @@ export default {
 <style>
 .my-card {
   width: 100%;
-  max-width: 98%;
+  max-width: 90%;
   text-align: justify;
-  left: 1%;
-  font-size: calc(5px + 6 * ((100vw - 20px) / 680));
+  left: 5%;
+  /* font-size: calc(5px + 6 * ((100vw - 20px) / 680)); */
 }
 
 .votos_box {
@@ -295,16 +296,18 @@ export default {
   color: rgb(113, 138, 221);
   font-family: "Bitter", serif;
   font: bold;
+  font-size: 120%;
 }
 
 .titulo {
   font-family: "PT Sans";
-  font-size: 140%;
+  font-size: calc(12px + 6 * ((100vw - 20px) / 680));
   font-weight: bold;
 }
 
 .ubicacion {
   font-family: "Helvetica";
+  font-size: 130%;
 }
 
 .usuario {
@@ -332,6 +335,7 @@ export default {
 .precio {
   color: rgb(16, 153, 78);
   font-style: italic;
+  font-size: 160%;
 }
 
 .fecha {

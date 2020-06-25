@@ -108,11 +108,18 @@ import { firebaseAuth } from '../../boot/firebase'
 
 export default {
   name: 'Usuario',
+  props: {
+    datos: {
+      // type: Array,
+      // required: true
+    }
+  },
   data () {
     return {
       saludo: '',
       saludo_2: this.$t('mind'),
       busqueda: '',
+      datos_busqueda: [],
       img: ''
     }
   },
@@ -123,6 +130,9 @@ export default {
       this.saludo = ''
       this.img = ''
       this.$router.push('login')
+    },
+    Buscar () {
+
     }
   },
   mounted () {
@@ -130,6 +140,28 @@ export default {
     this.saludo = this.$t('welcome') + ' ' + this.$store.state.store.datosUsuario.displayName.split(' ')[0]
     this.img = this.$store.state.store.datosUsuario.photoURL
     // console.log('El token-> ', this.$store.state.store.token)
+
+    // Copia de los datos
+    this.datos_backup = this.datos
+  },
+  updated () {
+    // console.log('LLEGANDO DATOS', this.datos)
+
+    if (this.busqueda !== '') {
+      // Reset
+      this.datos_busqueda = []
+      for (let i = 0; i < this.datos.length; i++) {
+        if ((this.datos[i].nombre_evento.includes(this.busqueda)) || (this.datos[i].nombre_evento.toLowerCase().includes(this.busqueda))) {
+          // Añadimos las coincidencias
+          this.datos_busqueda.push(this.datos[i])
+        }
+      }
+      // console.log('La busqueda ->', this.datos_busqueda)
+      this.$emit('clicked', this.datos_busqueda)
+    } else {
+      // Reset
+      this.$emit('clicked', '')
+    }
   }
 }
 </script>

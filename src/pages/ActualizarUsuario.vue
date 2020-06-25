@@ -313,17 +313,17 @@ export default {
 
       if (file === undefined) {
         this.new_url = this.photoURL
-        console.log('Caso no se sube foto')
+        // console.log('Caso no se sube foto')
         this.actualizarUsuario()
       } else {
-        console.log('Caso se sube foto')
+        // console.log('Caso se sube foto')
         const storageRef = firebaseStg.ref('avatares/usuarios/' + this.email)
         const thisRef = storageRef.child('foto')
 
         const that = this
         thisRef.put(file)
           .then(function (snapshot) {
-            console.log('actualizando foto')
+            // console.log('actualizando foto')
             thisRef.getDownloadURL().then((url) => {
               that.new_url = url
               that.actualizarUsuario()
@@ -354,7 +354,7 @@ export default {
           // console.log('RESPUESTA DEL SERVER', response.data)
           if (response.data.includes('Usuario actualizado')) {
             this.Success()
-            console.log('actualizando datos')
+            // console.log('actualizando datos')
             this.actualizarLocal()
           } else {
             this.$q.notify({
@@ -383,7 +383,7 @@ export default {
       this.$store.dispatch('store/anadirUsuario', usuario).then(() => {
         setTimeout(() => {
           // this.Success()
-          console.log('actualizando datos local')
+          // console.log('actualizando datos local')
           this.$router.push('events')
         }, 500)
       })

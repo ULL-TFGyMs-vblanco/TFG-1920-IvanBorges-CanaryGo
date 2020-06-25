@@ -320,42 +320,43 @@ export default {
     // Publicar comentarios
     PublicarComentario () {
       // console.log('DATOS', this.id)
-
-      axios({
-        method: 'put',
-        url: 'https://canarygo.herokuapp.com/eventos',
-        data: {
-          tipo: 'Comentario',
-          nombre: this.$store.state.store.datosUsuario.displayName,
-          avatar: this.$store.state.store.datosUsuario.photoURL,
-          hora: new Date().getHours() + ':' + String(new Date().getMinutes()).padStart(2, '0'),
-          dia: new Date().getDate() + '/' + (new Date().getMonth() + 1) + '/' + new Date().getFullYear(),
-          texto: this.comentario,
-          id: this.id,
-          token: this.$store.state.store.token
-        }
-      })
-        .then((response) => {
-          console.log('RESPUESTA DEL VOTO', response.data)
-          // Nuevos datos
-          this.$q.notify({
-            message: this.$t('comment_success'),
-            color: 'green-5',
-            textColor: 'white',
-            icon: 'cloud_done'
-          })
-          // Reseteamos y recargamos
-          this.comentario = ''
-          this.$emit('clicked')
-        }, (error) => {
-          console.log('EL ERROR ES', error)
-          this.$q.notify({
-            message: this.$t('comment_error'),
-            color: 'red',
-            textColor: 'white',
-            icon: 'error'
-          })
+      if (this.comentario !== '') {
+        axios({
+          method: 'put',
+          url: 'https://canarygo.herokuapp.com/eventos',
+          data: {
+            tipo: 'Comentario',
+            nombre: this.$store.state.store.datosUsuario.displayName,
+            avatar: this.$store.state.store.datosUsuario.photoURL,
+            hora: new Date().getHours() + ':' + String(new Date().getMinutes()).padStart(2, '0'),
+            dia: new Date().getDate() + '/' + (new Date().getMonth() + 1) + '/' + new Date().getFullYear(),
+            texto: this.comentario,
+            id: this.id,
+            token: this.$store.state.store.token
+          }
         })
+          .then((response) => {
+            // console.log('RESPUESTA DEL VOTO', response.data)
+            // Nuevos datos
+            this.$q.notify({
+              message: this.$t('comment_success'),
+              color: 'green-5',
+              textColor: 'white',
+              icon: 'cloud_done'
+            })
+            // Reseteamos y recargamos
+            this.comentario = ''
+            this.$emit('clicked')
+          }, (error) => {
+            console.log('EL ERROR ES', error)
+            this.$q.notify({
+              message: this.$t('comment_error'),
+              color: 'red',
+              textColor: 'white',
+              icon: 'error'
+            })
+          })
+      }
     }
   }
 }

@@ -289,7 +289,7 @@ export default {
           }
         })
           .then((response) => {
-            console.log('RESPUESTA DEL SERVER NUEVO EVENTO', response.data)
+            // console.log('RESPUESTA DEL SERVER NUEVO EVENTO', response.data)
             if (response.data.includes('Evento añadido')) {
               this.$q.notify({
                 icon: 'done',
@@ -345,9 +345,9 @@ export default {
 
       thisRef.put(image)
         .then(function (snapshot) {
-          console.log('actualizando foto')
+          // console.log('actualizando foto')
           thisRef.getDownloadURL().then(function (url) {
-            console.log('Datos fotito', id + ': ', url)
+            // console.log('Datos fotito', id + ': ', url)
             axios({
               method: 'post',
               url: 'https://canarygo.herokuapp.com/eventos',
@@ -367,7 +367,7 @@ export default {
     },
     ComprobarLogin () {
       firebaseAuth.signInWithCustomToken(this.$store.state.store.token).then(() => {
-        console.log('TOKEN CORRECTO')
+        // console.log('TOKEN CORRECTO')
       }).catch(function () {
         this.$store.dispatch('store/borrarUsuario')
         this.saludo = ''

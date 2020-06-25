@@ -1,7 +1,11 @@
 <template>
   <q-page padding>
     <!-- <Toolbar></Toolbar> -->
-    <Usuario :key="$i18n.locale"></Usuario>
+    <Usuario
+      :key="$i18n.locale"
+      v-bind:datos="this.datos_evento"
+      @clicked="onClickChildSearch"
+    ></Usuario>
     <Filtro
       class="filtro"
       @clicked="onClickChild"
@@ -40,13 +44,14 @@ export default {
   data () {
     return {
       datos_evento: [],
+      datos_evento_backup: [],
       tab: 'tab1',
       isla: ''
     }
   },
   methods: {
     Mostrar () {
-      console.log('LEYENDO DOC', this.$store.state.store)
+      // console.log('LEYENDO DOC', this.$store.state.store)
 
       axios({
         method: 'put',
@@ -59,7 +64,7 @@ export default {
         }
       })
         .then((response) => {
-          console.log('RESPUESTA DEL SERVER EVENTOS', response.data)
+          // console.log('RESPUESTA DEL SERVER EVENTOS', response.data)
           if (response.data === 'Error al verificar usuario en Evento') {
             // Borramos credenciales
             this.$store.dispatch('store/borrarUsuario')
@@ -69,6 +74,7 @@ export default {
             this.$router.push('login')
           } else {
             this.datos_evento = response.data
+            this.datos_evento_backup = response.data
           }
         }, (error) => {
           console.log('EL ERROR ES', error)
@@ -79,6 +85,13 @@ export default {
       this.isla = isla
 
       this.Mostrar()
+    },
+    onClickChildSearch (datosbusqueda) {
+      if (datosbusqueda === '') {
+        this.datos_evento = this.datos_evento_backup
+      } else {
+        this.datos_evento = datosbusqueda
+      }
     }
   },
   mounted () {

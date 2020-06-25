@@ -8,7 +8,7 @@
       :height="this.altura"
       margin="16"
       accept="image/*"
-      size="5"
+      size="25"
       radius="5"
       button-class="primary"
       :zIndex="this.index"

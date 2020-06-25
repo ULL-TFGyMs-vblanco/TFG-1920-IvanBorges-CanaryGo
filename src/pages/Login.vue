@@ -141,7 +141,7 @@ export default {
         }
       })
         .then((response) => {
-          console.log('RESPUESTA DEL SERVER', response)
+          // console.log('RESPUESTA DEL SERVER', response)
 
           if (response.data === 'auth/user-not-found') {
             this.Fail(this.$t('login_fail_user'))

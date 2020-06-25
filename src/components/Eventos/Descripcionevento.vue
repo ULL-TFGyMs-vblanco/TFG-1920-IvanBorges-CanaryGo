@@ -5,6 +5,7 @@
       <q-card-section horizontal>
         <q-img
           class="col-5"
+          :ratio="16/9"
           :src="this.foto"
         >
           <!-- // Animacion carga -->
@@ -174,11 +175,10 @@
               id="Maps"
               size="70%"
               outline
-              round
               color="primary"
               icon="navigation"
               @click="EnviarMaps"
-            />
+            >MAPS</q-btn>
             <!--  -->
           </div>
           <div class="col-3 col-sm-3 text-center comentarios">
@@ -225,7 +225,7 @@
       </div>
 
       <div class="q-pa-md row justify-center">
-        <div style="width: 100%; max-width: 80%">
+        <div>
           {{$t('comment_post')}}
 
           <!-- // Sección añadir comentarios -->
@@ -328,7 +328,7 @@ export default {
         }
       })
         .then((response) => {
-          console.log('RESPUESTA DEL VOTO', response.data)
+          // console.log('RESPUESTA DEL VOTO', response.data)
           // Nuevos datos
         }, (error) => {
           console.log('EL ERROR ES', error)
@@ -348,7 +348,7 @@ export default {
     },
     // Cargar datos
     Mostrar () {
-      console.log('CARGANDO EVENTO')
+      // console.log('CARGANDO EVENTO')
       axios({
         method: 'put',
         url: 'https://canarygo.herokuapp.com/eventos',
@@ -360,7 +360,7 @@ export default {
         }
       })
         .then((response) => {
-          console.log('RESPUESTA DEL SERVER EVENTOS', response.data)
+          // console.log('RESPUESTA DEL SERVER EVENTOS', response.data)
           const datos = response.data[0]
 
           // Efecto cargando
@@ -470,10 +470,6 @@ export default {
   padding-bottom: 15px;
 }
 
-.comentarios {
-  font-size: calc(6px + 6 * ((100vw - 20px) / 700));
-}
-
 .votos_box {
   background-color: rgba(128, 128, 128, 0.164);
   border-radius: 25px;
@@ -490,12 +486,17 @@ export default {
 
 .titulo {
   font-family: "PT Sans";
-  font-size: 140%;
+  font-size: calc(12px + 6 * ((100vw - 20px) / 680));
   font-weight: bold;
+}
+
+.descripcion {
+  font-size: calc(14px + 6 * ((100vw - 1000px) / 680));
 }
 
 .ubicacion {
   font-family: "Helvetica";
+  font-size: 130%;
 }
 
 .usuario {
@@ -505,11 +506,13 @@ export default {
 .comentarios {
   padding-left: 2%;
   pointer-events: none;
+    font-size: calc(14px + 6 * ((100vw - 1000px) / 700));
 }
 
 .precio {
   color: rgb(16, 153, 78);
   font-style: italic;
+  font-size: 160%;
 }
 
 .fecha {

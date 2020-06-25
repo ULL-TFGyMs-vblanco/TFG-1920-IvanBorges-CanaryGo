@@ -293,7 +293,7 @@ export default {
         }
       })
         .then((response) => {
-          console.log('RESPUESTA DEL SERVER', response)
+          // console.log('RESPUESTA DEL SERVER', response)
 
           if (response.data === 'Error al crear usuario') {
             this.Fail(this.$t('register_fail_2'))

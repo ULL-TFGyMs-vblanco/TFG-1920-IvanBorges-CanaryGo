@@ -1,13 +1,13 @@
 <template>
   <div class="login-box">
-    <a
+    <!-- <a
       href="#"
       class="social-button"
       id="facebook-connect"
       @click="IniciarSesionFacebook"
     >
       <span>{{facebook}}</span>
-    </a>
+    </a> -->
     <a
       href="#"
       class="social-button"
@@ -68,8 +68,8 @@ export default {
               }
             })
               .then((response) => {
-                console.log('RESPUESTA DEL SERVER', response)
-                console.log('USUARIO GOOGLE', firebaseAuth.currentUser)
+                // console.log('RESPUESTA DEL SERVER', response)
+                // console.log('USUARIO GOOGLE', firebaseAuth.currentUser)
 
                 if (response.data.includes('Usuario correcto:')) {
                   // Obtenemos el token
@@ -151,8 +151,8 @@ export default {
               }
             })
               .then((response) => {
-                console.log('RESPUESTA DEL SERVER', response)
-                console.log('USUARIO FACEBOOK', firebaseAuth.currentUser)
+                // console.log('RESPUESTA DEL SERVER', response)
+                // console.log('USUARIO FACEBOOK', firebaseAuth.currentUser)
 
                 let foto
                 if (response.data.foto === undefined) {

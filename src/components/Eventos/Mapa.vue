@@ -194,7 +194,7 @@ export default {
         })
     },
     Localizar_isla () {
-      console.log('Localizando isla')
+      // console.log('Localizando isla')
       const coordenadas = String(this.markerLatLng).slice(7, -1).split(',')
       const lat = Number(coordenadas[0])
       const lng = Number(coordenadas[1])
@@ -213,7 +213,7 @@ export default {
       } else if ((this.Rango(this.hro_lat_min, this.hro_lat_max, lat)) && (this.Rango(this.hro_lng_min, this.hro_lng_max, lng))) {
         this.isla = 'El Hierro'
       }
-      console.log('La isla es ', this.isla)
+      // console.log('La isla es ', this.isla)
     },
     Rango (min, max, num) {
       return num >= min && num <= max
