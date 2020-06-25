@@ -33,12 +33,13 @@
           <q-space />
           <!-- using v-if so you can see the effect -->
           <q-img
+            id="imagen_perfil"
             v-if="url !== null"
             :src="this.photoURL"
             :ratio="1"
             class="q-mt-md"
-            style="width: 350px"
             placeholder-src=""
+
           />
         </div>
 
@@ -426,7 +427,7 @@ export default {
   updated () {
     this.borrar()
     if (document.getElementById('foto').files[0] !== undefined) {
-      document.getElementsByClassName('q-pa-md q-gutter-md imagen_default')[0].setAttribute('style', 'display: none;')
+      // document.getElementsByClassName('q-pa-md q-gutter-md imagen_default')[0].setAttribute('style', 'display: none;')
     }
   },
   mounted () {
@@ -457,5 +458,18 @@ export default {
   padding-left: 8%;
   padding-top: 10%;
   padding-bottom: 10%;
+}
+
+  #imagen_perfil {
+    width: 350px;
+    height: 350px;
+  }
+
+@media only screen and (max-device-width: 640px) {
+  #imagen_perfil {
+    width: 100%;
+    height: 100%;
+    right: 5%;
+  }
 }
 </style>
