@@ -84,6 +84,8 @@ module.exports = function (app) {
         console.log('Nuevo evento')
         console.log('DATOS', req.body)
 
+        // Creamos palabras claves
+
         admin.firestore().collection('eventos').add({
           nombre_evento: req.body.nombre_evento,
           localizacion: req.body.localizacion,
@@ -99,6 +101,7 @@ module.exports = function (app) {
           fecha_creacion: new Date().getDate() + '/' + (new Date().getMonth() + 1) + '/' + new Date().getFullYear() + ',' + new Date().getHours() + ':' + String(new Date().getMinutes()).padStart(2, '0') + new Date().getMilliseconds(),
           foto_usuario: req.body.foto_usuario,
           navegador: req.body.nombre_evento.replace(/ /g, '-').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, ''),
+          busqueda: req.body.navegador.split('-'),
           foto: ''
         })
           .then(function (docRef) {

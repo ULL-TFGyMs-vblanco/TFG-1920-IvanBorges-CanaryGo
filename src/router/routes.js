@@ -11,6 +11,8 @@ const routes = [
       { path: '/signup', component: () => import('pages/SignUp.vue') },
       { path: '/new', component: () => import('pages/NuevoEvento.vue') },
       { path: '/update', component: () => import('pages/ActualizarUsuario.vue') },
+      { path: '/reset', component: () => import('pages/Restablecer.vue') },
+
       {
         path: '/events',
         component: () => import('pages/Eventos.vue'),

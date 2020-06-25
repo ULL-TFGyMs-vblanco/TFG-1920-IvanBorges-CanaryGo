@@ -144,7 +144,7 @@ export default {
     Redirigir () {
       // console.log('Main layout', this.$store.state.store.datosUsuario, this.$route.fullPath)
       if (this.$store.state.store.datosUsuario.length === 0) {
-        if ((this.$route.fullPath !== '/login') && (this.$route.fullPath !== '/signup') && (this.$route.fullPath !== '/home')) {
+        if ((this.$route.fullPath !== '/login') && (this.$route.fullPath !== '/signup') && (this.$route.fullPath !== '/home') && (this.$route.fullPath !== '/reset') && (this.$route.fullPath !== '/info')) {
           this.$router.push('/login')
           this.$q.notify({
             message: this.$t('must_login_register'),

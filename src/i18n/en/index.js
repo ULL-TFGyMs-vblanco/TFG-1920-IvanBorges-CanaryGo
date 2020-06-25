@@ -174,5 +174,8 @@ export default {
   user_caption: 'Introduce yourself to others',
   update_user: 'Update user',
   back: 'Go back',
-  error_page: 'Oops, nothing around here ...'
+  error_page: 'Oops, nothing around here ...',
+  reset_password: 'Restore',
+  reset_error: 'An error occurred while trying to reset your password. Try again later',
+  reset_verification: 'To complete the process check your email'
 }

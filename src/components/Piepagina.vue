@@ -18,20 +18,20 @@
                 style="max-width: 200px "
               />
 
-              <q-item
+              <!-- <q-item
                 clickable
                 v-ripple
               >
                 <q-item-section>
                   <q-item-label>{{$t('us')}}</q-item-label>
                 </q-item-section>
-              </q-item>
+              </q-item> -->
 
               <q-item
                 clickable
                 v-ripple
               >
-                <q-item-section>
+                <q-item-section @click="EnviarEmail">
                   <q-item-label>{{$t('contact')}}</q-item-label>
                 </q-item-section>
               </q-item>
@@ -56,6 +56,7 @@
               <q-item
                 clickable
                 v-ripple
+                to="/home"
               >
                 <q-item-section>
                   <q-item-label>{{$t('works')}}</q-item-label>
@@ -83,7 +84,7 @@
                 clickable
                 v-ripple
               >
-                <q-item-section>
+                <q-item-section @click="EnviarEmail">
                   <q-item-label>{{$t('help')}}</q-item-label>
                 </q-item-section>
               </q-item>
@@ -151,6 +152,11 @@ export default {
   name: 'Piepagina',
   data () {
     return {}
+  },
+  methods: {
+    EnviarEmail () {
+      window.open('mailto:alu0100880755@ull.edu.es')
+    }
   }
 }
 </script>

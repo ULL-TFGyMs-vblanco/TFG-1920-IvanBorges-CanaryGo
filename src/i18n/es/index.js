@@ -174,6 +174,8 @@ export default {
   user_caption: 'Preséntate a los demás',
   update_user: 'Actualizar usuario',
   back: 'Vuelve atrás',
-  error_page: 'Ups, nada por aquí...'
-
+  error_page: 'Ups, nada por aquí...',
+  reset_password: 'Restablecer',
+  reset_error: 'Se produjo un error al intentar resetear tu cotraseña. Inténtalo más tarde',
+  reset_verification: 'Para completar el proceso revisa tu correo'
 }

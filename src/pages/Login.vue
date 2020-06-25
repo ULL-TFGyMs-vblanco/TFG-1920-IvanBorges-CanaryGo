@@ -62,6 +62,7 @@
           <q-item
             clickable
             v-ripple
+            to="/reset"
           >
             <q-item-section>
               <q-item-label style="color: #ec9718">{{$t('password_reset')}}</q-item-label>
