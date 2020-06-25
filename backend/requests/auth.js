@@ -188,7 +188,7 @@ module.exports = function (app) {
       let documento
 
       //  Obtenemos id de la db
-      firebaseDb.collection('usuarios').where('correo', '==', user.email).get()
+      firebaseDb.collection('usuarios').where('correo', '==', req.body.email).get()
         .then((querySnapshot) => {
           querySnapshot.forEach((doc) => {
             documento = doc.id
@@ -200,6 +200,7 @@ module.exports = function (app) {
           // Borramos de la db
           admin.firestore().collection('usuarios').doc(documento).delete()
             .then(function () {
+              console.log('BORRANDO, ', documento)
               // Borramos img de el stg
               const storageRef = firebaseStg.ref('avatares/usuarios/' + user.email + '/foto')
               storageRef.delete().then(function () {

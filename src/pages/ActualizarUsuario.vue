@@ -401,6 +401,7 @@ export default {
           method: 'delete',
           url: 'https://canarygo.herokuapp.com/autorizar',
           data: {
+            email: this.$store.state.store.datosUsuario.email,
             token: this.$store.state.store.token
           }
         })

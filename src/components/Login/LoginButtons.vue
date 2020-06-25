@@ -74,13 +74,12 @@ export default {
                 if (response.data.includes('Usuario correcto:')) {
                   // Obtenemos el token
                   const token = response.data.split(':')[1]
-                  console.log('LA COSAA ->', firebaseAuth.currentUser.providerData[0])
-                  console.log('EL TOKEN ->', token)
 
                   // Obtenermos perfil
                   this.DatosExtraUsuario(token, firebaseAuth.currentUser.providerData[0]).then((response) => {
                     let foto
-                    if (response.data.foto === undefined) {
+
+                    if ((response.data.foto === undefined) || (response.data.foto === '')) {
                       foto = firebaseAuth.currentUser.providerData[0].photoURL
                     } else {
                       foto = response.data.foto
