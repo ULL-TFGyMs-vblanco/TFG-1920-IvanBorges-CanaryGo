@@ -342,4 +342,10 @@ export default {
   color: rgb(23, 131, 219);
   font-style: italic;
 }
+
+@media only screen and (max-device-width: 640px) {
+  .votos {
+    font-size: calc(18px + 6 * ((100vw - 1200px) / 700));
+  }
+}
 </style>

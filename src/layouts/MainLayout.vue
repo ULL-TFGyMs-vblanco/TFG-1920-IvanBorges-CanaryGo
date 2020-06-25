@@ -158,6 +158,7 @@ export default {
   },
   mounted () {
     // this.Redirigir()
+    this.botonoscuro()
   },
   updated () {
     this.Redirigir()

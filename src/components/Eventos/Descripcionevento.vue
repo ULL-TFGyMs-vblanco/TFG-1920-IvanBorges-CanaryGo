@@ -33,7 +33,7 @@
                   />
                   <q-btn
                     class="votos_evento"
-                    size="100%"
+                    size="110%"
                     flat
                     :loading="this.cargando"
                     style="pointer-events: none;"
@@ -506,7 +506,7 @@ export default {
 .comentarios {
   padding-left: 2%;
   pointer-events: none;
-    font-size: calc(14px + 6 * ((100vw - 1000px) / 700));
+  font-size: calc(14px + 6 * ((100vw - 1000px) / 700));
 }
 
 .precio {
@@ -518,5 +518,36 @@ export default {
 .fecha {
   color: rgb(23, 131, 219);
   font-style: italic;
+}
+/* // Movil */
+@media only screen and (max-device-width: 640px) {
+  .titulo {
+    font-family: "PT Sans";
+    font-size: calc(14px + 6 * ((100vw - 20px) / 680));
+    font-weight: bold;
+  }
+
+  .descripcion {
+    font-size: calc(18px + 6 * ((100vw - 1200px) / 680));
+  }
+
+  .ubicacion {
+    font-family: "Helvetica";
+    font-size: 140%;
+  }
+
+  .usuario {
+    pointer-events: none;
+  }
+
+  .comentarios {
+    padding-left: 2%;
+    pointer-events: none;
+    font-size: calc(18px + 6 * ((100vw - 1200px) / 700));
+  }
+
+  .votos {
+    font-size: calc(18px + 6 * ((100vw - 1200px) / 700));
+  }
 }
 </style>
