@@ -101,7 +101,7 @@ module.exports = function (app) {
           fecha_creacion: new Date().getDate() + '/' + (new Date().getMonth() + 1) + '/' + new Date().getFullYear() + ',' + new Date().getHours() + ':' + String(new Date().getMinutes()).padStart(2, '0') + new Date().getMilliseconds(),
           foto_usuario: req.body.foto_usuario,
           navegador: req.body.nombre_evento.replace(/ /g, '-').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, ''),
-          busqueda: req.body.navegador.split('-'),
+          busqueda: req.body.nombre_evento.replace(/ /g, '-').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').split('-'),
           foto: ''
         })
           .then(function (docRef) {

@@ -289,7 +289,7 @@ export default {
           }
         })
           .then((response) => {
-            // console.log('RESPUESTA DEL SERVER', response.data)
+            console.log('RESPUESTA DEL SERVER NUEVO EVENTO', response.data)
             if (response.data.includes('Evento añadido')) {
               this.$q.notify({
                 icon: 'done',
@@ -365,13 +365,12 @@ export default {
     },
     ComprobarLogin () {
       firebaseAuth.signInWithCustomToken(this.$store.state.store.token).then(() => {
-
+        console.log('TOKEN CORRECTO')
       }).catch(function () {
         this.$store.dispatch('store/borrarUsuario')
         this.saludo = ''
         this.img = ''
-        console.log('BORRRRANDDOOOO')
-        // console.clear()
+        console.clear()
         this.$router.push('login')
       })
     }
