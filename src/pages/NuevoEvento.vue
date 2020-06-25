@@ -300,9 +300,8 @@ export default {
                 progress: true
               })
               var id = response.data.split(':')
-              this.$router.push('events')
               this.subirImagen(id[1], file)
-              this.$router.push('events')
+              // this.$router.push('events')
             } else {
               this.$q.notify({
                 color: 'negative',
@@ -342,21 +341,24 @@ export default {
     subirImagen (id, image) {
       const storageRef = firebaseStg.ref('eventos/' + id)
       const thisRef = storageRef.child('foto')
+      const that = this
 
       thisRef.put(image)
         .then(function (snapshot) {
           console.log('actualizando foto')
           thisRef.getDownloadURL().then(function (url) {
-            // console.log('Datos fotito', id + ': ', url)
+            console.log('Datos fotito', id + ': ', url)
             axios({
               method: 'post',
               url: 'https://canarygo.herokuapp.com/eventos',
               data: {
                 operacion: 'Evento',
                 foto: url,
-                id: id
+                id: id,
+                token: that.$store.state.store.token
               }
             })
+            that.$router.push('events')
           })
         })
         .catch(function (error) {

@@ -8,7 +8,7 @@
           <q-tabs v-model="tab" shrink>
             <q-tab name="tab1" :label="$t('featured')" />
             <q-tab name="tab2" :label="$t('new')" />
-            <q-tab name="tab3" :label="$t('location_user')" />
+            <!-- <q-tab name="tab3" :label="$t('location_user')" /> -->
           </q-tabs>
           <q-space />
 

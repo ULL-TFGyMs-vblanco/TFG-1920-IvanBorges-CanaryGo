@@ -18,8 +18,7 @@ module.exports = function (app) {
   // Put
   app.put('/eventos', async function (req, res) {
     console.log('HTTP Crear Evento General')
-    console.log('Funcionando', req.body)
-    // console.log('Funcionando2', req.data)
+    // console.log('Funcionando', req.body)
 
     firebaseAuth.signInWithCustomToken(req.body.token).then(() => {
       firebaseAuth.signOut()
@@ -242,7 +241,8 @@ module.exports = function (app) {
         EstablecerVoto(req.body.email, req.body.id, res, 1)
         //
       } else if (req.body.operacion === 'Evento') {
-        EstablecerFoto(req.body.foto, req.body.id)
+        console.log('VAMOSS A CALMARNO')
+        EstablecerFoto(req.body.foto, req.body.id, res)
       }
     }).catch(function (error) {
       console.error('Error actualizando evento final', error)
@@ -258,9 +258,13 @@ module.exports = function (app) {
 
   /// ///////////// UTILIDADES /////////////////
 
-  function EstablecerFoto (url, id) {
-    firebaseDb.collection('eventos').doc(id).update({
+  function EstablecerFoto (url, id, res) {
+    console.log('ESTABLECER FOTO')
+    admin.firestore().collection('eventos').doc(id).update({
       foto: url
+    }).then(function () {
+      console.log('Foto Actualizada')
+      res.send('Hecho')
     })
   }
 
