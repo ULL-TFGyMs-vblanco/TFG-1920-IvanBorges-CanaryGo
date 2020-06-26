@@ -338,10 +338,10 @@ module.exports = function (app) {
     const fotoRefFemale = storageRefDefault.child('Avatar_f.png')
 
     let tipofoto
-    if (genero === 'Masculino') {
+    if ((genero === 'Masculino') || (genero === 'Male')) {
       console.log('Masculino')
       tipofoto = fotoRefMale
-    } else if (this.genero === 'Femenino') {
+    } else if ((this.genero === 'Femenino') || (genero === 'Female')) {
       console.log('Femenino')
       tipofoto = fotoRefFemale
     }

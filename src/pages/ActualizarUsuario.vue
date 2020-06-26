@@ -20,6 +20,7 @@
 
         <div class="q-pa-md q-gutter-md imagen_default">
           <q-chip
+            id="perfil_actual"
             outline
             size="20px"
             color="primary"
@@ -176,6 +177,7 @@
         <br />
         <br />
         <q-chip
+          id="borrar_perfil"
           outline
           clickable
           size="20px"
@@ -284,6 +286,8 @@ export default {
       this.$refs.genero.resetValidation()
 
       if (this.provider === 'password') {
+        this.contrasena = null
+        this.email = null
         this.$refs.contrasena.resetValidation()
         this.$refs.email.resetValidation()
       }

@@ -21,6 +21,7 @@
           <!-- Selector -->
           <Selectorarchivos
             class="selectorarchivos"
+            id="selectorarchivos"
             v-bind:anchura='550'
             v-bind:altura='550'
           />
@@ -28,6 +29,7 @@
           <q-input
             ref="nombre_evento"
             class="nombre_evento"
+            id="nombre_evento"
             filled
             v-model="nombre_evento"
             :label="$t('event_name')"
@@ -145,16 +147,19 @@
           />
 
           <q-input
-            ref="enlace"
-            class="enlace"
+            ref="link"
+            class="link"
             filled
-            v-model="descuento"
+            v-model="link"
             :label="$t('link')"
             :hint="$t('link_hint')"
             type="link"
           />
 
-          <q-item class="text-left">
+          <q-item
+            class="text-left"
+            id="usuario"
+          >
             <q-item-section>
               <q-item-label>
                 <q-avatar
@@ -232,7 +237,7 @@ export default {
       precio: '',
       descripcion: '',
       descuento: '',
-      enlace: '',
+      link: '',
       sesion: false,
       usuario: this.$store.state.store.datosUsuario.displayName.split(' ')[0],
       foto_usuario: this.$store.state.store.datosUsuario.photoURL,
@@ -295,7 +300,7 @@ export default {
             isla: this.isla,
             descuento: this.descuento,
             descripcion: this.descripcion,
-            link: this.enlace,
+            link: this.link,
             foto_usuario: this.foto_usuario,
             token: this.$store.state.store.token
           }
@@ -336,6 +341,7 @@ export default {
       this.precio = null
       this.descuento = null
       this.descripcion = null
+      this.link = null
 
       // this.$refs.foto.resetValidation()
       this.$refs.nombre_evento.resetValidation()

@@ -4,6 +4,7 @@
       <q-card-section class="fecha text-right">{{ this.fecha_inicio }} </q-card-section>
       <q-card-section horizontal>
         <q-img
+          id="imagen"
           class="col-5"
           :ratio="16/9"
           :src="this.foto"
@@ -19,7 +20,10 @@
         </q-img>
         <q-card-section vertical>
           <q-card-section horizontal>
-            <div class="votos_">
+            <div
+              class="votos_"
+              id="votos"
+            >
               <q-card-section class="votos">
                 <div class="votos_box">
                   <q-btn
@@ -51,7 +55,10 @@
               </q-card-section>
             </div>
           </q-card-section>
-          <q-card-section class="titulo text-justify">{{ this.nombre_evento }}
+          <q-card-section
+            class="titulo text-justify"
+            id="titulo"
+          >{{ this.nombre_evento }}
             <!-- // Animacion carga -->
             <q-inner-loading :showing="cargando">
               <q-spinner-dots
@@ -90,7 +97,10 @@
       <!-- Descripcion -->
       <br>
       <q-separator />
-      <q-card-section class="titulo text-justify">{{ $t('description') }}
+      <q-card-section
+        class="titulo text-justify"
+        id="descripcion"
+      >{{ $t('description') }}
         <!-- // Animacion carga -->
         <q-inner-loading :showing="cargando">
           <q-spinner-bars
@@ -100,12 +110,15 @@
         </q-inner-loading>
         <!--  -->
       </q-card-section>
-      <q-card-section class="descripcion text-justify">{{ descripcion }}
+      <q-card-section
+        class="descripcion text-justify descripcion_texto"
+        id="descripcion_texto"
+      >{{ descripcion }}
 
       </q-card-section>
 
       <!-- Descuento -->
-      <q-card-section class="titulo text-justify">{{ $t('price_discount') }}
+      <q-card-section class="titulo text-justify descuento">{{ $t('price_discount') }}
         <!-- // Animacion carga -->
         <q-inner-loading :showing="cargando">
           <q-spinner-bars
@@ -123,11 +136,11 @@
       </q-card-section>
       <q-card-section
         v-show="!this.mostrar_codigo"
-        class="descripcion text-justify"
+        class="descripcion text-justify descuento_codigo"
       >{{ descuento }}</q-card-section>
 
       <!-- Duracion -->
-      <q-card-section class="titulo text-justify">{{ $t('duration') }}
+      <q-card-section class="titulo text-justify duracion">{{ $t('duration') }}
         <!-- // Animacion carga -->
         <q-inner-loading :showing="cargando">
           <q-spinner-bars
@@ -137,13 +150,13 @@
         </q-inner-loading>
         <!--  -->
       </q-card-section>
-      <q-card-section class="descripcion text-justify">{{ fecha_inicio + ' - ' + fecha_fin }}
+      <q-card-section class="descripcion text-justify fechas">{{ fecha_inicio + ' - ' + fecha_fin }}
 
       </q-card-section>
 
       <!-- Mapa -->
       <q-separator /> <br>
-      <q-card-section class="titulo text-justify">{{ $t('event_location') }}</q-card-section>
+      <q-card-section class="titulo text-justify localizacion">{{ $t('event_location') }}</q-card-section>
       <MapaSimple
         :key="$i18n.locale"
         v-bind:center="this.ubicacion"
@@ -196,6 +209,7 @@
           </div>
           <div class="col-3 col-sm-3 text-center evento">
             <q-btn
+              id="link"
               size="70%"
               unelevated
               @click="RedirigirRegistro"
@@ -226,7 +240,10 @@
         <!-- <br /> -->
       </div>
 
-      <div class="q-pa-md row justify-center">
+      <div
+        class="q-pa-md row justify-center seccion_comentarios"
+        id="seccion_comentarios"
+      >
         <div>
           {{$t('comment_post')}}
 

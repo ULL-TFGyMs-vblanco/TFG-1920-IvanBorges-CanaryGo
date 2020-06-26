@@ -35,14 +35,14 @@ describe('ESPAÑOL', () => {
     })
   })
 
-  describe('Menu redirige a Inicio', () => {
+  describe('Menu redirige correctamente', () => {
     beforeEach(() => {
       cy.visit('/')
     })
     it('Redirige a Inicio', () => {
       cy.get('.q-toolbar > .q-btn > .q-btn__wrapper > .q-btn__content').click()
         .then(() => {
-          cy.get('[href="/home"]').click()
+          cy.get('.q-drawer__content > .q-list > [href="/home"]').click()
           cy.url().should('include', '/home')
         })
     })
@@ -58,6 +58,27 @@ describe('ESPAÑOL', () => {
         .then(() => {
           cy.get('[href="/signup"]').click()
           cy.url().should('include', '/signup')
+        })
+    })
+    it('Redirige a Eventos', () => {
+      cy.get('.q-toolbar > .q-btn > .q-btn__wrapper > .q-btn__content').click()
+        .then(() => {
+          cy.get('[href="/events"]').click()
+          cy.url().should('include', '/events')
+        })
+    })
+    it('Redirige a Añadir evento', () => {
+      cy.get('.q-toolbar > .q-btn > .q-btn__wrapper > .q-btn__content').click()
+        .then(() => {
+          cy.get('[href="/new"]').click()
+          cy.url().should('include', '/new')
+        })
+    })
+    it('Redirige a Actualizar usuario', () => {
+      cy.get('.q-toolbar > .q-btn > .q-btn__wrapper > .q-btn__content').click()
+        .then(() => {
+          cy.get('[href="/update"]').click()
+          cy.url().should('include', '/update')
         })
     })
   })
@@ -114,7 +135,7 @@ describe('ENGLISH', () => {
     it('Menu redirects to Home', () => {
       cy.get('.q-toolbar > .q-btn > .q-btn__wrapper > .q-btn__content').click()
         .then(() => {
-          cy.get('[href="/home"]').click()
+          cy.get('.q-drawer__content > .q-list > [href="/home"]').click()
           cy.url().should('include', '/home')
         })
     })
@@ -130,6 +151,27 @@ describe('ENGLISH', () => {
         .then(() => {
           cy.get('[href="/signup"]').click()
           cy.url().should('include', '/signup')
+        })
+    })
+    it('Redirect to Events', () => {
+      cy.get('.q-toolbar>.q-btn>.q-btn__wrapper>.q-btn__content').click()
+        .then(() => {
+          cy.get('[href="/events"]').click()
+          cy.url().should('include', '/events')
+        })
+    })
+    it('Redirect to Add event', () => {
+      cy.get('.q-toolbar>.q-btn> .q-btn__wrapper>.q-btn__content').click()
+        .then(() => {
+          cy.get('[href="/new"]').click()
+          cy.url().should('include', '/new')
+        })
+    })
+    it('Redirect to Update User', () => {
+      cy.get('.q-toolbar>.q-btn>.q-btn__wrapper>.q-btn__content').click()
+        .then(() => {
+          cy.get('[href="/update"]').click()
+          cy.url().should('include', '/update')
         })
     })
   })

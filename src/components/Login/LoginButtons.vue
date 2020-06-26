@@ -122,7 +122,7 @@ export default {
     },
     IniciarSesionFacebook () {
       const provider = firebaseAuthFacebook
-      provider.addScope('user_birthday')
+      // provider.addScope('user_birthday')
       firebaseAuth.useDeviceLanguage()
       provider.setCustomParameters({
         login_hint: 'user@example.com'

@@ -2,11 +2,20 @@
   <div class="text-center saludo">
     <q-toolbar class>
       <div class=".col-6 col-sm-6 negrita">
-        <div class="text-h6 q-mb-md text-center negrita saludo">{{saludo}}</div>
-        <div class="text-h6 q-mb-md text-center negrita saludo_2">{{saludo_2}}</div>
+        <div
+          id="saludo"
+          class="text-h6 q-mb-md text-center negrita saludo"
+        >{{saludo}}</div>
+        <div
+          id="saludo2"
+          class="text-h6 q-mb-md text-center negrita saludo_2"
+        >{{saludo_2}}</div>
       </div>
       <!-- BUSQUEDA USUARIO -->
-      <div class=".col-4 col-sm-4">
+      <div
+        class=".col-4 col-sm-4"
+        id="busqueda"
+      >
         <q-input
           dark
           dense
@@ -36,10 +45,16 @@
             size="80px"
             label="cuenta"
           >
-            <img :src=this.img />
+            <img
+              id="imagen_perfil"
+              :src="this.img"
+            />
           </q-avatar>
           <q-menu>
-            <div class="row no-wrap q-pa-md text-center">
+            <div
+              class="row no-wrap q-pa-md text-center"
+              id="ajustes_general"
+            >
               <div class="column">
                 <!-- AJUSTES -->
                 <div
@@ -48,7 +63,10 @@
                 >
                   <q-list class="asistencia">
                     <q-item>
-                      <q-item-section class="negrita">{{$t('settings')}}</q-item-section>
+                      <q-item-section
+                        class="negrita"
+                        id="ajustes"
+                      >{{$t('settings')}}</q-item-section>
                     </q-item>
                     <q-separator
                       inset
@@ -60,7 +78,7 @@
                       v-ripple
                     >
                       <q-item-section @click="$router.push('update')">
-                        <q-item-label>
+                        <q-item-label id="perfil">
                           <q-icon
                             name="person"
                             style="font-size: 2em;"

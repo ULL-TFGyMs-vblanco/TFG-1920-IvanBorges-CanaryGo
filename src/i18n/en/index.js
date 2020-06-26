@@ -94,7 +94,7 @@ export default {
   event_date_end: 'Event end date',
   event_date_hint_end: 'Indicates the end date of the event',
   event_date_fail_end: 'You must enter a date for the event',
-  event_date_fail_2: 'Please enter correct date format',
+  event_date_fail_2: 'Please enter a correct date format',
   event_fail_3: 'Please enter a photo',
   price: 'Price',
   price_hint: 'Enter the price of the event',

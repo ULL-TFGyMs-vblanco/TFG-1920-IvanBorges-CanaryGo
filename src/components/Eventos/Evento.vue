@@ -4,7 +4,8 @@
       <q-card-section class="fecha text-right">{{ fecha_inicio }}</q-card-section>
       <q-card-section horizontal>
         <q-img
-          class="col-5"
+          id="imagen_evento"
+          class="col-5 imagen_evento"
           :src="foto"
           :ratio="16/9"
         />
@@ -13,9 +14,13 @@
             <div class="
           votos_">
               <q-card-section class="votos">
-                <div class="votos_box">
+                <div
+                  class="votos_box"
+                  id="votos_box"
+                >
                   <q-btn
                     class="Restar"
+                    id="Restar"
                     size="70%"
                     :color="this.color_negativo"
                     :disable="this.estado_disable"
@@ -26,12 +31,14 @@
                   />
                   <q-btn
                     class="votos_evento"
+                    id="votos_evento"
                     size="100%"
                     flat
                     style="pointer-events: none;"
                   >{{votos_evento}}</q-btn>
                   <q-btn
                     class="Sumar"
+                    id="Sumar"
                     :color="this.color_positivo"
                     :disable="this.estado_disable"
                     size="70%"
