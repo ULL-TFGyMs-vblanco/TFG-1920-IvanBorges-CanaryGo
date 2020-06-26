@@ -179,17 +179,23 @@ export default {
                         this.Success()
                         this.$router.push('events')
                       }, 500)
+                    }).catch(function (error) {
+                      console.log(error)
                     })
+                  }).catch(function (error) {
+                    console.log(error)
                   })
                 }).catch(function (error) {
                   console.log(error)
                 })
+              }).catch(function (error) {
+                console.log(error)
               })
             } else {
               this.Fail(this.$t('login_fail_verify'))
             }
           }
-        }, (error) => {
+        }).catch(function (error) {
           console.log('EL ERROR ES', error)
         })
     },

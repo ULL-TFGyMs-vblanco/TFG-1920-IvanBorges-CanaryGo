@@ -101,7 +101,11 @@ export default {
                           this.Success()
                           this.$router.push('events')
                         }, 500)
+                      }).catch(function (error) {
+                        console.log(error)
                       })
+                    }).catch(function (error) {
+                      console.log(error)
                     })
                   }).catch(function (error) {
                     console.log(error)
@@ -109,7 +113,8 @@ export default {
                 } else {
                   this.Fail(this.$t('error_google'))
                 }
-              }, (error) => {
+              })
+              .catch(function (error) {
                 console.log('EL ERROR ES', error)
               })
           }
@@ -179,12 +184,16 @@ export default {
                         this.Success()
                         this.$router.push('events')
                       }, 500)
+                    }).catch(function (error) {
+                      console.log(error)
                     })
+                  }).catch(function (error) {
+                    console.log(error)
                   })
                 } else {
                   this.Fail(this.$t('error_google'))
                 }
-              }, (error) => {
+              }).catch(function (error) {
                 console.log('EL ERROR ES', error)
               })
           }

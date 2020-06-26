@@ -198,6 +198,8 @@
             <q-btn
               size="70%"
               unelevated
+              @click="RedirigirRegistro"
+              :disable="this.link_activo"
               rounded
               color="primary"
             >{{$t('event_register')}}</q-btn>
@@ -272,6 +274,7 @@ export default {
   components: { EditorTexto, Comentario, MapaSimple },
   data () {
     return {
+      // Datos evento
       comentarios_texto: [],
       sin_comentarios: false,
       comentarios: '',
@@ -289,6 +292,8 @@ export default {
       navegador: '',
       descripcion: '',
       descuento: '',
+      link: '',
+      link_activo: true,
       mostrar_codigo: false,
       votantes: [],
       cargando: true,
@@ -330,7 +335,7 @@ export default {
         .then((response) => {
           // console.log('RESPUESTA DEL VOTO', response.data)
           // Nuevos datos
-        }, (error) => {
+        }).catch(function (error) {
           console.log('EL ERROR ES', error)
         })
 
@@ -382,6 +387,7 @@ export default {
             this.descripcion = datos.descripcion
             this.fecha_fin = datos.fecha_fin
             this.descuento = datos.descuento
+            this.link = datos.link
 
             // Codigo descuento
             if (datos.descuento === '') {
@@ -395,6 +401,11 @@ export default {
               this.sin_comentarios = false
             }
 
+            // Link evento
+            if (datos.link !== '') {
+              this.link_activo = false
+            }
+
             this.ComprobarVotos()
             this.CargarMapa()
             this.cargando = false
@@ -405,7 +416,7 @@ export default {
             this.img = ''
             this.$router.push('login')
           }
-        }, (error) => {
+        }).catch(function (error) {
           console.log('EL ERROR ES', error)
         })
     },
@@ -439,6 +450,9 @@ export default {
       this.ubicacion = [this.x, this.y]
 
       this.ubicacion2 = L.latLng(this.x, this.y)
+    },
+    RedirigirRegistro () {
+      window.open(this.link)
     },
     EnviarMaps () {
       // window.open('https://www.google.es/maps/@' + this.x + ',' + this.y + ',16z')

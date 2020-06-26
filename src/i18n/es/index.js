@@ -177,5 +177,7 @@ export default {
   error_page: 'Ups, nada por aquí...',
   reset_password: 'Restablecer',
   reset_error: 'Se produjo un error al intentar resetear tu cotraseña. Inténtalo más tarde',
-  reset_verification: 'Para completar el proceso revisa tu correo'
+  reset_verification: 'Para completar el proceso revisa tu correo',
+  link_hint: 'Introduce la web para el registro (Opcional)',
+  link: 'Enlace para el registro'
 }

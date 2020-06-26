@@ -99,6 +99,7 @@ module.exports = function (app) {
           isla: req.body.isla,
           fecha_creacion: new Date().getDate() + '/' + (new Date().getMonth() + 1) + '/' + new Date().getFullYear() + ',' + new Date().getHours() + ':' + String(new Date().getMinutes()).padStart(2, '0') + new Date().getMilliseconds(),
           foto_usuario: req.body.foto_usuario,
+          link: req.body.link,
           navegador: req.body.nombre_evento.replace(/ /g, '-').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, ''),
           busqueda: req.body.nombre_evento.replace(/ /g, '-').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').split('-'),
           foto: ''
@@ -145,6 +146,7 @@ module.exports = function (app) {
                 foto_usuario: doc.data().foto_usuario,
                 navegador: doc.data().navegador,
                 descripcion: doc.data().descripcion,
+                link: doc.data().link,
                 descuento: doc.data().descuento,
                 comentarios_texto: '',
                 votantes: ''

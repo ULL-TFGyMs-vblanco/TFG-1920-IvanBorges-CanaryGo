@@ -39,7 +39,6 @@
             :ratio="1"
             class="q-mt-md"
             placeholder-src=""
-
           />
         </div>
 
@@ -328,9 +327,10 @@ export default {
             thisRef.getDownloadURL().then((url) => {
               that.new_url = url
               that.actualizarUsuario()
+            }).catch(function (error) {
+              console.log(error)
             })
-          })
-          .catch(function (error) {
+          }).catch(function (error) {
             console.log(error)
           })
       }
@@ -366,7 +366,7 @@ export default {
               progress: true
             })
           }
-        }, (error) => {
+        }).catch(function (error) {
           console.log('EL ERROR ES', error)
         })
     },
@@ -387,6 +387,8 @@ export default {
           // console.log('actualizando datos local')
           this.$router.push('events')
         }, 500)
+      }).catch(function (error) {
+        console.log(error)
       })
     },
     borrarUsuario () {
@@ -460,10 +462,10 @@ export default {
   padding-bottom: 10%;
 }
 
-  #imagen_perfil {
-    width: 350px;
-    height: 350px;
-  }
+#imagen_perfil {
+  width: 350px;
+  height: 350px;
+}
 
 @media only screen and (max-device-width: 640px) {
   #imagen_perfil {

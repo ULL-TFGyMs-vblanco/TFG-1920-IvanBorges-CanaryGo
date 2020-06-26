@@ -301,7 +301,8 @@ export default {
             this.Success()
             this.alert = true
           }
-        }, (error) => {
+        })
+        .catch(function (error) {
           console.log('EL ERROR ES', error)
         })
     },

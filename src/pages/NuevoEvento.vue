@@ -144,6 +144,16 @@
             type="name"
           />
 
+          <q-input
+            ref="enlace"
+            class="enlace"
+            filled
+            v-model="descuento"
+            :label="$t('link')"
+            :hint="$t('link_hint')"
+            type="link"
+          />
+
           <q-item class="text-left">
             <q-item-section>
               <q-item-label>
@@ -222,6 +232,7 @@ export default {
       precio: '',
       descripcion: '',
       descuento: '',
+      enlace: '',
       sesion: false,
       usuario: this.$store.state.store.datosUsuario.displayName.split(' ')[0],
       foto_usuario: this.$store.state.store.datosUsuario.photoURL,
@@ -284,6 +295,7 @@ export default {
             isla: this.isla,
             descuento: this.descuento,
             descripcion: this.descripcion,
+            link: this.enlace,
             foto_usuario: this.foto_usuario,
             token: this.$store.state.store.token
           }
@@ -311,7 +323,7 @@ export default {
                 progress: true
               })
             }
-          }, (error) => {
+          }).catch(function (error) {
             console.log('EL ERROR ES', error)
           })
       }
@@ -359,6 +371,8 @@ export default {
               }
             })
             that.$router.push('events')
+          }).catch(function (error) {
+            console.log(error)
           })
         })
         .catch(function (error) {

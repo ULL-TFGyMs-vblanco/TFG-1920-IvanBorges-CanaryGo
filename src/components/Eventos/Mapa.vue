@@ -20,13 +20,19 @@
         zoomAnimation="true"
         layer-type="base"
       ></l-tile-layer>
-      <l-marker id="marker" :lat-lng="markerLatLng">
+      <l-marker
+        id="marker"
+        :lat-lng="markerLatLng"
+      >
         <l-popup id="popup_marker">{{markerinfo}}</l-popup>
       </l-marker>
       <v-geosearch :options="geosearchOptions"></v-geosearch>
     </l-map>
     <br />
-    <link rel="stylesheet" href="https://unpkg.com/leaflet-geosearch@2.6.0/assets/css/leaflet.css" />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet-geosearch@2.6.0/assets/css/leaflet.css"
+    />
   </div>
 </template>
 
@@ -188,8 +194,7 @@ export default {
           } else {
             // No se cambia
           }
-        })
-        .catch((error) => {
+        }).catch((error) => {
           console.log(error)
         })
     },

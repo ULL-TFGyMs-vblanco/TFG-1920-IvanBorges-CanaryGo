@@ -190,7 +190,7 @@ export default {
           .then((response) => {
             // console.log('RESPUESTA DEL VOTO', response.data)
             this.datos_evento = response.data
-          }, (error) => {
+          }).catch(function (error) {
             console.log('EL ERROR ES', error)
           })
 
@@ -253,7 +253,7 @@ export default {
 
           // Comprobamos votos
           this.ComprobarVotos()
-        }, (error) => {
+        }).catch(function (error) {
           console.log('EL ERROR ES', error)
         })
     },

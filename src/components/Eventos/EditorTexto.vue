@@ -347,7 +347,7 @@ export default {
             // Reseteamos y recargamos
             this.comentario = ''
             this.$emit('clicked')
-          }, (error) => {
+          }).catch(function (error) {
             console.log('EL ERROR ES', error)
             this.$q.notify({
               message: this.$t('comment_error'),

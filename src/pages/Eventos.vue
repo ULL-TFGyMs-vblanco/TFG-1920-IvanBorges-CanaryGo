@@ -76,7 +76,7 @@ export default {
             this.datos_evento = response.data
             this.datos_evento_backup = response.data
           }
-        }, (error) => {
+        }).catch(function (error) {
           console.log('EL ERROR ES', error)
         })
     },
