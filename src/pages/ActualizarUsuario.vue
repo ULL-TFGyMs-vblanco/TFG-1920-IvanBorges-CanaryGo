@@ -157,6 +157,19 @@
           </template>
         </q-input>
 
+        <!-- Cambiar contraseña -->
+        <q-item
+          class="Reset"
+          clickable
+          v-ripple
+          @click="Reset"
+        >
+          <q-item-section>
+            <q-item-label style="color: #ec9718">{{$t('password_change')}}</q-item-label>
+          </q-item-section>
+        </q-item>
+        <!--  -->
+
         <div>
           <q-btn
             class="Actualizar"
@@ -428,6 +441,29 @@ export default {
         console.clear()
         this.$router.push('login')
       })
+    },
+    // Cambiar contraseña
+    Reset () {
+      var auth = firebaseAuth
+      var that = this
+
+      auth.sendPasswordResetEmail(this.email)
+        .then(function () {
+          // Correo enviado
+          that.$q.notify({
+            icon: 'done',
+            color: 'positive',
+            message: that.$t('reset_verification'),
+            position: 'bottom',
+            timeout: 1000,
+            progress: true
+          })
+        })
+        .catch(function (error) {
+          console.log(error)
+          const mensajeerror = this.$t('reset_error')
+          that.Fail(mensajeerror)
+        })
     }
   },
   updated () {
@@ -444,6 +480,7 @@ export default {
     if (this.provider !== 'password') {
       document.getElementsByClassName('Contrasena')[0].setAttribute('style', 'display:none')
       document.getElementsByClassName('Email')[0].setAttribute('style', 'display:none')
+      document.getElementsByClassName('Reset')[0].setAttribute('style', 'display:none')
     }
   }
 }

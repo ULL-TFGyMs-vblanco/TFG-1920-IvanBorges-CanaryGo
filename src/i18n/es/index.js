@@ -5,7 +5,7 @@ export default {
   title1: 'NO MAS EVENTOS OLVIDADOS',
   description1: 'Muchas veces debido a que el evento se hace de forma local o en otra isla, se desconoce de la existencia del mismo (por muy bueno que sea). Olvídate de ese momento con CanaryGo.',
   title1_1: 'OPINIONES DE GENTE COMO TÚ',
-  description1_1: 'Gracias a las aportaciones de la gran comunidad podrás saber si el evento se adecua a lo que se está buscando, lo bueno y lo malo.',
+  description1_1: 'Gracias a las aportaciones de la gran comunidad podrás saber si el evento se adecúa a lo que se está buscando, lo bueno y lo malo.',
   introduction2: 'Organiza el calendario a tu manera',
   title2: 'ORGANIZA TUS PRIORIDADES',
   description2: 'Puedes ordenar tus eventos según tus prioridades y preferencias: (Isla, Fecha, Novedades). De esta forma podrás encontrar siempre lo que buscas.',
@@ -179,5 +179,6 @@ export default {
   reset_error: 'Se produjo un error al intentar resetear tu cotraseña. Inténtalo más tarde',
   reset_verification: 'Para completar el proceso revisa tu correo',
   link_hint: 'Introduce la web para el registro (Opcional)',
-  link: 'Enlace para el registro'
+  link: 'Enlace para el registro',
+  password_change: 'Cambiar la contraseña'
 }

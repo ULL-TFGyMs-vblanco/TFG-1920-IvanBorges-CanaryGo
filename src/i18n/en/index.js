@@ -179,5 +179,6 @@ export default {
   reset_error: 'An error occurred while trying to reset your password. Try again later',
   reset_verification: 'To complete the process check your email',
   link_hint: 'Enter the web for the registration (Optional)',
-  link: 'Link for registration'
+  link: 'Link for registration',
+  password_change: 'Change password'
 }

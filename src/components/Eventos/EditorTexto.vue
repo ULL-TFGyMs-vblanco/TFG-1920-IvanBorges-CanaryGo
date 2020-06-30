@@ -58,6 +58,7 @@
       <div id="caretPos"></div>
 
       <picker
+        class="selectoremojis"
         set='messenger'
         v-show="mostrar_emoji"
         v-model="comentario"
@@ -361,3 +362,9 @@ export default {
   }
 }
 </script>
+
+<style>
+.selectoremojis {
+  font-size: calc(14px + 6 * ((100vw - 1400px) / 700));
+}
+</style>
