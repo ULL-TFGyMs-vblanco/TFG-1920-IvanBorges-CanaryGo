@@ -119,7 +119,7 @@
                 <q-item-section>
                   <img
                     class="absolute-center"
-                    src="../assets/images/CanaryGo/android-app.svg"
+                    src="../../assets/images/CanaryGo/android-app.svg"
                     style="max-width: 100px; width: 100%; height: auto; min-width: 60px;"
                   />
                 </q-item-section>
@@ -132,7 +132,7 @@
                 <q-item-section>
                   <img
                     class="absolute-center"
-                    src="../assets/images/CanaryGo/app-store.svg"
+                    src="../../assets/images/CanaryGo/app-store.svg"
                     style="max-width: 100px; width: 100%; height: auto; min-width: 60px;"
                   />
                 </q-item-section>

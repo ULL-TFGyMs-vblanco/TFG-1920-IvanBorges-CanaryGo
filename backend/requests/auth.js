@@ -1,5 +1,6 @@
 
-// var express = require('express')
+// Limpiando logs para rendimiento
+console.log = function () { }
 
 module.exports = function (app) {
   const { firebaseAuth, firebaseDb, firebaseStg } = require('../config/firebase')

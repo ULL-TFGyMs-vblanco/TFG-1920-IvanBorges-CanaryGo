@@ -219,8 +219,8 @@
 
 <script>
 
-import Selectorarchivos from '../components/Eventos/Selectorarchivos'
-import Mapa from '../components/Eventos/Mapa'
+import Selectorarchivos from '../components/NuevoEvento/Selectorarchivos'
+import Mapa from '../components/NuevoEvento/Mapa'
 import axios from 'axios'
 import { firebaseStg, firebaseAuth } from 'boot/firebase'
 

@@ -281,9 +281,9 @@
 
 <script>
 import axios from 'axios'
-import EditorTexto from '../Eventos/EditorTexto'
-import Comentario from '../Eventos/Comentario'
-import MapaSimple from '../Eventos/MapaSimple'
+import EditorTexto from '../components/Descripcion/EditorTexto'
+import Comentario from '../components/Descripcion/Comentario'
+import MapaSimple from '../components/Descripcion/MapaSimple'
 import L from 'leaflet'
 
 export default {

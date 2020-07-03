@@ -365,6 +365,10 @@ export default {
 
 <style>
 .selectoremojis {
-  font-size: calc(14px + 6 * ((100vw - 1400px) / 700));
+  font-size: calc(28px + 62 * ((100vw - 1400px) / 700));
+}
+
+.emoji-mart-preview-data {
+  font-family: bold, arial !important;
 }
 </style>

@@ -1,3 +1,5 @@
+// Limpiando logs para rendimiento
+console.log = function () { }
 
 module.exports = function (app) {
   global.XMLHttpRequest = require('xhr2')

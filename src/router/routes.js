@@ -17,11 +17,11 @@ const routes = [
         path: '/events',
         component: () => import('pages/Eventos.vue'),
         children: [
-          { path: ':id', component: () => import('components/Eventos/Descripcionevento.vue') }
+          { path: ':id', component: () => import('pages/Descripcionevento.vue') }
         ]
       },
       { path: '/error', component: () => import('pages/Error404.vue') },
-      { path: ':id', name: 'evento_detallado', component: () => import('components/Eventos/Descripcionevento.vue'), prop: true }
+      { path: ':id', name: 'evento_detallado', component: () => import('pages/Descripcionevento.vue'), prop: true }
     ]
   }
 ]

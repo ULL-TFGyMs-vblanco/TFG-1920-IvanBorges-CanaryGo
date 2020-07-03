@@ -239,7 +239,7 @@
 
 // eslint-disable-next-line no-unused-vars
 import { firebaseAuth, firebase, firebaseStg } from 'boot/firebase'
-import Selectorarchivos from '../components/Eventos/Selectorarchivos'
+import Selectorarchivos from '../components/NuevoEvento/Selectorarchivos'
 import axios from 'axios'
 
 export default {

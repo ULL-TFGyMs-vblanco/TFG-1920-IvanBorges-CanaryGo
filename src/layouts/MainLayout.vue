@@ -72,8 +72,8 @@
 //////////////////////////////////////////////////////////////////////
 
 <script>
-import EssentialLink from 'components/EssentialLink'
-import LanguageSelector from '../components/LanguageSelector.vue'
+import EssentialLink from '../components/Interfaz/EssentialLink'
+import LanguageSelector from '../components/Interfaz/LanguageSelector'
 
 export default {
   name: 'MainLayout',

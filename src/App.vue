@@ -7,7 +7,7 @@
 
 <script>
 
-import Piepagina from './components/Piepagina.vue'
+import Piepagina from './components/Interfaz/Piepagina'
 
 export default {
   name: 'App',

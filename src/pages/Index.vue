@@ -149,7 +149,7 @@
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 <script>
-import Seccioninfo from '../components/Seccioninfo.vue'
+import Seccioninfo from '../components/Index/Seccioninfo.vue'
 
 export default {
 
