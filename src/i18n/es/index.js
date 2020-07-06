@@ -2,7 +2,7 @@ export default {
   more_info: 'Más información',
   language: 'Idioma',
   introduction1: 'Encuentra los eventos que tanto buscas',
-  title1: 'NO MAS EVENTOS OLVIDADOS',
+  title1: 'NO MÁS EVENTOS OLVIDADOS',
   description1: 'Muchas veces debido a que el evento se hace de forma local o en otra isla, se desconoce de la existencia del mismo (por muy bueno que sea). Olvídate de ese momento con CanaryGo.',
   title1_1: 'OPINIONES DE GENTE COMO TÚ',
   description1_1: 'Gracias a las aportaciones de la gran comunidad podrás saber si el evento se adecúa a lo que se está buscando, lo bueno y lo malo.',
