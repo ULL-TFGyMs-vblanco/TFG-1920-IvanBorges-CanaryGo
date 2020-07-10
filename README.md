@@ -12,7 +12,7 @@ $ quasar dev
 
 ## Actualización de Quasar // Quasar update
 
-$ quasar upgrade
+$ quasar upgrade -i
 
 ## Generación de paquetes dist // Dist Package Generation
 
