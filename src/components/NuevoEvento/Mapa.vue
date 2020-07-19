@@ -167,7 +167,11 @@ export default {
     },
     reverseGeocode () {
       const Nominatim = require('nominatim-geocoder')
-      const geocoder = new Nominatim()
+      const geocoder = new Nominatim({
+        secure: true, // enables ssl,
+        customUrl: 'https://nominatim.openstreetmap.org/'
+      }
+      )
       const ubicacion = this.markerLatLng.lat + ', ' + this.markerLatLng.lng
 
       geocoder.search({ q: ubicacion })
@@ -184,7 +188,10 @@ export default {
     },
     Geocode (ubicacion) {
       const Nominatim = require('nominatim-geocoder')
-      const geocoder = new Nominatim()
+      const geocoder = new Nominatim({
+        secure: true, // enables ssl,
+        customUrl: 'https://nominatim.openstreetmap.org/'
+      })
 
       geocoder.search({ q: ubicacion })
         .then((response) => {
