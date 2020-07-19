@@ -241,9 +241,6 @@ export default {
           // console.log('contador2++')
         }
 
-        // Resultados
-        // console.log('cursor, contador2, comentario', this.cursor, contador2, text[i])
-
         // Bucle
         i = i + 1
       }
