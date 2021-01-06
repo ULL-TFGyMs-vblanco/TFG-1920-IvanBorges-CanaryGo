@@ -21,7 +21,7 @@
     "@pderas/vue2-geocoder": "^1.1.0",
     "@quasar/extras": "^1.8.2",
     "@types/leaflet": "^1.5.16",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "cors": "^2.8.5",
     "emoji-mart-vue": "^2.6.6",
     "esri-leaflet": "^2.4.1",
